@@ -17,7 +17,20 @@
 		reverse_proxy api:8000
 	}
 
-	# Frontend y página de prueba
+	# Los archivos con huella en el nombre —index-CP59w0GO.js— nunca
+	# cambian de contenido: si cambian, cambia el nombre. Se pueden
+	# guardar un año y evitan que la Raspberry vuelva a pedirlos en
+	# cada arranque del kiosco.
+	@conHuella path_regexp /assets/.*-[A-Za-z0-9_-]{8,}\.(js|css|woff2?|png|jpg|svg)$
+	header @conHuella Cache-Control "public, max-age=31536000, immutable"
+
+	# index.html es la excepción: no lleva huella, y si se cachea, la
+	# Pi se queda con una versión vieja que apunta a archivos que ya
+	# no existen y muestra una pantalla en blanco.
+	@entrada path / /index.html
+	header @entrada Cache-Control "no-cache"
+
+	# Frontend
 	handle {
 		root * /srv
 		try_files {path} /index.html

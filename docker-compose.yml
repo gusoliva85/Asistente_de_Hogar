@@ -12,11 +12,25 @@ services:
       EMAIL_CERTIFICADO: ${EMAIL_CERTIFICADO:-}
     volumes:
       - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./infra/caddy/site:/srv:ro
+      - frontend_dist:/srv:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
-      - api
+      api:
+        condition: service_started
+      frontend:
+        condition: service_completed_successfully
+
+  # Contenedor efímero: compila el frontend, lo copia al volumen que sirve
+  # Caddy y termina. No queda corriendo ni deja Node en el servidor.
+  frontend:
+    build:
+      context: ./apps/dashboard
+    restart: "no"
+    command: >
+      sh -c "rm -rf /destino/* /destino/.[!.]* 2>/dev/null; cp -a /sitio/. /destino/"
+    volumes:
+      - frontend_dist:/destino
 
   api:
     build:
@@ -51,6 +65,7 @@ services:
     # Sin "ports": la base NO se expone a Internet. Solo la ve la red interna.
 
 volumes:
+  frontend_dist:
   caddy_data:
   caddy_config:
   db_data:
