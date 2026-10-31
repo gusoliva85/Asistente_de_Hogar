@@ -53,16 +53,11 @@ export function Principal({ estado, onAjustes }: Props) {
     <div className="pantalla">
       <Grano />
 
-      <Encabezado
-        hogar={estado.hogar}
-        conexion={estado.conexion}
-        viaje={estado.viaje}
-        onAjustes={onAjustes}
-      />
+      <Encabezado hogar={estado.hogar} conexion={estado.conexion} onAjustes={onAjustes} />
 
       <div className="pantalla__cuerpo">
         <div className="columna">
-          <PanelPrincipal ahora={ahora} clima={estado.clima} />
+          <PanelPrincipal ahora={ahora} clima={estado.clima} viaje={estado.viaje} />
           <div className="columna__par">
             <TarjetaAgenda eventos={estado.eventos} />
             <TarjetaCompras articulos={estado.compras} />

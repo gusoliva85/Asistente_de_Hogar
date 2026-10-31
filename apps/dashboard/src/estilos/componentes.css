@@ -208,9 +208,9 @@
 
 .panel__hora {
   display: block;
-  font-size: 80px;
+  font-size: 90px;
   font-weight: var(--peso-fuerte);
-  line-height: 0.88;
+  line-height: 0.86;
   letter-spacing: -0.055em;
   font-variant-numeric: tabular-nums;
   /* La hora no es texto plano: el degradado se recorta sobre el tipo */
@@ -221,30 +221,24 @@
 }
 
 .panel__fecha {
-  margin-top: 11px;
+  margin-top: 12px;
   display: flex;
-  align-items: center;
-  gap: 9px;
+  align-items: baseline;
+  gap: 10px;
 }
 
-.panel__fecha-dia {
-  font-size: 14.5px;
-  font-weight: var(--peso-semi);
+/* El día de la semana es lo que se lee primero */
+.panel__dia {
+  font-size: 22px;
+  font-weight: var(--peso-fuerte);
+  letter-spacing: -0.02em;
+  color: var(--sobre-oscuro);
+}
+
+.panel__numero {
+  font-size: 16px;
+  font-weight: var(--peso-medio);
   color: var(--sobre-oscuro-2);
-}
-
-.panel__separador {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.panel__semana {
-  font-size: 13px;
-  font-weight: var(--peso-normal);
-  color: var(--sobre-oscuro-2);
-  opacity: 0.75;
 }
 
 .panel__clima {
@@ -302,6 +296,69 @@
   font-size: 13.5px;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro);
+}
+
+/* ── Pronóstico por franjas ─────────────────────────────────────────────── */
+
+.pronostico {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 7px 4px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  border-radius: var(--radio-chip);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.pronostico__franja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--sobre-oscuro);
+}
+
+.pronostico__franja + .pronostico__franja {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pronostico__hora {
+  font-size: 10.5px;
+  font-weight: var(--peso-semi);
+  color: var(--sobre-oscuro-2);
+}
+
+.pronostico__grados {
+  font-size: 14px;
+  font-weight: var(--peso-fuerte);
+  letter-spacing: -0.02em;
+}
+
+.clima__viaje {
+  margin: 7px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: var(--peso-medio);
+  color: var(--sobre-oscuro-2);
+}
+
+/* ── Animación del ícono del clima ──────────────────────────────────────── */
+
+/* Estaban definidas las animaciones pero no las clases que las aplican:
+   el ícono quedaba congelado. */
+.rayos {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: giro 28s linear infinite;
+}
+
+.nube {
+  transform-box: fill-box;
+  animation: flotar 6s ease-in-out infinite;
 }
 
 /* ── Tarjetas ───────────────────────────────────────────────────────────── */
@@ -869,8 +926,10 @@
   color: var(--texto-2);
 }
 
+/* Mismo ancho que la columna de la derecha: las tarjetas de arriba y el
+   botón quedan alineados en un solo borde vertical. */
 .ayuda {
-  width: 252px;
+  width: 300px;
   height: 100%;
   flex: none;
   display: flex;

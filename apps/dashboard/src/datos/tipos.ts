@@ -17,7 +17,13 @@ export type EstadoMicrofono = 'listo' | 'escuchando' | 'ausente' | 'silenciado'
 export interface Hogar {
   id: string
   nombre: string
-  /** Modo acompañamiento: hubo actividad reciente en la casa. */
+  /**
+   * Si este hogar tiene el modo acompañamiento encendido. Es el caso del
+   * hogar de una persona que vive sola: alguien de afuera quiere saber
+   * que hubo movimiento. En el hogar propio no tiene sentido mostrarlo.
+   */
+  acompanamiento: boolean
+  /** Hubo actividad reciente. Solo se muestra si `acompanamiento`. */
   activa: boolean
 }
 
@@ -63,8 +69,20 @@ export interface Clima {
   condicion: string
   /** Para el ícono y para `aria-label`. */
   esDeNoche: boolean
-  /** Seis valores para la curva. Vacío si no hay pronóstico. */
-  porHora: number[]
+  /**
+   * Tres franjas del día: mañana, tarde y noche. No una curva por hora:
+   * una línea sin números no responde ninguna pregunta que alguien se
+   * haga mirando la pantalla de reojo.
+   */
+  pronostico: FranjaClima[]
+}
+
+export interface FranjaClima {
+  /** Etiqueta ya resuelta por el servidor: «09:00», «14:00», «19:00». */
+  hora: string
+  temperatura: number
+  condicion: string
+  esDeNoche: boolean
 }
 
 export interface Viaje {

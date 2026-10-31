@@ -1,10 +1,9 @@
-import type { EstadoConexion, Hogar, Viaje } from '../datos/tipos'
-import { IconoAjustes, IconoConexion, IconoSinConexion, IconoViaje } from './Iconos'
+import type { EstadoConexion, Hogar } from '../datos/tipos'
+import { IconoAjustes, IconoConexion, IconoSinConexion } from './Iconos'
 
 interface Props {
   hogar: Hogar
   conexion: EstadoConexion
-  viaje: Viaje | null
   /** Provisional: hasta que exista la pantalla de ajustes (Fase 3),
       este botón alterna el tema para poder compararlos (F1.5). */
   onAjustes: () => void
@@ -23,7 +22,7 @@ const TEXTO_CONEXION: Record<EstadoConexion, string> = {
   'sin-conexion': 'Sin conexión',
 }
 
-export function Encabezado({ hogar, conexion, viaje, onAjustes }: Props) {
+export function Encabezado({ hogar, conexion, onAjustes }: Props) {
   const hora = new Date().getHours()
   const caido = conexion === 'sin-conexion'
 
@@ -32,23 +31,19 @@ export function Encabezado({ hogar, conexion, viaje, onAjustes }: Props) {
       <div className="encabezado__izquierda">
         <span className="marca" aria-hidden="true">J</span>
         <h1 className="encabezado__saludo">{saludo(hora)}</h1>
-        <span className="pastilla">{hogar.nombre}</span>
+        {/* El nombre del hogar no se muestra: el dispositivo pertenece a
+            una sola casa y nunca cambia. Decirlo en cada pantalla es
+            ocupar lugar para informar algo que ya se sabe. */}
       </div>
 
       <div className="encabezado__derecha">
-        {/* Modo acompañamiento: solo aparece si hubo actividad. Un chip
-            que dice "Casa activa" cuando no lo está sería mentir. */}
-        {hogar.activa && (
+        {/* Modo acompañamiento: solo en los hogares que lo tienen
+            encendido —el de alguien que vive solo—, y solo si hubo
+            actividad. En la casa propia no informa nada. */}
+        {hogar.acompanamiento && hogar.activa && (
           <span className="pastilla pastilla--viva">
             <span className="punto-vivo ambiental" aria-hidden="true" />
             Casa activa
-          </span>
-        )}
-
-        {viaje && (
-          <span className="pastilla pastilla--viaje">
-            <IconoViaje tamano={13} />
-            {viaje.minutos} min a {viaje.destino}
           </span>
         )}
 

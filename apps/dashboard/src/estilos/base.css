@@ -165,10 +165,10 @@ button:active:not(:disabled) {
 @keyframes flotar {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translate(0, 0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translate(-4px, -5px);
   }
 }
 

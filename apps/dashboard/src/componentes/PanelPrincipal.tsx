@@ -1,20 +1,20 @@
-import type { Clima } from '../datos/tipos'
-import { CurvaTemperatura, IconoClima } from './IconoClima'
+import type { Clima, Viaje } from '../datos/tipos'
+import { IconoClima, Pronostico } from './IconoClima'
+import { IconoViaje } from './Iconos'
 import { Grano } from './Grano'
 
 interface Props {
   ahora: Date
   clima: Clima | null
+  viaje: Viaje | null
 }
 
-const FECHA = new Intl.DateTimeFormat('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })
+const DIA = new Intl.DateTimeFormat('es-AR', { weekday: 'long' })
+const FECHA = new Intl.DateTimeFormat('es-AR', { day: 'numeric', month: 'long' })
 const HORA = new Intl.DateTimeFormat('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
 
-/** Semana del año. Dato chico que ancla el día dentro del año. */
-function semanaDelAno(d: Date): number {
-  const inicio = new Date(d.getFullYear(), 0, 1)
-  const dias = Math.floor((d.getTime() - inicio.getTime()) / 86_400_000)
-  return Math.ceil((dias + inicio.getDay() + 1) / 7)
+function mayuscula(texto: string): string {
+  return texto.charAt(0).toUpperCase() + texto.slice(1)
 }
 
 /**
@@ -23,8 +23,7 @@ function semanaDelAno(d: Date): number {
  * Es el único elemento oscuro de la pantalla y es deliberado: da
  * jerarquía sin volver oscura toda la interfaz.
  */
-export function PanelPrincipal({ ahora, clima }: Props) {
-  const fecha = FECHA.format(ahora)
+export function PanelPrincipal({ ahora, clima, viaje }: Props) {
 
   return (
     <section className="panel aparece">
@@ -36,12 +35,12 @@ export function PanelPrincipal({ ahora, clima }: Props) {
         <time className="panel__hora" dateTime={ahora.toISOString()}>
           {HORA.format(ahora)}
         </time>
+        {/* El día de la semana manda sobre el número: es lo que alguien
+            necesita saber al despertarse. La semana del año se sacó
+            porque no respondía ninguna pregunta. */}
         <div className="panel__fecha">
-          <span className="panel__fecha-dia">
-            {fecha.charAt(0).toUpperCase() + fecha.slice(1)}
-          </span>
-          <span className="panel__separador" aria-hidden="true" />
-          <span className="panel__semana">Semana {semanaDelAno(ahora)}</span>
+          <span className="panel__dia">{mayuscula(DIA.format(ahora))}</span>
+          <span className="panel__numero">{FECHA.format(ahora)}</span>
         </div>
       </div>
 
@@ -58,7 +57,13 @@ export function PanelPrincipal({ ahora, clima }: Props) {
                 </span>
               </div>
               <div className="clima__condicion">{clima.condicion}</div>
-              <CurvaTemperatura valores={clima.porHora} />
+              <Pronostico franjas={clima.pronostico} />
+              {viaje && (
+                <p className="clima__viaje">
+                  <IconoViaje tamano={12} grosor={2} />
+                  {viaje.minutos} min a {viaje.destino}
+                </p>
+              )}
             </div>
           </>
         ) : (

@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import type { FranjaClima } from '../datos/tipos'
 
 /**
  * Ícono del clima: SVG compuesto, no un ícono plano de biblioteca
@@ -103,55 +104,70 @@ export function IconoClima({ condicion, esDeNoche, ancho = 92 }: Props) {
 }
 
 /**
- * Curva de temperatura por hora. Es una sola línea con un relleno
- * degradado debajo: dice la forma del día sin ocupar espacio ni exigir
- * que nadie lea números.
+ * Pronóstico del día en tres franjas: mañana, tarde y noche.
+ *
+ * Reemplaza a la curva de temperatura que había antes. Una línea sin
+ * números se ve prolija pero no responde ninguna pregunta: nadie mira la
+ * pantalla de reojo para enterarse de la forma del día, sino para saber
+ * si a la tarde va a hacer frío.
  */
-export function CurvaTemperatura({ valores }: { valores: number[] }) {
-  const id = useId().replace(/:/g, '')
-  if (valores.length < 2) return null
-
-  const ancho = 138
-  const alto = 30
-  const margen = 4
-  const min = Math.min(...valores)
-  const max = Math.max(...valores)
-  const rango = max - min || 1
-
-  const puntos = valores.map((v, i) => {
-    const x = 2 + (i * (ancho - 4)) / (valores.length - 1)
-    const y = margen + (1 - (v - min) / rango) * (alto - margen * 2 - 2)
-    return [x, y] as const
-  })
-
-  const linea = puntos.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join(' L ')
-  const primero = puntos[0]
-  const ultimo = puntos[puntos.length - 1]
-  if (!primero || !ultimo) return null
-
-  const masAlto = puntos[valores.indexOf(max)] ?? primero
+export function Pronostico({ franjas }: { franjas: FranjaClima[] }) {
+  if (franjas.length === 0) return null
 
   return (
-    <svg
-      width={ancho}
-      height={alto}
-      viewBox={`0 0 ${ancho} ${alto}`}
-      fill="none"
-      style={{ marginTop: 8, display: 'block' }}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id={`curva-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(255,205,120,.45)" />
-          <stop offset="100%" stopColor="rgba(255,205,120,0)" />
-        </linearGradient>
-      </defs>
-      <path
-        d={`M ${linea} L ${ultimo[0].toFixed(1)} ${alto} L ${primero[0].toFixed(1)} ${alto} Z`}
-        fill={`url(#curva-${id})`}
-      />
-      <path d={`M ${linea}`} stroke="#FFD08A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={masAlto[0]} cy={masAlto[1]} r="3" fill="#FFF3D6" />
+    <ul className="pronostico">
+      {franjas.map((f) => (
+        <li key={f.hora} className="pronostico__franja">
+          <span className="pronostico__hora numero">{f.hora}</span>
+          <IconoClimaMini condicion={f.condicion} esDeNoche={f.esDeNoche} />
+          <span className="pronostico__grados numero">{f.temperatura}°</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/**
+ * Versión chica del ícono, sin animación ni halo: a 18 px no se ven y
+ * son tres repeticiones más que pintar en una Pi 3.
+ */
+function IconoClimaMini({ condicion, esDeNoche }: { condicion: string; esDeNoche: boolean }) {
+  const nublado = /nublad|cubiert|lluvi|tormenta/i.test(condicion)
+
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" role="img" aria-label={condicion}>
+      {!nublado &&
+        (esDeNoche ? (
+          <path
+            d="M18 14.5A7.5 7.5 0 0 1 9.5 6a6.2 6.2 0 1 0 8.5 8.5Z"
+            fill="currentColor"
+            opacity=".9"
+          />
+        ) : (
+          <>
+            <circle cx="12" cy="12" r="4.6" fill="currentColor" opacity=".9" />
+            <g stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" opacity=".7">
+              <path d="M12 2.6v2.2" />
+              <path d="M12 19.2v2.2" />
+              <path d="M2.6 12h2.2" />
+              <path d="M19.2 12h2.2" />
+              <path d="m5.6 5.6 1.6 1.6" />
+              <path d="m16.8 16.8 1.6 1.6" />
+              <path d="m18.4 5.6-1.6 1.6" />
+              <path d="m7.2 16.8-1.6 1.6" />
+            </g>
+          </>
+        ))}
+      {nublado && (
+        <>
+          {!esDeNoche && <circle cx="9" cy="9" r="3.4" fill="currentColor" opacity=".55" />}
+          <path
+            d="M8.5 19h8.2a3.6 3.6 0 0 0 .4-7.2 5.4 5.4 0 0 0-10.2-1.3A4 4 0 0 0 8.5 19Z"
+            fill="currentColor"
+            opacity=".9"
+          />
+        </>
+      )}
     </svg>
   )
 }

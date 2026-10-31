@@ -24,7 +24,7 @@ export function estadoFicticio(): EstadoPantalla {
   const proximo = eventos.find((e) => new Date(e.comienza) > ahora)
 
   return {
-    hogar: { id: 'h1', nombre: 'Hogar principal', activa: true },
+    hogar: { id: 'h1', nombre: 'Hogar principal', acompanamiento: false, activa: true },
     conexion: 'conectado',
     microfono: 'listo',
     clima: {
@@ -33,7 +33,11 @@ export function estadoFicticio(): EstadoPantalla {
       minima: 14,
       condicion: 'Parcialmente nublado',
       esDeNoche: ahora.getHours() < 7 || ahora.getHours() >= 20,
-      porHora: [18, 19, 21, 22, 20, 17],
+      pronostico: [
+        { hora: '09:00', temperatura: 16, condicion: 'Despejado', esDeNoche: false },
+        { hora: '14:00', temperatura: 23, condicion: 'Parcialmente nublado', esDeNoche: false },
+        { hora: '19:00', temperatura: 18, condicion: 'Nublado', esDeNoche: true },
+      ],
     },
     viaje: { destino: 'el centro', minutos: 24 },
     eventos: eventos.map((e) => ({ ...e, destacado: e.id === proximo?.id })),
@@ -69,7 +73,7 @@ export function estadoFicticio(): EstadoPantalla {
  */
 export function estadoVacio(): EstadoPantalla {
   return {
-    hogar: { id: 'h1', nombre: 'Hogar principal', activa: false },
+    hogar: { id: 'h1', nombre: 'Hogar principal', acompanamiento: false, activa: false },
     conexion: 'sin-conexion',
     microfono: 'ausente',
     clima: null,
