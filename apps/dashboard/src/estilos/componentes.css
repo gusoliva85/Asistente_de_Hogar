@@ -2,8 +2,14 @@
    JARVIS — Pantalla principal y sus componentes
 
    Medidas tomadas de documentacion/mockups/project/Principal.dc.html.
+   Cuatro bloques y no seis. La lista de compras y los dispositivos
+   salieron de la pantalla principal: se consultan por voz y desde el
+   celular. Ese espacio se repartió entre lo que quedó.
+
    La suma vertical tiene que dar 600 exactos:
-   22 + 30 + 12 + 406 + 12 + 96 + 22 = 600.
+   22 + 30 + 14 + 402 + 14 + 96 + 22 = 600
+   Izquierda: panel 236 + 14 + agenda 152 = 402
+   Derecha:   recordatorio 104 + 14 + música 284 = 402
 
    Ningún color literal: todo sale de tokens.css.
    ─────────────────────────────────────────────────────────────────────── */
@@ -16,30 +22,23 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   overflow: hidden;
 }
 
 .pantalla__cuerpo {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 12px;
-  height: 406px;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 14px;
+  height: 402px;
 }
 
 .columna {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   min-width: 0;
-}
-
-.columna__par {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  height: 208px;
 }
 
 .grano {
@@ -172,18 +171,16 @@
 /* ── Panel oscuro ───────────────────────────────────────────────────────── */
 
 .panel {
-  height: 186px;
+  height: 236px;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  /* 20 px a los lados y no 26: esos 12 px van a la barra de pronóstico,
-     que es lo que estaba quedando comprimido. */
-  padding: 20px 20px;
+  padding: 20px 24px;
   border-radius: 30px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
   color: var(--sobre-oscuro);
   background: var(--panel-oscuro);
   box-shadow:
@@ -220,14 +217,17 @@
   position: relative;
 }
 
-/* La hora no se encoge; el clima ocupa lo que queda y se ajusta */
-.panel__tiempo {
-  flex: none;
+.panel__superior {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .panel__hora {
   display: block;
-  font-size: 102px;
+  font-size: 108px;
   font-weight: var(--peso-fuerte);
   line-height: 0.84;
   letter-spacing: -0.055em;
@@ -252,38 +252,24 @@
 
 /* El día de la semana es lo que se lee primero */
 .panel__dia {
-  font-size: 27px;
+  font-size: 30px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
   color: var(--sobre-oscuro);
 }
 
 .panel__numero {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: var(--peso-medio);
   color: var(--sobre-oscuro-2);
 }
 
 .panel__clima {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-left: 20px;
-}
-
-.clima {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.clima__arriba {
+  flex: none;
   display: flex;
   align-items: center;
   gap: 16px;
+  padding-left: 26px;
 }
 
 .panel__division {
@@ -318,32 +304,34 @@
 }
 
 .clima__temperatura {
-  font-size: 56px;
+  font-size: 58px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.045em;
 }
 
 .clima__extremos {
-  font-size: 14.5px;
+  font-size: 15px;
+  white-space: nowrap;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro-2);
 }
 
 .clima__condicion {
   margin-top: 2px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro);
 }
 
 /* ── Pronóstico por franjas ─────────────────────────────────────────────── */
 
-/* Ocupa todo el ancho del bloque de clima y es baja: se lee como un
-   subrayado del clima, no como otra tarjeta. */
+/* A todo el ancho del panel. Al costado del clima competía con la hora
+   por el mismo espacio y las dos cosas quedaban estrujadas. */
 .pronostico {
+  position: relative;
   list-style: none;
   margin: 0;
-  padding: 7px 4px;
+  padding: 9px 8px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-radius: var(--radio-chip);
@@ -356,8 +344,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 0 6px;
+  gap: 9px;
+  padding: 0 10px;
   color: var(--sobre-oscuro);
 }
 
@@ -375,14 +363,14 @@
 }
 
 .pronostico__hora {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: var(--peso-semi);
   letter-spacing: 0.02em;
   color: var(--sobre-oscuro-2);
 }
 
 .pronostico__grados {
-  font-size: 16.5px;
+  font-size: 18px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
 }
@@ -416,7 +404,8 @@
 }
 
 .tarjeta--ambar {
-  height: 110px;
+  height: 104px;
+  flex: none;
   flex-direction: row;
   align-items: center;
   gap: 13px;
@@ -428,9 +417,9 @@
   opacity: 0.82;
 }
 
-.columna--lateral .tarjeta:not(.tarjeta--ambar) {
-  height: 140px;
-  padding: 15px 17px;
+.tarjeta--agenda {
+  height: 152px;
+  padding: 16px 20px;
 }
 
 .tarjeta__cabecera {
@@ -456,11 +445,6 @@
   box-shadow: var(--brillo-interior-boton), var(--halo-acento);
 }
 
-.tarjeta__insignia--verde {
-  background: var(--verde);
-  box-shadow: var(--brillo-interior-boton), var(--verde-halo);
-}
-
 .tarjeta__titulo {
   margin: 0;
   font-size: 10.5px;
@@ -476,17 +460,6 @@
   font-weight: var(--peso-semi);
   color: var(--texto-3);
   white-space: nowrap;
-}
-
-.insignia-conteo {
-  margin-left: auto;
-  font-size: 11px;
-  font-weight: var(--peso-extra);
-  color: var(--acento-contraste);
-  padding: 3px 10px;
-  border-radius: var(--radio-pastilla);
-  background: var(--verde);
-  box-shadow: var(--verde-halo);
 }
 
 /* ── Estados vacíos ─────────────────────────────────────────────────────── */
@@ -522,36 +495,38 @@
 
 /* ── Agenda ─────────────────────────────────────────────────────────────── */
 
-.agenda,
-.compras,
-.casa {
+.agenda {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* Filas horizontales y repartidas en el alto: con dos eventos o con
+   tres, la tarjeta nunca queda con un bloque de aire muerto abajo. */
 .agenda {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: space-evenly;
 }
 
 .agenda__fila {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 9px 11px;
-  margin: 0 -11px;
+  gap: 16px;
+  padding: 6px 12px;
+  margin: 0 -12px;
   border-radius: 16px;
+  min-width: 0;
 }
 
 .agenda__fila--proxima {
-  background: linear-gradient(100deg, var(--realce-fila), transparent);
+  background: linear-gradient(100deg, var(--realce-fila), transparent 70%);
 }
 
 .agenda__marca {
   width: 4px;
-  height: 36px;
+  height: 28px;
   border-radius: 3px;
   flex: none;
   background: currentColor;
@@ -563,16 +538,12 @@
   opacity: 1;
 }
 
-.agenda__texto {
-  min-width: 0;
-}
-
 .agenda__hora {
-  display: block;
-  font-size: 19px;
+  font-size: 22px;
   font-weight: var(--peso-extra);
   letter-spacing: -0.025em;
   color: var(--texto-2);
+  flex: none;
 }
 
 .agenda__fila--proxima .agenda__hora {
@@ -580,64 +551,17 @@
 }
 
 .agenda__titulo {
-  font-size: 13.5px;
-  font-weight: var(--peso-normal);
+  font-size: 16.5px;
+  font-weight: var(--peso-medio);
   color: var(--texto-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* ── Compras ────────────────────────────────────────────────────────────── */
-
-.compras {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px 12px;
-}
-
-.compras__fila {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 14px;
-  font-weight: var(--peso-normal);
-  min-width: 0;
-}
-
-.compras__fila--hecha {
-  color: var(--texto-3);
-  text-decoration: line-through;
-}
-
-.compras__nombre {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.compras__cantidad {
-  color: var(--texto-3);
-}
-
-.casilla {
-  width: 17px;
-  height: 17px;
-  border-radius: 6px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--acento-contraste);
-  background: var(--vidrio);
-  box-shadow:
-    inset 0 0 0 2px var(--realce-fila),
-    0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-.compras__fila--hecha .casilla {
-  background: var(--verde);
-  box-shadow: var(--brillo-interior-boton);
+.agenda__fila--proxima .agenda__titulo {
+  color: var(--texto);
+  font-weight: var(--peso-semi);
 }
 
 /* ── Recordatorio ───────────────────────────────────────────────────────── */
@@ -684,168 +608,64 @@
   text-overflow: ellipsis;
 }
 
-/* ── Casa ───────────────────────────────────────────────────────────────── */
-
-.casa {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.casa__fila {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
-}
-
-.casa__icono {
-  width: 31px;
-  height: 31px;
-  border-radius: 11px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--texto-3);
-  background: var(--realce-fila);
-}
-
-.casa__icono--encendido {
-  color: var(--acento-contraste);
-  background: var(--dorado);
-  box-shadow: var(--brillo-interior-boton), var(--dorado-halo);
-}
-
-.casa__icono--mudo {
-  opacity: 0.5;
-}
-
-.casa__nombre {
-  font-size: 13.5px;
-  font-weight: var(--peso-semi);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.casa__nivel {
-  margin-left: auto;
-  font-size: 12px;
-  font-weight: var(--peso-fuerte);
-  color: var(--confirmacion);
-}
-
-/* «Sin respuesta» y no «apagado»: no sabemos si está apagado */
-.casa__mudo {
-  margin-left: auto;
-  font-size: 11.5px;
-  font-weight: var(--peso-semi);
-  color: var(--texto-3);
-  white-space: nowrap;
-}
-
-.interruptor {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  width: 42px;
-  height: 23px;
-  padding: 2px;
-  border-radius: var(--radio-pastilla);
-  flex: none;
-  background: var(--realce-fila);
-  box-shadow: var(--sombra-hundida);
-  transition: background var(--transicion-boton);
-}
-
-.interruptor--si {
-  background: var(--dorado);
-}
-
-.interruptor__perilla {
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  background: var(--blanco-control);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
-  transition: transform var(--transicion-boton);
-}
-
-.interruptor--si .interruptor__perilla {
-  transform: translateX(19px);
-}
-
 /* ── Música ─────────────────────────────────────────────────────────────── */
 
+/* Tarjeta con su arte, no una barra. Sin música conserva el mismo
+   marco, la misma tapa y el mismo botón, atenuados: un hueco en blanco
+   no deja saber a qué pertenece ese espacio. */
 .musica {
-  flex-grow: 1;
   position: relative;
   overflow: hidden;
+  flex-grow: 1;
   box-sizing: border-box;
-  padding: 13px 15px;
+  padding: 18px;
   border-radius: var(--radio-tarjeta-grande);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   color: var(--sobre-oscuro);
   background: var(--panel-musica);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sombra-tarjeta);
 }
 
-/* Apagada conserva el panel oscuro —es el mismo objeto, no otro— pero
-   atenuado, para que se lea como "acá va a sonar algo" y no como una
-   tarjeta distinta. */
 .musica--apagada {
   filter: saturate(0.45);
   opacity: 0.78;
 }
 
-.musica__tapa--vacia {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--sobre-oscuro-2);
-  background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
-  box-shadow: none;
+/* Cubre la tarjeta para abrir la pantalla completa. El botón de
+   reproducción queda por encima con z-index. */
+.musica__abrir {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: inherit;
+  background: none;
 }
 
-.musica__titulo--vacio {
-  font-weight: var(--peso-semi);
-  color: var(--sobre-oscuro-2);
-}
-
-.musica__boton:disabled {
-  opacity: 0.45;
-  cursor: default;
-  box-shadow: none;
-}
-
-.musica__tapa {
-  width: 52px;
-  height: 52px;
-  border-radius: 15px;
-  flex: none;
-  background: linear-gradient(145deg, #2b2456, #5b3f8e 48%, #c45f86);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 14px rgba(0, 0, 0, 0.3);
+.musica__abrir:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .musica__texto {
+  position: relative;
+  width: 100%;
   min-width: 0;
-  flex-grow: 1;
+  text-align: center;
 }
 
 .musica__titulo {
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: var(--peso-fuerte);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.musica__artista,
-.musica__origen {
+.musica__artista {
+  margin-top: 2px;
   font-size: 12px;
   font-weight: var(--peso-normal);
   color: var(--sobre-oscuro-2);
@@ -854,13 +674,28 @@
   text-overflow: ellipsis;
 }
 
+/* Anclado al borde de abajo con su propio aire, no colgando del texto */
+.musica__pie {
+  position: relative;
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .musica__origen {
-  margin-top: 5px;
   display: flex;
   align-items: center;
   gap: 7px;
   font-size: 11px;
   font-weight: var(--peso-semi);
+  color: var(--sobre-oscuro-2);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ondas {
@@ -868,6 +703,7 @@
   align-items: flex-end;
   gap: 2px;
   height: 10px;
+  flex: none;
 }
 
 .onda {
@@ -899,6 +735,8 @@
 }
 
 .musica__boton {
+  position: relative;
+  z-index: 1;
   width: 38px;
   height: 38px;
   min-height: 38px;
@@ -910,6 +748,12 @@
   color: var(--texto);
   background: var(--blanco-control);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.musica__boton:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
 }
 
 /* ── Barra de voz y emergencia ──────────────────────────────────────────── */
@@ -1046,26 +890,6 @@
   100% {
     transform: translateX(125%);
   }
-}
-
-/* Cubre la tarjeta de música para abrir la pantalla completa. El botón
-   de pausa queda por encima con z-index. */
-.musica__abrir {
-  position: absolute;
-  inset: 0;
-  min-height: 0;
-  border-radius: inherit;
-  background: none;
-}
-
-.musica__abrir:hover {
-  transform: none;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.musica__boton {
-  position: relative;
-  z-index: 1;
 }
 
 /* La barra de voz es un botón: tocarla abre la pantalla de escucha. */

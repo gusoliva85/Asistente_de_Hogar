@@ -28,25 +28,23 @@ export function PanelPrincipal({ ahora, clima }: Props) {
       <div className="panel__aura panel__aura--2 ambiental" aria-hidden="true" />
       <Grano intenso />
 
-      <div className="panel__tiempo">
-        <time className="panel__hora" dateTime={ahora.toISOString()}>
-          {HORA.format(ahora)}
-        </time>
-        {/* El día de la semana manda sobre el número: es lo que alguien
-            necesita saber al despertarse. */}
-        <div className="panel__fecha">
-          <span className="panel__dia">{mayuscula(DIA.format(ahora))}</span>
-          <span className="panel__numero">{FECHA.format(ahora)}</span>
+      <div className="panel__superior">
+        <div className="panel__tiempo">
+          <time className="panel__hora" dateTime={ahora.toISOString()}>
+            {HORA.format(ahora)}
+          </time>
+          {/* El día de la semana manda sobre el número: es lo que alguien
+              necesita saber al despertarse. */}
+          <div className="panel__fecha">
+            <span className="panel__dia">{mayuscula(DIA.format(ahora))}</span>
+            <span className="panel__numero">{FECHA.format(ahora)}</span>
+          </div>
         </div>
-      </div>
 
-      <div className="panel__clima">
-        <span className="panel__division" aria-hidden="true" />
-        {clima ? (
-          /* Dos filas: arriba el ícono con la temperatura, abajo el
-             pronóstico ocupando todo el ancho, como un subrayado. */
-          <div className="clima">
-            <div className="clima__arriba">
+        <div className="panel__clima">
+          <span className="panel__division" aria-hidden="true" />
+          {clima ? (
+            <>
               <IconoClima condicion={clima.condicion} esDeNoche={clima.esDeNoche} ancho={100} />
               <div>
                 <div className="clima__cifras">
@@ -57,18 +55,22 @@ export function PanelPrincipal({ ahora, clima }: Props) {
                 </div>
                 <div className="clima__condicion">{clima.condicion}</div>
               </div>
-            </div>
-            <Pronostico franjas={clima.pronostico} />
-          </div>
-        ) : (
-          /* Sin clima no se inventa un número ni se deja un hueco:
-             se dice qué pasa. */
-          <p className="panel__sin-dato">
-            Sin datos del clima
-            <span>No pude consultarlo. Lo vuelvo a intentar solo.</span>
-          </p>
-        )}
+            </>
+          ) : (
+            /* Sin clima no se inventa un número ni se deja un hueco:
+               se dice qué pasa. */
+            <p className="panel__sin-dato">
+              Sin datos del clima
+              <span>No pude consultarlo. Lo vuelvo a intentar solo.</span>
+            </p>
+          )}
+        </div>
       </div>
+
+      {/* El pronóstico ocupa el ancho entero del panel. Al costado del
+          clima competía con la hora por el mismo espacio y las dos cosas
+          quedaban estrujadas. */}
+      {clima && <Pronostico franjas={clima.pronostico} />}
     </section>
   )
 }
