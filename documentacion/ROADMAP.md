@@ -48,7 +48,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 
 | Fase | Qué es | Estado |
 |---|---|---|
-| **0** | Preparación | **Casi terminada** — falta dominio, copias de seguridad y endurecer el servidor |
+| **0** | Preparación | **Casi terminada** — solo faltan el dominio (F0.e) y las copias de seguridad de Contabo (F0.d), ambas dependen del usuario |
 | 1 | La pantalla viva | Sin empezar |
 | 2 | Backend y datos reales | Sin empezar |
 | 3 | El celular | Sin empezar |
@@ -62,6 +62,8 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | 11 | Más adelante | Sin empezar |
 
 **Lo que está funcionando hoy:** la Raspberry arranca, se conecta al Wi-Fi y se administra por SSH, con la resolución forzada a 1024×600. El VPS corre Ubuntu 24.04 con Docker, acceso solo por llave SSH y cortafuegos activo. Los tres contenedores —Caddy, API y PostgreSQL— están en marcha, y `http://13.140.36.93/health` responde desde internet.
+
+El servidor además aplica parches de seguridad solo, sin reiniciarse por su cuenta, y ningún servicio corre como root.
 
 **Lo próximo:** Fase 1, el frontend en la Raspberry. Antes conviene resolver el dominio, que bloquea el HTTPS y con él el micrófono de la Fase 4.
 
@@ -91,11 +93,12 @@ Cada tarea terminada lleva su fecha al lado. Si una queda a medias, se abre en s
 - [x] **F0.2 — Escribir `.env.example`.** Todas las variables con sus nombres definitivos y valores vacíos. Es la documentación viva de qué secretos existen. — *30/10/2026*
 - [x] **F0.3 — Armar el `docker-compose.yml` base.** Caddy con TLS automático, la API en Python, y PostgreSQL con volumen persistente y reinicio automático. — *30/10/2026*
 - [x] **F0.4 — Escribir la guía de instalación de la Raspberry.** Paso a paso, pensada para que la sigas sin que yo esté. — *30/10/2026*
-- **F0.5 — Asegurar el servidor.**
+- [x] **F0.5 — Asegurar el servidor.** — *31/10/2026*
   - [x] Clave SSH instalada y acceso por contraseña deshabilitado — *31/10/2026*
   - [x] Cortafuegos `ufw` activo en 22/80/443, el resto denegado — *31/10/2026*
-  - [ ] Actualizaciones de seguridad automáticas
-  - [ ] Usuario sin privilegios para los servicios (hoy todo corre como `root`)
+  - [x] Actualizaciones de seguridad automáticas (`unattended-upgrades`, sin reinicio automático) — *31/10/2026*
+  - [x] Los servicios corren sin privilegios: la API como `jarvis` (uid 1000), PostgreSQL como `postgres` — *31/10/2026*
+  - *Mejora anotada, fuera de F0:* en el anfitrión, `docker compose` se opera como `root`. Un usuario de sistema aparte sería más prolijo, pero pertenecer al grupo `docker` equivale a root igual, y no cambia la exposición desde internet.
 - [x] **F0.6 — Publicar una página de prueba.** Para confirmar la cadena entera: DNS, certificado, proxy. — *31/10/2026*
 
 ### 🔧 Lo que hacés vos, después de F0.4
