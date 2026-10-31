@@ -21,7 +21,11 @@ User=jarvis_gus
 PAMName=login
 TTYPath=/dev/tty1
 Environment=XDG_RUNTIME_DIR=/run/user/1000
-Environment=JARVIS_URL=http://13.140.36.93
+# ?vidrio=solido apaga el desenfoque del vidrio y nada más. En la Pi 3,
+# backdrop-filter tumba el renderizador de Chromium con una violación de
+# segmento —"Aw Snap, error code 11"— y no es falta de memoria: el dmesg
+# sale limpio. Las animaciones, el grano y las sombras siguen encendidos.
+Environment=JARVIS_URL=http://13.140.36.93/?vidrio=solido
 ExecStart=/usr/bin/cage -d -- /usr/local/bin/iniciar-kiosco.sh
 
 # Si Chromium se cae, vuelve. Es un dispositivo sin teclado: nadie va a
@@ -29,11 +33,12 @@ ExecStart=/usr/bin/cage -d -- /usr/local/bin/iniciar-kiosco.sh
 Restart=always
 RestartSec=3
 
-# Un límite para que un Chromium desbocado no se lleve puesta la
-# máquina: con 1 GB de RAM, si el navegador crece sin control el
-# sistema entero deja de responder y no se puede ni entrar por SSH.
-MemoryMax=620M
-MemoryHigh=560M
+# No va MemoryMax acá: con PAMName=login la sesión se mueve al ámbito
+# del usuario y el límite del servicio no alcanza a los procesos. Se
+# comprueba con `systemctl show jarvis-kiosco -p MemoryCurrent`: si
+# devuelve "[not set]", no está midiendo nada y el límite es decorativo.
+# Pendiente de resolver bien; mientras tanto, el consumo se vigila a
+# mano (F1.10).
 
 [Install]
 WantedBy=multi-user.target

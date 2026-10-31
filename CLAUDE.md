@@ -59,6 +59,9 @@ Si la especificación y el roadmap se contradicen, manda la especificación.
 - El driver KMS (`dtoverlay=vc4-kms-v3d`) **ignora las directivas `hdmi_*` de `config.txt`**. La resolución se fuerza con `video=HDMI-A-1:1024x600M@60D` en `cmdline.txt`.
 - zram ya viene activo de fábrica por `systemd-zram-generator` (zstd, ~900 MB). **No instalar `zram-tools`**: choca con él y deja un servicio en estado `failed`.
 - Ser de 64 bits pesa más que `armhf` en 1 GB de RAM. Si Chromium en kiosco se arrastra en la Fase 1, regrabar en 32 bits libera 100-200 MB.
-- En reposo: 156 MB usados de 905, 49 °C, 2,8 GB de disco.
+- **`backdrop-filter` tumba el renderizador de Chromium** sobre el driver V3D: «Aw, Snap! Error code: 11», con el `dmesg` limpio. El kiosco carga la pantalla con `?vidrio=solido`, que apaga solo el desenfoque y deja vivas las animaciones, el grano y las sombras.
+- **La interfaz se escala sola** a la pantalla (`util/usarEscala.ts`). En el televisor de 1080p se agranda; en el panel de 7" la escala da 1.
+- El servicio del kiosco usa `PAMName=login`, así que **`MemoryMax` no se aplica**: los procesos quedan fuera de su grupo de control. Se comprueba con `systemctl show jarvis-kiosco -p MemoryCurrent`.
+- En reposo, sin kiosco: 156 MB usados de 905, 49 °C, 2,8 GB de disco.
 
 **Pendiente que depende del usuario:** conseguir un dominio y apuntarlo a `13.140.36.93`. Bloquea el HTTPS, y el HTTPS bloquea el micrófono del navegador en la Fase 4.

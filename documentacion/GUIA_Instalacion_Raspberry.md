@@ -261,7 +261,7 @@ Después del reinicio la pantalla tiene que aparecer sola, sin que nadie toque n
 
 El servicio y el script llevan comentarios, pero tres cosas merecen aparecer también acá:
 
-- **`MemoryMax=620M`.** Con 1 GB de RAM, un Chromium desbocado deja la máquina sin memoria y ya no se puede ni entrar por SSH para arreglarla. El límite hace que lo mate el sistema y se reinicie solo, en lugar de llevarse puesto todo el equipo.
+- **`?vidrio=solido` en la dirección.** Apaga el desenfoque del vidrio, y solo eso. En la Pi 3, `backdrop-filter` tumba el renderizador de Chromium: aparece «Aw, Snap! Error code: 11» y la pantalla queda inservible. No es falta de memoria —el `dmesg` sale limpio— sino el driver gráfico V3D. Las animaciones, el grano y las sombras siguen funcionando.
 - **`Restart=always`.** Es un dispositivo sin teclado colgado de una pared. Si el navegador se cae, nadie va a ir a levantarlo.
 - **El arreglo de `exit_type` en el script.** Ante cualquier corte de luz, Chromium marca la sesión como terminada mal y al arrancar muestra la barra de «restaurar pestañas». En una casa sin teclado, eso se queda en pantalla para siempre. El script limpia esa marca antes de arrancar.
 
@@ -280,5 +280,8 @@ El servicio y el script llevan comentarios, pero tres cosas merecen aparecer tam
 | `zramswap.service` falla con `Device or resource busy` | zram ya está activo por systemd. No hace falta `zram-tools`: ver Paso 7. |
 | La resolución es 1024×600 pero llena la pantalla | El televisor escala la señal. Buscá "Just Scan" u "Original" en su menú de imagen. Es cosmético. |
 | Se pone muy lenta con el tiempo | microSD sin clasificación A1/A2. |
+| Chromium muestra «Aw, Snap! Error code: 11» | El efecto vidrio tumba al driver V3D. La dirección tiene que llevar `?vidrio=solido`. |
+| El kiosco se ve en un cuarto de pantalla | Normal si el televisor es de 1080p: la interfaz se escala sola. En el panel de 7" se ve a tamaño real. |
+| `MemoryCurrent=[not set]` en el servicio | Con `PAMName=login` los procesos quedan fuera del grupo de control, así que `MemoryMax` no se aplica. |
 
 **Un reinicio al azar casi siempre es la fuente, no el software.** Es el error más común y el más difícil de diagnosticar si no se sospecha primero.
