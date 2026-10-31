@@ -128,7 +128,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 ### 💻 Lo que programo yo
 
 - [x] **F1.1 — Montar el frontend.** React con TypeScript sobre Vite, compilado a estáticos livianos, sin librerías que impongan su estética. — *31/10/2026. Compila: 13 archivos, 385 KB; JS 70 KB comprimido, CSS 2,6 KB. Tipografía empaquetada, solo subconjunto latino.*
-- [ ] **F1.2 — Implementar los tokens de diseño.** Los temas de `DECISION_Frontend_Temas.md` como variables CSS intercambiables en bloque. Ningún color escrito a mano dentro de un componente.
+- [x] **F1.2 — Implementar los tokens de diseño.** Los temas de `DECISION_Frontend_Temas.md` como variables CSS intercambiables en bloque. Ningún color escrito a mano dentro de un componente. — *31/10/2026. Cambio de tema verificado en pantalla por el usuario. Incluye la capa de refinamiento de la sección 3.4 y el interruptor de rendimiento reducido.*
 - [ ] **F1.3 — Construir los componentes.** Reloj, clima con el ícono SVG animado, agenda, compras, recordatorio, estado de dispositivos, barra de música, pastillas de estado y botón de emergencia.
 - [ ] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API.
 - [ ] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente.

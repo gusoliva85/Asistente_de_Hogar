@@ -24,10 +24,14 @@
 
   /* Movimiento */
   --curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Curva con un pelo de rebote, para que lo que aparece no "frene seco" */
+  --curva-entrada: cubic-bezier(0.16, 1, 0.3, 1);
   --transicion-boton: 300ms var(--curva);
   --transicion-tarjeta: 450ms var(--curva);
+  --transicion-rapida: 160ms var(--curva);
   --elevacion-boton: translateY(-2px);
   --elevacion-tarjeta: translateY(-3px);
+  --hundido: translateY(1px) scale(0.985);
 
   /* Radios */
   --radio-tarjeta-grande: 28px;
@@ -70,8 +74,31 @@
   --vidrio-borde: rgba(255, 255, 255, 0.92);
   --vidrio-desenfoque: blur(22px) saturate(140%);
 
-  --sombra-tarjeta: 0 14px 32px rgba(32, 26, 70, 0.1);
-  --sombra-elevada: 0 24px 48px rgba(32, 26, 70, 0.16);
+  /* Sombra en tres capas en vez de una: contacto, difusión y ambiente.
+     Una sola sombra grande se lee como una mancha; tres capas dan
+     profundidad real sin costar más en GPU. */
+  --sombra-tarjeta:
+    0 1px 2px rgba(32, 26, 70, 0.06),
+    0 6px 14px rgba(32, 26, 70, 0.07),
+    0 18px 38px rgba(32, 26, 70, 0.09);
+  --sombra-elevada:
+    0 2px 4px rgba(32, 26, 70, 0.08),
+    0 10px 22px rgba(32, 26, 70, 0.1),
+    0 28px 56px rgba(32, 26, 70, 0.14);
+  --sombra-hundida: inset 0 1px 3px rgba(32, 26, 70, 0.1);
+
+  /* Borde de luz interior: el canto superior del vidrio atrapa luz, como
+     un objeto físico. Es lo que más separa "caja de color" de "material". */
+  --brillo-interior: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --brillo-interior-boton: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+
+  /* Lustre: degradado tenue de arriba hacia abajo sobre el vidrio */
+  --lustre: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 42%);
+
+  /* Halo de color del acento, para botones y elementos activos */
+  --halo-acento: 0 8px 22px rgba(75, 71, 184, 0.3);
+  --halo-acento-fuerte: 0 12px 30px rgba(75, 71, 184, 0.42);
+  --halo-emergencia: 0 10px 26px rgba(184, 45, 45, 0.34);
 
   /* Panel oscuro: el único elemento oscuro de la pantalla, a propósito */
   --panel-oscuro: linear-gradient(142deg, #272250 0%, #1b1933 58%, #2c2142 100%);
@@ -115,8 +142,24 @@
   --vidrio-borde: rgba(255, 255, 255, 0.92);
   --vidrio-desenfoque: blur(22px) saturate(140%);
 
-  --sombra-tarjeta: 0 14px 32px rgba(16, 46, 40, 0.09);
-  --sombra-elevada: 0 22px 44px rgba(16, 46, 40, 0.14);
+  --sombra-tarjeta:
+    0 1px 2px rgba(16, 46, 40, 0.05),
+    0 6px 14px rgba(16, 46, 40, 0.06),
+    0 18px 38px rgba(16, 46, 40, 0.08);
+  --sombra-elevada:
+    0 2px 4px rgba(16, 46, 40, 0.07),
+    0 10px 22px rgba(16, 46, 40, 0.09),
+    0 26px 52px rgba(16, 46, 40, 0.13);
+  --sombra-hundida: inset 0 1px 3px rgba(16, 46, 40, 0.09);
+
+  --brillo-interior: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  --brillo-interior-boton: inset 0 1px 0 rgba(255, 255, 255, 0.26);
+
+  --lustre: linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 42%);
+
+  --halo-acento: 0 8px 22px rgba(14, 140, 119, 0.28);
+  --halo-acento-fuerte: 0 12px 30px rgba(14, 140, 119, 0.4);
+  --halo-emergencia: 0 10px 26px rgba(194, 61, 40, 0.32);
 
   --panel-oscuro: linear-gradient(142deg, #17322c 0%, #0f2420 58%, #16342c 100%);
   --sobre-oscuro: #eaf5f2;
@@ -140,6 +183,9 @@
    ─────────────────────────────────────────────────────────────────────── */
 
 [data-rendimiento='reducido'] {
+  /* Se apaga el desenfoque, que es lo caro en GPU. El brillo interior, el
+     lustre y las sombras en capas se conservan: cuestan prácticamente
+     nada y son lo que sostiene la sensación de material. */
   --vidrio-desenfoque: none;
 }
 

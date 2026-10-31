@@ -59,28 +59,29 @@ export function App() {
 
   return (
     <div className="banco">
-      <header className="banco__encabezado vidrio">
+      <header className="banco__encabezado vidrio aparece">
         <div>
           <h1 className="banco__titulo">JARVIS — tokens de diseño</h1>
           <p className="banco__nota">
             Banco de pruebas de F1.2. La pantalla principal llega en F1.4.
           </p>
         </div>
-        <button className="boton-tema" onClick={alternar}>
+        <button className="boton-tema realce" onClick={alternar}>
           Tema: {tema === 'lavanda' ? 'Lavanda Suave' : 'Menta Clínica'}
         </button>
       </header>
 
       <div className="banco__cuerpo">
-        <section className="panel-oscuro">
+        <section className="panel-oscuro aparece" style={{ animationDelay: '60ms' }}>
           <div className="panel-oscuro__aura ambiental" aria-hidden="true" />
+          <div className="panel-oscuro__aura panel-oscuro__aura--2 ambiental" aria-hidden="true" />
           <time className="panel-oscuro__hora" dateTime={ahora.toISOString()}>
             {hora}
           </time>
           <p className="panel-oscuro__fecha">{fecha}</p>
         </section>
 
-        <section className="tarjeta vidrio">
+        <section className="tarjeta vidrio vidrio--interactiva aparece" style={{ animationDelay: '120ms' }}>
           <h2 className="tarjeta__titulo">Color</h2>
           <div className="muestras">
             {MUESTRAS.map(([nombre, token]) => (
@@ -96,7 +97,7 @@ export function App() {
           </div>
         </section>
 
-        <section className="tarjeta vidrio">
+        <section className="tarjeta vidrio vidrio--interactiva aparece" style={{ animationDelay: '180ms' }}>
           <h2 className="tarjeta__titulo">Forma y estado</h2>
           <div className="chips">
             <span className="chip chip--confirmacion">Agregado a la lista</span>
@@ -104,7 +105,7 @@ export function App() {
             <span className="chip chip--viaje">Viaje 24 min</span>
             <span className="chip">Casa activa</span>
           </div>
-          <button className="boton-emergencia">Necesito ayuda</button>
+          <button className="boton-emergencia realce">Necesito ayuda</button>
         </section>
       </div>
     </div>

@@ -162,6 +162,25 @@ Estos valores son el contrato. Se implementan como variables CSS (o el equivalen
 | Realce de fila | `rgba(14,140,119,.07)` con desplazamiento de 12 px a la derecha |
 | Bloque del clima | `linear-gradient(165deg, rgba(126,178,224,.30), rgba(14,140,119,.16))` |
 
+### 3.4 Capa de refinamiento (compartida)
+
+> **Agregado el 31/10/2026, a pedido del usuario.** La dirección visual no cambia: son tokens de acabado que se aplican sobre los dos temas. El motivo fue que la primera implementación se veía correcta pero plana, sin sensación de producto terminado.
+
+| Token | Qué resuelve |
+|---|---|
+| `--sombra-tarjeta`, `--sombra-elevada` | **Sombra en tres capas** —contacto, difusión y ambiente— en lugar de una sola. Una sombra grande y única se lee como una mancha gris; tres capas dan profundidad. No cuesta más en GPU que una sola. |
+| `--brillo-interior` | Canto de luz en el borde superior (`inset 0 1px 0`). Es lo que más separa «caja de color» de «material»: los objetos físicos atrapan luz en su borde superior. |
+| `--lustre` | Degradado tenue de arriba hacia abajo sobre el vidrio, como pseudoelemento para no pisar el fondo propio de cada tarjeta. |
+| `--halo-acento`, `--halo-emergencia` | Sombra teñida con el color del propio botón, no gris. Un botón de acento con sombra gris se ve pegado; con su halo, encendido. |
+| `--hundido` | El botón se hunde al apretarlo. En una pantalla táctil es la única confirmación de que el dedo llegó: no alcanza con el cambio de color, porque el dedo lo tapa. |
+| `--curva-entrada` | Curva con un pelo de rebote para lo que aparece, de modo que no frene en seco. |
+| `.realce` | Franja especular que cruza el botón al pasar por encima. Es un degradado desplazándose, sin desenfoque. |
+| `.aparece` | Entrada escalonada de 500 ms. El kiosco arranca en frío y la pantalla aparecía de golpe; escalonada se siente encendida y no volcada. |
+
+**Qué pasa con esto en rendimiento reducido:** se apaga **solo el desenfoque** (`backdrop-filter`), que es lo caro en GPU. Las sombras en capas, el brillo interior y el lustre se conservan, porque cuestan prácticamente nada y son justamente lo que sostiene la sensación de material. La degradación no debe devolver la interfaz al estado plano.
+
+---
+
 ### 3.4 Ícono del clima (compartido)
 
 Es un SVG compuesto, no un ícono plano de biblioteca. Tres piezas:

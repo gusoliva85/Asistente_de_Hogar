@@ -49,15 +49,24 @@ button {
   border: none;
   background: none;
   min-height: var(--tactil-minimo);
-  transition: transform var(--transicion-boton), box-shadow var(--transicion-boton);
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform var(--transicion-boton),
+    box-shadow var(--transicion-boton),
+    filter var(--transicion-rapida);
 }
 
 button:hover:not(:disabled) {
   transform: var(--elevacion-boton);
+  filter: saturate(1.06);
 }
 
+/* Al apretar, el botón se hunde: en una pantalla táctil es la única
+   confirmación de que el dedo llegó. No alcanza con el color. */
 button:active:not(:disabled) {
-  transform: translateY(0);
+  transform: var(--hundido);
+  transition-duration: 90ms;
 }
 
 /* El foco tiene que verse: se opera con pantalla táctil, pero también
@@ -70,11 +79,79 @@ button:active:not(:disabled) {
 /* ── Superficies ────────────────────────────────────────────────────────── */
 
 .vidrio {
+  position: relative;
+  isolation: isolate;
   background: var(--vidrio);
   border: 1px solid var(--vidrio-borde);
   backdrop-filter: var(--vidrio-desenfoque);
   -webkit-backdrop-filter: var(--vidrio-desenfoque);
-  box-shadow: var(--sombra-tarjeta);
+  box-shadow: var(--sombra-tarjeta), var(--brillo-interior);
+  transition:
+    transform var(--transicion-tarjeta),
+    box-shadow var(--transicion-tarjeta);
+}
+
+/* Lustre: la luz que cae sobre el canto superior. Es un pseudoelemento y
+   no un degradado en el fondo para que cada tarjeta pueda tener su propio
+   color debajo sin perderlo. */
+.vidrio::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lustre);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.vidrio--interactiva:hover {
+  transform: var(--elevacion-tarjeta);
+  box-shadow: var(--sombra-elevada), var(--brillo-interior);
+}
+
+/* Realce especular: una franja de luz que cruza al pasar por encima.
+   Es un degradado desplazándose, sin desenfoque: cuesta casi nada. */
+.realce {
+  overflow: hidden;
+}
+
+.realce::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  transition: transform 700ms var(--curva);
+  pointer-events: none;
+}
+
+.realce:hover::after {
+  transform: translateX(130%);
+}
+
+/* ── Entrada ────────────────────────────────────────────────────────────── */
+
+/* El kiosco arranca en frío y la pantalla aparece de golpe. Una entrada
+   escalonada de 500 ms hace que se sienta encendido y no volcado. */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aparece {
+  animation: aparecer 500ms var(--curva-entrada) both;
 }
 
 /* ── Animaciones ambientales ────────────────────────────────────────────── */

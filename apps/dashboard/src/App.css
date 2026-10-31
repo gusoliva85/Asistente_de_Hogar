@@ -89,6 +89,24 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow:
+    var(--sombra-elevada),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* Segunda aurora, en el extremo opuesto y a contratiempo: dos luces que
+   respiran desfasadas se leen como volumen, una sola como un parche. */
+.panel-oscuro__aura--2 {
+  top: auto;
+  right: auto;
+  bottom: -80px;
+  left: -50px;
+  width: 190px;
+  height: 190px;
+  background: var(--emergencia-plano);
+  opacity: 0.4;
+  animation-duration: 9s;
+  animation-delay: -3s;
 }
 
 .panel-oscuro__aura {
@@ -126,11 +144,12 @@
   color: var(--acento-contraste);
   font-weight: var(--peso-fuerte);
   font-size: 14px;
-  box-shadow: var(--sombra-tarjeta);
+  letter-spacing: 0.01em;
+  box-shadow: var(--halo-acento), var(--brillo-interior-boton);
 }
 
 .boton-tema:hover {
-  box-shadow: var(--sombra-elevada);
+  box-shadow: var(--halo-acento-fuerte), var(--brillo-interior-boton);
 }
 
 .boton-emergencia {
@@ -141,7 +160,8 @@
   color: #fff;
   font-weight: var(--peso-extra);
   font-size: 17px;
-  box-shadow: var(--sombra-tarjeta);
+  letter-spacing: 0.01em;
+  box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
 }
 
 .chips {
@@ -157,6 +177,12 @@
   font-weight: var(--peso-semi);
   background: var(--realce-fila);
   color: var(--texto-2);
+  box-shadow: var(--brillo-interior);
+  transition: transform var(--transicion-rapida);
+}
+
+.chip:hover {
+  transform: translateY(-1px);
 }
 
 .chip--confirmacion {
