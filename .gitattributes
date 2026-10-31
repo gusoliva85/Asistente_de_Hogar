@@ -1,0 +1,19 @@
+# Finales de línea: LF siempre en el repositorio.
+# Sin esto, Windows versiona CRLF y los scripts y Dockerfiles
+# fallan dentro de los contenedores Linux.
+* text=auto eol=lf
+
+# Archivos que deben ser LF sí o sí
+*.sh      text eol=lf
+*.py      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+Dockerfile text eol=lf
+Caddyfile text eol=lf
+.env.example text eol=lf
+
+# Binarios: que Git no los toque
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
