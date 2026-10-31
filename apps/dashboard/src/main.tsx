@@ -16,11 +16,19 @@ import './estilos/base.css'
 import './estilos/componentes.css'
 
 import { App } from './App'
-import { aplicarRendimiento, aplicarTema, leerTemaGuardado } from './temas/tema'
+import {
+  aplicarLuz,
+  aplicarRendimiento,
+  aplicarTema,
+  leerModoLuz,
+  leerTemaGuardado,
+  resolverLuz,
+} from './temas/tema'
 
 // Antes de que React monte, para que no haya un parpadeo con el tema
 // equivocado en el arranque del kiosco.
 aplicarTema(leerTemaGuardado())
+aplicarLuz(resolverLuz(leerModoLuz(new Date()), new Date()))
 aplicarRendimiento(new URLSearchParams(location.search).get('rendimiento') === 'reducido')
 
 const raiz = document.getElementById('raiz')

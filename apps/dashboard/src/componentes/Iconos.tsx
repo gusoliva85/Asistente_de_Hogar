@@ -153,6 +153,26 @@ export const IconoViaje = (p: PropsIcono) => (
   </Trazo>
 )
 
+export const IconoSol = (p: PropsIcono) => (
+  <Trazo grosor={2} {...p}>
+    <circle cx="12" cy="12" r="4.4" />
+    <path d="M12 2.5v2.4" />
+    <path d="M12 19.1v2.4" />
+    <path d="M2.5 12h2.4" />
+    <path d="M19.1 12h2.4" />
+    <path d="m5.3 5.3 1.7 1.7" />
+    <path d="m17 17 1.7 1.7" />
+    <path d="m18.7 5.3-1.7 1.7" />
+    <path d="m7 17-1.7 1.7" />
+  </Trazo>
+)
+
+export const IconoLuna = (p: PropsIcono) => (
+  <Trazo grosor={2} {...p}>
+    <path d="M20.5 14.3A8.8 8.8 0 0 1 9.7 3.5a8.8 8.8 0 1 0 10.8 10.8Z" />
+  </Trazo>
+)
+
 export const IconoTilde = ({ tamano = 9 }: PropsIcono) => (
   <svg
     width={tamano}

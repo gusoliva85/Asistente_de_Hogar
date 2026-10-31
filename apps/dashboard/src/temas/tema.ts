@@ -54,3 +54,68 @@ export function aplicarRendimiento(reducido: boolean): void {
     delete document.documentElement.dataset.rendimiento
   }
 }
+
+/* ── Luz: claro u oscuro ────────────────────────────────────────────────────
+   Es una dimensión aparte del tema. Lavanda y Menta tienen cada uno su
+   versión de noche, así que elegir el color y elegir la hora del día son
+   decisiones distintas.
+   ─────────────────────────────────────────────────────────────────────── */
+
+export type Luz = 'claro' | 'oscuro'
+export type ModoLuz = 'auto' | Luz
+
+const CLAVE_LUZ = 'jarvis.luz'
+
+/** De 20:00 a 06:59 la pantalla va oscura. */
+export const HORA_OSCURO = 20
+export const HORA_CLARO = 7
+
+export function luzPorHorario(ahora: Date): Luz {
+  const h = ahora.getHours()
+  return h >= HORA_OSCURO || h < HORA_CLARO ? 'oscuro' : 'claro'
+}
+
+interface EleccionGuardada {
+  modo: ModoLuz
+  /** Día en que se eligió, en formato local AAAA-MM-DD. */
+  dia: string
+}
+
+function hoy(ahora: Date): string {
+  return `${ahora.getFullYear()}-${ahora.getMonth() + 1}-${ahora.getDate()}`
+}
+
+export function leerModoLuz(ahora: Date): ModoLuz {
+  try {
+    const crudo = localStorage.getItem(CLAVE_LUZ)
+    if (!crudo) return 'auto'
+    const guardada = JSON.parse(crudo) as EleccionGuardada
+    // La elección a mano vale hasta el día siguiente. Si alguien puso la
+    // pantalla en claro a las once de la noche, no queremos que siga
+    // clara para siempre: al otro día vuelve a decidir el horario.
+    if (guardada.dia !== hoy(ahora)) return 'auto'
+    return guardada.modo === 'claro' || guardada.modo === 'oscuro' ? guardada.modo : 'auto'
+  } catch {
+    return 'auto'
+  }
+}
+
+export function guardarModoLuz(modo: ModoLuz, ahora: Date): void {
+  try {
+    if (modo === 'auto') localStorage.removeItem(CLAVE_LUZ)
+    else localStorage.setItem(CLAVE_LUZ, JSON.stringify({ modo, dia: hoy(ahora) }))
+  } catch {
+    /* almacenamiento bloqueado */
+  }
+}
+
+export function resolverLuz(modo: ModoLuz, ahora: Date): Luz {
+  return modo === 'auto' ? luzPorHorario(ahora) : modo
+}
+
+export function aplicarLuz(luz: Luz): void {
+  document.documentElement.dataset.luz = luz
+  document
+    .querySelector('meta[name="color-scheme"]')
+    ?.setAttribute('content', luz === 'oscuro' ? 'dark' : 'light')
+}

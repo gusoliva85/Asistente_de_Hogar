@@ -75,6 +75,7 @@
   --emergencia: linear-gradient(140deg, #e05a5a, #b82d2d);
   --emergencia-plano: #b82d2d;
 
+  --blanco-control: #ffffff;
   --vidrio: rgba(255, 255, 255, 0.7);
   --vidrio-borde: rgba(255, 255, 255, 0.92);
   --vidrio-desenfoque: blur(22px) saturate(140%);
@@ -160,6 +161,7 @@
   --emergencia: linear-gradient(140deg, #e0533d, #c23d28);
   --emergencia-plano: #c23d28;
 
+  --blanco-control: #ffffff;
   --vidrio: rgba(255, 255, 255, 0.72);
   --vidrio-borde: rgba(255, 255, 255, 0.92);
   --vidrio-desenfoque: blur(22px) saturate(140%);
@@ -212,6 +214,137 @@
   --realce-fila: rgba(14, 140, 119, 0.07);
 }
 
+
+/* ── Variantes oscuras ──────────────────────────────────────────────────────
+   La luz es una dimensión aparte del tema: `data-luz="oscuro"` sobre
+   `data-tema`. Así Lavanda y Menta tienen cada uno su versión de noche y
+   nadie tiene que elegir entre el color que prefiere y la hora del día.
+
+   Estas reglas van después de las claras a propósito: sobrescriben solo
+   los tokens que cambian. Las formas, los radios y los tiempos son los
+   mismos; de noche cambia la luz, no el diseño.
+   ─────────────────────────────────────────────────────────────────────── */
+
+[data-luz='oscuro'] {
+  color-scheme: dark;
+
+  /* El vidrio deja de ser niebla blanca y pasa a ser vidrio ahumado */
+  --vidrio: rgba(255, 255, 255, 0.055);
+  --vidrio-borde: rgba(255, 255, 255, 0.1);
+  --brillo-interior: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --brillo-interior-boton: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --lustre: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 42%);
+  --blanco-control: #e9e6f5;
+
+  /* De noche la sombra no se ve: lo que separa las superficies es el
+     borde de luz, no la oscuridad debajo. Las sombras se achican y se
+     profundizan para no ensuciar. */
+  --sombra-tarjeta:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 22px rgba(0, 0, 0, 0.3);
+  --sombra-elevada:
+    0 2px 6px rgba(0, 0, 0, 0.36),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+  --sombra-hundida: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+
+  /* El grano se nota mucho más sobre fondo oscuro */
+  --grano-opacidad: 0.03;
+  --grano-opacidad-oscuro: 0.05;
+}
+
+[data-tema='lavanda'][data-luz='oscuro'] {
+  --fondo-base: #131126;
+  --fondo-aurora-1: radial-gradient(680px 420px at 0% -10%, rgba(123, 116, 224, 0.22), transparent 62%);
+  --fondo-aurora-2: radial-gradient(620px 420px at 100% 108%, rgba(200, 110, 150, 0.16), transparent 58%);
+
+  --texto: #efecfa;
+  --texto-2: #b0abcf;
+  --texto-3: #817ca2;
+
+  /* Más claro que en el tema claro: sobre fondo oscuro el acento tiene
+     que aclararse para mantener el contraste de 4,5:1 */
+  --acento: #9a93ff;
+  --acento-degradado: linear-gradient(140deg, #6e68e0, #9a93ff);
+  --acento-contraste: #15122b;
+
+  --confirmacion: #5fcb9f;
+  --recordatorio: #e8ab63;
+  --emergencia: linear-gradient(140deg, #e8705f, #c43a34);
+  --emergencia-plano: #ff8b7d;
+
+  --panel-oscuro: linear-gradient(142deg, #241f4a 0%, #16142c 58%, #28203c 100%);
+  --cielo: linear-gradient(170deg, #4a5392 0%, #5f5496 52%, #8a6070 100%);
+  --nube-desde: #cfcae8;
+  --nube-hasta: #7e78a8;
+  --hora-degradado: linear-gradient(176deg, #ffffff 14%, #9a93e8 96%);
+
+  --dorado: linear-gradient(145deg, #e0ad5b, #b57a26);
+  --dorado-halo: 0 5px 14px rgba(181, 122, 38, 0.45);
+  --verde: linear-gradient(145deg, #3fa87c, #1f7a58);
+  --verde-halo: 0 5px 14px rgba(31, 122, 88, 0.4);
+  --ambar: linear-gradient(145deg, #d99a4c, #a66526);
+  --ambar-halo: 0 7px 18px rgba(166, 101, 38, 0.42);
+  --ambar-fondo: linear-gradient(140deg, rgba(118, 82, 44, 0.42), rgba(255, 255, 255, 0.04));
+  --ambar-texto: #e8b87a;
+  --panel-musica: linear-gradient(140deg, #2a2352 0%, #16142c 60%, #3a2146 100%);
+
+  --en-vivo: #4fc48d;
+  --en-vivo-texto: #7fd9ad;
+  --en-vivo-fondo: linear-gradient(180deg, rgba(31, 170, 110, 0.2), rgba(31, 140, 95, 0.1));
+
+  --halo-acento: 0 8px 24px rgba(110, 104, 224, 0.4);
+  --halo-acento-fuerte: 0 12px 32px rgba(110, 104, 224, 0.55);
+  --halo-emergencia: 0 10px 28px rgba(196, 58, 52, 0.45);
+  --realce-fila: rgba(154, 147, 255, 0.11);
+  --viaje: var(--acento);
+}
+
+[data-tema='menta'][data-luz='oscuro'] {
+  --fondo-base: #0e1b1a;
+  --fondo-aurora-1: radial-gradient(720px 420px at 2% -8%, rgba(14, 160, 135, 0.18), transparent 62%);
+  --fondo-aurora-2: radial-gradient(640px 440px at 100% 104%, rgba(70, 120, 180, 0.15), transparent 58%);
+
+  --texto: #e8f3f0;
+  --texto-2: #a3bab4;
+  --texto-3: #74908a;
+
+  --acento: #35c8ab;
+  --acento-oscuro: #1f9d85;
+  --acento-degradado: linear-gradient(140deg, #14a88e, #35c8ab);
+  --acento-contraste: #06201c;
+
+  --confirmacion: #4fd0ab;
+  --recordatorio: #e0a85f;
+  --emergencia: linear-gradient(140deg, #e8705f, #c4402c);
+  --emergencia-plano: #ff8f7a;
+
+  --panel-oscuro: linear-gradient(142deg, #12302a 0%, #0b1f1c 58%, #123530 100%);
+  --cielo: linear-gradient(165deg, rgba(60, 100, 140, 0.4), rgba(14, 140, 119, 0.22));
+  --nube-desde: #c5d8d4;
+  --nube-hasta: #6f8c88;
+  --hora-degradado: linear-gradient(176deg, #ffffff 14%, #4fc9b0 96%);
+
+  --dorado: linear-gradient(145deg, #d9ab5e, #a87a28);
+  --dorado-halo: 0 5px 14px rgba(168, 122, 40, 0.42);
+  --verde: linear-gradient(145deg, #17a98f, #0a6a5b);
+  --verde-halo: 0 5px 14px rgba(10, 106, 91, 0.42);
+  --ambar: linear-gradient(145deg, #d49a52, #9e6424);
+  --ambar-halo: 0 7px 18px rgba(158, 100, 36, 0.4);
+  --ambar-fondo: linear-gradient(140deg, rgba(110, 80, 40, 0.38), rgba(255, 255, 255, 0.04));
+  --ambar-texto: #e2b377;
+  --panel-musica: linear-gradient(140deg, #123029 0%, #0a1d1a 60%, #10333a 100%);
+
+  --en-vivo: #35c8ab;
+  --en-vivo-texto: #6fd9c2;
+  --en-vivo-fondo: linear-gradient(180deg, rgba(20, 168, 142, 0.2), rgba(14, 140, 119, 0.1));
+
+  --halo-acento: 0 8px 24px rgba(20, 168, 142, 0.38);
+  --halo-acento-fuerte: 0 12px 32px rgba(20, 168, 142, 0.5);
+  --halo-emergencia: 0 10px 28px rgba(196, 64, 44, 0.42);
+  --realce-fila: rgba(53, 200, 171, 0.1);
+  --viaje: #74aee0;
+}
+
 /* ── Degradación para la Raspberry Pi 3 ─────────────────────────────────────
    backdrop-filter con desenfoque es caro en GPU. Si F1.10 muestra que no
    rinde, se activa este atributo en <html> y el vidrio pasa a ser color
@@ -234,4 +367,8 @@
 
 [data-tema='menta'][data-rendimiento='reducido'] {
   --vidrio: rgba(255, 255, 255, 0.9);
+}
+
+[data-luz='oscuro'][data-rendimiento='reducido'] {
+  --vidrio: rgba(255, 255, 255, 0.09);
 }

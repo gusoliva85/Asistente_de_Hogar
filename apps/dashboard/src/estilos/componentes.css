@@ -588,7 +588,7 @@
   align-items: center;
   justify-content: center;
   color: var(--acento-contraste);
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--vidrio);
   box-shadow:
     inset 0 0 0 2px var(--realce-fila),
     0 1px 2px rgba(0, 0, 0, 0.06);
@@ -726,7 +726,7 @@
   width: 19px;
   height: 19px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--blanco-control);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
   transition: transform var(--transicion-boton);
 }
@@ -845,7 +845,7 @@
   align-items: center;
   justify-content: center;
   color: var(--texto);
-  background: #fff;
+  background: var(--blanco-control);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
 }
 
@@ -940,6 +940,9 @@
   font-size: 19px;
   font-weight: var(--peso-extra);
   letter-spacing: 0.01em;
+  /* El botón de emergencia no cambia con la luz: es rojo con texto
+     blanco siempre, en los cuatro modos. Es lo último que debería
+     depender de una preferencia. */
   color: #fff;
   background: var(--emergencia);
   box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);

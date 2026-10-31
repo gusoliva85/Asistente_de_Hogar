@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { Principal } from './pantallas/Principal'
 import { estadoFicticio, estadoVacio } from './datos/ficticios'
-import { usarTema } from './temas/usarTema'
+import { usarLuz, usarTema } from './temas/usarTema'
+import { usarReloj } from './util/usarReloj'
 
 /**
  * Fase 1: los datos son ficticios pero tienen la forma exacta que va a
@@ -12,12 +13,23 @@ import { usarTema } from './temas/usarTema'
  * vacíos en vez de suponerlos (F1.6).
  */
 export function App() {
+  const ahora = usarReloj()
   const { alternar } = usarTema()
+  const { luz, alternarLuz, automatico } = usarLuz(ahora)
 
   const estado = useMemo(() => {
     const vacio = new URLSearchParams(location.search).get('datos') === 'vacio'
     return vacio ? estadoVacio() : estadoFicticio()
   }, [])
 
-  return <Principal estado={estado} onAjustes={alternar} />
+  return (
+    <Principal
+      estado={estado}
+      ahora={ahora}
+      onAjustes={alternar}
+      luz={luz}
+      automatico={automatico}
+      onLuz={alternarLuz}
+    />
+  )
 }

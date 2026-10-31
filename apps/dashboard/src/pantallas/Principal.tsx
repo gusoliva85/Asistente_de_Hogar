@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import type { EstadoPantalla } from '../datos/tipos'
 import { Encabezado } from '../componentes/Encabezado'
 import { PanelPrincipal } from '../componentes/PanelPrincipal'
@@ -9,51 +8,31 @@ import { TarjetaCasa } from '../componentes/TarjetaCasa'
 import { BarraMusica } from '../componentes/BarraMusica'
 import { BarraVoz } from '../componentes/BarraVoz'
 import { Grano } from '../componentes/Grano'
-
-/**
- * Reloj de la pantalla.
- *
- * Un solo temporizador para toda la interfaz: cada componente que
- * quisiera su propio `setInterval` sería un despertar más por minuto en
- * una Pi 3 que tiene que durar encendida meses.
- *
- * El primer salto se alinea con el segundo 0 del minuto siguiente, para
- * que la hora no cambie con medio minuto de retraso.
- */
-function usarReloj(): Date {
-  const [ahora, setAhora] = useState(() => new Date())
-
-  useEffect(() => {
-    let intervalo: number | undefined
-    const primero = window.setTimeout(
-      () => {
-        setAhora(new Date())
-        intervalo = window.setInterval(() => setAhora(new Date()), 60_000)
-      },
-      60_000 - (Date.now() % 60_000),
-    )
-    return () => {
-      window.clearTimeout(primero)
-      if (intervalo !== undefined) window.clearInterval(intervalo)
-    }
-  }, [])
-
-  return ahora
-}
+import type { Luz } from '../temas/tema'
 
 interface Props {
   estado: EstadoPantalla
+  ahora: Date
   onAjustes: () => void
+  luz: Luz
+  automatico: boolean
+  onLuz: () => void
 }
 
-export function Principal({ estado, onAjustes }: Props) {
-  const ahora = usarReloj()
+export function Principal({ estado, ahora, onAjustes, luz, automatico, onLuz }: Props) {
 
   return (
     <div className="pantalla">
       <Grano />
 
-      <Encabezado hogar={estado.hogar} conexion={estado.conexion} onAjustes={onAjustes} />
+      <Encabezado
+        hogar={estado.hogar}
+        conexion={estado.conexion}
+        onAjustes={onAjustes}
+        luz={luz}
+        automatico={automatico}
+        onLuz={onLuz}
+      />
 
       <div className="pantalla__cuerpo">
         <div className="columna">
