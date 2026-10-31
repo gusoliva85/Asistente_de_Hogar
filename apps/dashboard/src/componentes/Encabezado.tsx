@@ -49,19 +49,27 @@ export function Encabezado({ hogar, conexion, luz, automatico, onLuz }: Props) {
           </span>
         )}
 
-        <span className={`pastilla${caido ? ' pastilla--alerta' : ''}`}>
-          {caido ? <IconoSinConexion tamano={13} /> : <IconoConexion tamano={13} />}
+        {/* El ícono lleva el color —verde conectado, rojo y tachado sin
+            conexión— y el texto queda en gris. Así el estado se ve de
+            lejos sin que la pastilla grite. */}
+        <span className="pastilla">
+          <span className={`pastilla__senal pastilla__senal--${caido ? 'mala' : 'buena'}`}>
+            {caido ? <IconoSinConexion tamano={15} /> : <IconoConexion tamano={15} />}
+          </span>
           {TEXTO_CONEXION[conexion]}
         </span>
 
+        {/* Con texto y no solo ícono: en una pantalla de 7" un botón de
+            30 px no se acierta con el dedo, y un sol suelto no dice si
+            enciende o apaga. Dice a qué modo te lleva. */}
         <button
           type="button"
-          className="boton-icono"
+          className="boton-modo"
           onClick={onLuz}
-          aria-label={luz === 'oscuro' ? 'Pasar a modo claro' : 'Pasar a modo oscuro'}
-          title={automatico ? 'La decide el horario' : 'Elegido a mano, hasta mañana'}
+          title={automatico ? 'Ahora la decide el horario' : 'Elegido a mano, hasta mañana'}
         >
-          {luz === 'oscuro' ? <IconoSol tamano={15} /> : <IconoLuna tamano={15} />}
+          {luz === 'oscuro' ? <IconoSol tamano={17} /> : <IconoLuna tamano={17} />}
+          {luz === 'oscuro' ? 'Modo claro' : 'Modo oscuro'}
         </button>
 
       </div>

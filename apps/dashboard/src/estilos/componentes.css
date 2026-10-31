@@ -3,7 +3,11 @@
 
    Medidas tomadas de documentacion/mockups/project/Principal.dc.html.
    La suma vertical tiene que dar 600 exactos:
-   22 + 30 + 12 + 406 + 12 + 96 + 22 = 600.
+   22 + 44 + 12 + 392 + 12 + 96 + 22 = 600.
+
+   El encabezado creció de 30 a 44 px para que el botón de modo llegue
+   al área táctil mínima. Los 14 px salen de las tarjetas de agenda y
+   compras, que iban sobradas de alto.
 
    Ningún color literal: todo sale de tokens.css.
    ─────────────────────────────────────────────────────────────────────── */
@@ -25,7 +29,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
   gap: 12px;
-  height: 406px;
+  height: 392px;
 }
 
 .columna {
@@ -39,7 +43,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  height: 208px;
+  height: 194px;
 }
 
 .grano {
@@ -57,7 +61,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  height: 30px;
+  height: 44px;
 }
 
 .encabezado__izquierda,
@@ -73,9 +77,9 @@
 }
 
 .marca {
-  width: 30px;
-  height: 30px;
-  border-radius: 11px;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,7 +93,7 @@
 
 .encabezado__saludo {
   margin: 0;
-  font-size: 19px;
+  font-size: 21px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.025em;
   white-space: nowrap;
@@ -98,11 +102,11 @@
 .pastilla {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 13px;
   font-weight: var(--peso-semi);
   color: var(--texto-2);
-  padding: 5px 12px;
+  padding: 8px 14px;
   border-radius: var(--radio-pastilla);
   background: var(--vidrio);
   box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -117,10 +121,6 @@
 
 .pastilla--viaje {
   color: var(--viaje);
-}
-
-.pastilla--alerta {
-  color: var(--emergencia-plano);
 }
 
 .punto-vivo {
@@ -143,18 +143,40 @@
   }
 }
 
-.boton-icono {
-  width: 30px;
-  height: 30px;
-  min-height: 30px;
-  border-radius: 11px;
+/* Área táctil mínima: 44 px. Es una pantalla de 7" que se opera con el
+   dedo, no con el mouse. */
+.boton-modo {
+  height: 44px;
+  padding: 0 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 9px;
+  border-radius: var(--radio-pastilla);
+  font-size: 13.5px;
+  font-weight: var(--peso-semi);
   color: var(--texto-2);
   background: var(--vidrio);
-  box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--brillo-interior), var(--sombra-tarjeta);
   flex: none;
+  white-space: nowrap;
+}
+
+.boton-modo:hover {
+  color: var(--texto);
+  box-shadow: var(--brillo-interior), var(--sombra-elevada);
+}
+
+/* La señal lleva el color; el texto que la acompaña queda en gris */
+.pastilla__senal {
+  display: flex;
+}
+
+.pastilla__senal--buena {
+  color: var(--en-vivo);
+}
+
+.pastilla__senal--mala {
+  color: var(--emergencia-plano);
 }
 
 /* ── Panel oscuro ───────────────────────────────────────────────────────── */
