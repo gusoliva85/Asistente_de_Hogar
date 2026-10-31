@@ -34,10 +34,28 @@ Si la especificación y el roadmap se contradicen, manda la especificación.
 
 ## Estado
 
-**Fase 0 cerrada** (31/10/2026), salvo HTTPS. El despliegue vive en `/opt/jarvis` en el VPS, clonado de <https://github.com/gusoliva85/Asistente_de_Hogar> (privado) con una llave de despliegue de solo lectura. Ciclo de actualización: commit y push desde la PC, `git pull && docker compose up -d` en el servidor. Verificado desde fuera: `http://13.140.36.93/health` devuelve 200 con `{"estado":"ok"}`, y la raíz sirve la página de prueba con las cabeceras de seguridad puestas.
+> **El estado del proyecto vive en [documentacion/ROADMAP.md](documentacion/ROADMAP.md), no acá.** Cada tarea es una casilla con fecha, y la sección «Dónde estamos» resume en qué fase estamos. **Al terminar cualquier tarea hay que marcarla ahí, en el mismo momento**, junto con el commit que la cierra. Una tarea se marca `[x]` solo cuando se verificó contra la realidad —una salida de comando, una respuesta HTTP, algo visible en pantalla—, nunca porque el código esté escrito. Si queda a medias, se abre en subtareas y se marca solo lo hecho.
+>
+> Esta sección guarda únicamente los datos del entorno que no se deducen del código.
 
-**Falta para cerrar F0 del todo:** un dominio apuntando a `13.140.36.93`. Sin él Caddy sirve por HTTP plano. Al agregarlo: poner `DOMINIO` en el `.env` y, si se quieren avisos de vencimiento, `tls <correo>` dentro del bloque del sitio del `Caddyfile` — **no** un bloque global con `email`, que aborta si la variable viene vacía.
+**Fase 0 casi terminada.** Falta el dominio (y con él el HTTPS), las copias de seguridad de Contabo, las actualizaciones automáticas y dejar de correr los servicios como `root`. Detalle y criterios de cierre, en el roadmap.
 
-**VPS:** `vmi3573476`, **Ubuntu 24.04.5 LTS x86_64**, 7,8 GB RAM, 96 GB disco, sin swap. Reinstalado limpio el 31/10/2026. Acceso **solo por llave SSH** (`~/.ssh/jarvis_deploy` en la PC del usuario, alias `jarvis-vps`): no hay contraseña de root utilizable. Contraseña apagada en `/etc/ssh/sshd_config.d/00-jarvis.conf` — ojo, en SSH **gana el archivo de número más bajo**, no el último, por eso el `00`. `ufw` activo: 22, 80 y 443, el resto denegado. **Docker se saltea `ufw`**: agregar `ports:` a un servicio lo expone a internet aunque el cortafuegos lo niegue. **No responde ICMP** (Contabo lo filtra: un `ping` sin respuesta no significa caído). **Latencia ~165 ms** desde Buenos Aires — presupuesto a respetar en el camino de voz: palabra de activación siempre en el dispositivo, y audio en streaming hacia el servidor en vez de esperar a que la frase termine.
+**Despliegue.** Vive en `/opt/jarvis` en el VPS, clonado de <https://github.com/gusoliva85/Asistente_de_Hogar> (privado, cuenta `gusoliva85`) con una llave de despliegue de solo lectura. Ciclo de actualización: commit y push desde la PC, después `cd /opt/jarvis && git pull && docker compose up -d` en el servidor. El `.env` real se genera en el servidor y nunca se versiona.
 
-**Pendientes que dependen del usuario:** versión de Ubuntu del VPS (`cat /etc/os-release`) y dominio (la IP ya la tenemos; va al `.env`, nunca al repositorio).
+**VPS.** `vmi3573476` en `13.140.36.93`. **Ubuntu 24.04.5 LTS x86_64**, 7,8 GB RAM, 96 GB disco, sin swap. Reinstalado limpio el 31/10/2026.
+
+- Acceso **solo por llave SSH**: `~/.ssh/jarvis_deploy` en la PC del usuario, alias `jarvis-vps`. No hay contraseña de root utilizable.
+- El apagado de contraseñas está en `/etc/ssh/sshd_config.d/00-jarvis.conf`. **En SSH gana el archivo de número más bajo, no el último** — por eso el `00`: hay un `50-cloud-init.conf` que habilita contraseñas y lo pisaría.
+- `ufw` activo: 22, 80 y 443; el resto denegado. **Docker se saltea `ufw`**: agregar `ports:` a un servicio lo expone a internet aunque el cortafuegos lo niegue.
+- **No responde ICMP** (Contabo lo filtra): un `ping` sin respuesta no significa que esté caído.
+- **Latencia ~165 ms** desde Buenos Aires. Es el presupuesto a respetar en el camino de voz: palabra de activación siempre en el dispositivo, y audio en streaming hacia el servidor en vez de esperar a que la frase termine.
+- Caddy: **no** usar un bloque global con `email`, que aborta si la variable viene vacía. Cuando haya dominio, va `tls <correo>` dentro del bloque del sitio.
+
+**Raspberry.** Host `jarvis`, usuario `jarvis_gus`, accesible por SSH en la LAN. Raspberry Pi OS sobre **Debian 13 (Trixie)**, **aarch64**.
+
+- El driver KMS (`dtoverlay=vc4-kms-v3d`) **ignora las directivas `hdmi_*` de `config.txt`**. La resolución se fuerza con `video=HDMI-A-1:1024x600M@60D` en `cmdline.txt`.
+- zram ya viene activo de fábrica por `systemd-zram-generator` (zstd, ~900 MB). **No instalar `zram-tools`**: choca con él y deja un servicio en estado `failed`.
+- Ser de 64 bits pesa más que `armhf` en 1 GB de RAM. Si Chromium en kiosco se arrastra en la Fase 1, regrabar en 32 bits libera 100-200 MB.
+- En reposo: 156 MB usados de 905, 49 °C, 2,8 GB de disco.
+
+**Pendiente que depende del usuario:** conseguir un dominio y apuntarlo a `13.140.36.93`. Bloquea el HTTPS, y el HTTPS bloquea el micrófono del navegador en la Fase 4.

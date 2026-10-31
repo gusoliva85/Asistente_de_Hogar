@@ -41,8 +41,8 @@ Completá `.env` **en el servidor**. Los valores que no pueden quedar vacíos:
 | `POSTGRES_PASSWORD` | `openssl rand -base64 36` |
 | `JWT_SECRET` | `openssl rand -hex 32` |
 | `DATABASE_URL` | la misma contraseña que pusiste arriba |
-| `DOMINIO` | tu dominio, o `:80` para probar por IP sin HTTPS |
-| `EMAIL_CERTIFICADO` | tu correo, para los avisos de Let's Encrypt |
+| `DOMINIO` | tu dominio. **Dejalo vacío para servir por HTTP contra la IP**, sin HTTPS |
+| `EMAIL_CERTIFICADO` | opcional, y solo si hay dominio. Hoy no se usa |
 
 **`.env` no se versiona nunca.** El `.gitignore` ya lo bloquea.
 
@@ -56,10 +56,22 @@ docker compose ps
 ### 3. Comprobar
 
 ```bash
-curl -fsS https://TU_DOMINIO/health
+curl -fsS http://localhost/health
 ```
 
-Tiene que responder `{"estado":"ok", ...}`. Y en el navegador, `https://TU_DOMINIO` muestra la página de prueba con el candado cerrado.
+Tiene que responder `{"estado":"ok", ...}`, y la raíz debe servir la página de prueba. Con dominio configurado, lo mismo por `https://TU_DOMINIO` y con el candado cerrado.
+
+### 4. Actualizar lo que ya está desplegado
+
+El despliegue vive en `/opt/jarvis` en el VPS, clonado del repositorio con una llave de despliegue de solo lectura:
+
+```bash
+cd /opt/jarvis
+git pull
+docker compose up -d
+```
+
+`up -d` recrea solo los contenedores que cambiaron. Los volúmenes —y con ellos la base de datos— no se tocan.
 
 ### Comandos útiles
 
@@ -82,4 +94,6 @@ Están en [`CLAUDE.md`](CLAUDE.md), pero las dos que más condicionan el código
 
 ## Estado
 
-**Fase 0** — infraestructura. La API solo responde `/health`; la interfaz llega en la Fase 1.
+**El avance se lleva en [`documentacion/ROADMAP.md`](documentacion/ROADMAP.md)**, tarea por tarea y con fecha. La sección «Dónde estamos» del roadmap dice en qué fase estamos y qué funciona hoy.
+
+En resumen: **Fase 0**, infraestructura. La API solo responde `/health`; la interfaz llega en la Fase 1.
