@@ -93,7 +93,7 @@
   display: flex;
   align-items: center;
   height: 38px;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: var(--peso-extra);
   letter-spacing: -0.015em;
   color: var(--texto);
@@ -845,15 +845,18 @@
   gap: 14px;
 }
 
+/* El halo se corrió hacia afuera y bajó de intensidad: antes caía justo
+   detrás de la hora y la dejaba sobre un violeta medio, que es el peor
+   fondo posible —ni claro ni oscuro— para cualquier color de texto. */
 .musica__aura {
   position: absolute;
-  top: -160px;
-  right: -120px;
-  width: 460px;
-  height: 420px;
+  top: -240px;
+  right: -210px;
+  width: 500px;
+  height: 460px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--acento), transparent 68%);
-  opacity: 0.3;
+  opacity: 0.22;
   pointer-events: none;
   animation: aura 9s ease-in-out infinite;
 }
