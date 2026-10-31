@@ -49,7 +49,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | Fase | Qué es | Estado |
 |---|---|---|
 | **0** | Preparación | **Casi terminada** — solo faltan el dominio (F0.e) y las copias de seguridad de Contabo (F0.d), ambas dependen del usuario |
-| 1 | La pantalla viva | **Casi terminada** — las cuatro pantallas aprobadas, desplegadas y andando en la Pi. Falta medir (F1.10) y dejarlo en arranque automático |
+| 1 | La pantalla viva | **Casi terminada** — las cuatro pantallas aprobadas, desplegadas y andando en la Pi. **F1.10 en curso**: el muestreador corriendo desde el 31/10/2026 a las 17:55. Falta la curva de un día y dejarlo en arranque automático |
 | 2 | Backend y datos reales | Sin empezar |
 | 3 | El celular | Sin empezar |
 | 4 | La voz | Sin empezar |
@@ -279,7 +279,8 @@ Le decís algo enrevesado —«el jueves que viene tengo que llevar el auto al t
 
 ### 💻 Lo que programo yo
 
-- [ ] **F6.1 — Integrar el clima**, con caché en el servidor y pronóstico por hora.
+- [ ] **F6.1 — Integrar el clima**, con caché en el servidor y pronóstico por hora. **La estación tiene que ser la más próxima posible a donde está cada hogar**, no «Buenos Aires» a secas: la provincia es enorme y un pronóstico de La Plata no sirve en Caballito. Se elige el proveedor comparando qué estación real usa para CABA y a cuántos kilómetros queda, no por la marca.
+- [ ] **F6.1b — Elegir el proveedor del clima con criterio escrito.** Comparar al menos tres por: estación más cercana a CABA, pronóstico por hora, límite de consultas gratis, y si entrega un código de condición estable con el que mapear el ícono. **El Servicio Meteorológico Nacional entra en la comparación**, por ser la fuente local.
 - [ ] **F6.2 — Integrar el tiempo de viaje**, con destino configurable.
 - [ ] **F6.3 — Sincronizar el calendario externo** sin duplicar eventos, respetando de quién es cada agenda.
 - [ ] **F6.4 — Notificaciones push**: registro del dispositivo, envío desde el servidor, y manejo del caso en que el navegador revoca el permiso.
@@ -287,6 +288,7 @@ Le decís algo enrevesado —«el jueves que viene tengo que llevar el auto al t
 - [ ] **F6.6 — Recordatorios que avisan de verdad**: pantalla, voz y celular, con confirmación. Un recordatorio de medicación registra que se avisó y que el usuario confirmó; **nunca afirma que el remedio fue tomado**.
 - [ ] **F6.7 — Registro consultable.** «Jarvis, ¿qué hiciste hoy?» devuelve la lista real de acciones con su resultado. **Alexa no ofrece nada así**, y sale casi gratis porque la auditoría ya existe desde la Fase 2.
 - [ ] **F6.8 — Memoria editable.** Una vista donde ver y borrar lo que el asistente aprendió de uno. Alexa es una caja negra; esto es lo contrario.
+- [ ] **F6.10 — Reemplazar los íconos del clima por un juego animado ya hecho.** Hoy son SVG dibujados a mano por mí, y se nota: costaron tres rondas de correcciones y aun así no tienen la calidad de un juego profesional. Hay que adoptar uno externo, **animado o en 3D**, y mapear cada código de condición del proveedor de F6.1b a su ícono. Requisitos: licencia que permita usarlo, peso razonable para una Pi 3 —un Lottie pesado la ahoga, hay que medirlo— y que tenga variantes de día y de noche. **Pendiente: Gus tiene que pasarme la página de donde quiere sacarlos**; la mencionó el 31/10/2026 pero no quedó el link.
 - [ ] **F6.9 — Montar la pantalla definitiva**: instalarla en la carcasa, ajustar resolución, calibrar el táctil y revisar el diseño en el tamaño físico real.
 
 ### ✅ Cómo sabemos que terminó
@@ -393,6 +395,16 @@ Decís «Jarvis, poné De música ligera de Soda Stereo» y **suena esa canción
 - [ ] **F9.11 — Rutinas en lenguaje natural.** «Cuando diga buenas noches, apagá las luces.» Creadas hablando, no en un menú.
 - [ ] **F9.12 — Control local como respaldo.** Claves locales y control directo desde la Raspberry: inmediato en vez de uno a tres segundos, y **las luces siguen funcionando aunque se caiga Internet**.
 
+### 🔎 Más allá de Tuya — investigación pendiente
+
+> **Pedido de Gus, 31/10/2026:** que JARVIS llegue a **todo lo que tenga Bluetooth o Wi-Fi** en la casa —pulseras, relojes, aspiradoras, luces, lo que aparezca—, no solo a lo que hable Tuya. No hay plan todavía: hay que investigarlo. Estas tareas son ese trabajo, y van **después** de que Tuya funcione, porque Tuya es lo que ya está comprado y en uso.
+
+- [ ] **F9.13 — Inventario real de las dos casas.** Recorrer cada hogar y listar qué hay con Bluetooth o Wi-Fi, con marca y modelo exactos. **Primero esto**: sin saber qué dispositivos existen de verdad, cualquier investigación de protocolos es teoría.
+- [ ] **F9.14 — Estudiar los caminos de integración y elegir.** Las opciones realistas son Matter (el estándar al que están migrando casi todos), Home Assistant usado como biblioteca de integraciones detrás de nuestra API, BLE directo desde la Raspberry, y las nubes propietarias de cada marca. Hay que escribir qué cubre cada uno **de los dispositivos de F9.13**, qué cuesta y qué deja afuera. El resultado es una decisión argumentada, no un listado.
+- [ ] **F9.15 — Medir qué aguanta la Raspberry.** El Bluetooth de la Pi 3 es uno solo y ya lo quiere la música (Fase 8). Mantener conexiones permanentes con varias pulseras **y** reproducir audio por el mismo radio es, probablemente, pedirle demasiado. Hay que medirlo antes de prometer nada, y la respuesta puede ser un segundo adaptador USB.
+- [ ] **F9.16 — Pulseras y relojes, con cuidado especial.** Son los únicos de la lista que tocan la salud: pulsaciones, sueño, caídas. **Cruza con la Fase 7 y con la detección de caídas de la Fase 11**, así que hereda su regla más dura: una emergencia no puede depender de que una pulsera haya sincronizado bien. Sirven para acompañar y para avisar, **nunca como único detector**. También son datos de salud de la madre de Gus: entran en el aislamiento entre hogares como todo lo demás, y antes de guardarlos hay que decidir qué se guarda y por cuánto tiempo.
+- [ ] **F9.17 — Que el adaptador de F9.2 aguante lo que salga de acá.** Si la investigación termina en Matter o en Home Assistant, tiene que entrar como una implementación más al lado de Tuya, sin tocar la lógica ni la interfaz. Si no entra, el adaptador estaba mal pensado y se corrige acá.
+
 ### ✅ Cómo sabemos que terminó
 
 Decís «apagá las luces del living» y se apagan. «Mandá la aspiradora a limpiar» y arranca. Desenchufás el módem y las luces **siguen respondiendo**. Y si un dispositivo está desconectado, lo dice en vez de fingir.
@@ -435,7 +447,7 @@ Nada de esto es necesario para que el proyecto sea un éxito.
 - Cámara y visualización, con tapa física —algo que el Echo Show 11 no tiene.
 - Detección de personas.
 - Reconocimiento facial.
-- Detección de caídas, con sus límites medidos.
+- Detección de caídas, con sus límites medidos. **Se cruza con F9.16**: si para entonces hay una pulsera integrada, es una señal más, nunca el único detector.
 - Más sensores: apertura, temperatura, humedad, pérdidas de agua.
 - Modelo local corriendo en el propio dispositivo, si alguna vez hay hardware que lo aguante.
 - Más hogares.
@@ -456,7 +468,7 @@ Nada de esto es necesario para que el proyecto sea un éxito.
 | 6 | Clima, calendario, viaje, notificaciones, registro | panel táctil, carcasa |
 | 7 | **Emergencias probadas y modo acompañamiento** | pulsador, UPS |
 | 8 | Música: YouTube por voz, todo lo demás por Bluetooth | — |
-| 9 | Luces y aspiradora por voz, rutinas habladas | — |
+| 9 | Luces y aspiradora por voz, rutinas habladas, **e investigar todo lo que tenga Bluetooth o Wi-Fi** | — |
 | 10 | Segundo hogar funcionando | segunda Raspberry |
 | 11 | Cámara y ampliaciones | a definir |
 
