@@ -37,7 +37,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | **Ahora (Fase 0)** | microSD 64 GB A1/A2 + fuente 5V 2,5A | ~$27.000 |
 | Fase 4 | Micrófono USB de conferencia + barra de sonido + adaptador USB de audio | ~$57.000 |
 | Fase 6 | Panel táctil 7" 1024×600 + carcasa acrílica | ~$113.000 |
-| Fase 7 | Pulsador de emergencia + caja + UPS | ~$14.000 + UPS |
+| Fase 7 | Pulsador de emergencia + caja + UPS | **Suspendido** (31/10/2026, decisión de Gus) |
 | Fase 10 | Todo de nuevo para el segundo hogar | ~$211.000 |
 
 ---
