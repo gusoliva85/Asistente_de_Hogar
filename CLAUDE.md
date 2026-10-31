@@ -8,9 +8,10 @@ Documentos, en orden de lectura:
 2. [documentacion/ESPECIFICACION_Tecnica_Funcional.md](documentacion/ESPECIFICACION_Tecnica_Funcional.md) — **qué se construye y cómo**: arquitectura, modelo de datos, API, voz, IA, música, domótica, emergencias, seguridad, despliegue y criterios de aceptación.
 3. [documentacion/ROADMAP.md](documentacion/ROADMAP.md) — **en qué orden**: fases 0 a 11, con tareas numeradas y pruebas de cierre por fase.
 4. [documentacion/DECISION_Frontend_Temas.md](documentacion/DECISION_Frontend_Temas.md) — la interfaz.
-5. [documentacion/HARDWARE_Opciones_y_Compras.md](documentacion/HARDWARE_Opciones_y_Compras.md) — **qué comprar**: modelos concretos, precios en Argentina y links.
-6. [documentacion/COMPARATIVA_Alexa.md](documentacion/COMPARATIVA_Alexa.md) — contra qué competimos, qué igualar y dónde ganamos.
-7. [documentacion/LIQUID_AI_Evaluacion.md](documentacion/LIQUID_AI_Evaluacion.md) — el modelo de lenguaje local: qué sirve y cómo entra.
+5. [documentacion/GUIA_Servidor_VPS.md](documentacion/GUIA_Servidor_VPS.md) — **cómo se monta el servidor**, de cero a desplegado, con las trampas que ya nos mordieron.
+6. [documentacion/HARDWARE_Opciones_y_Compras.md](documentacion/HARDWARE_Opciones_y_Compras.md) — **qué comprar**: modelos concretos, precios en Argentina y links.
+7. [documentacion/COMPARATIVA_Alexa.md](documentacion/COMPARATIVA_Alexa.md) — contra qué competimos, qué igualar y dónde ganamos.
+8. [documentacion/LIQUID_AI_Evaluacion.md](documentacion/LIQUID_AI_Evaluacion.md) — el modelo de lenguaje local: qué sirve y cómo entra.
 
 Si la especificación y el roadmap se contradicen, manda la especificación.
 
