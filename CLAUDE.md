@@ -61,6 +61,10 @@ Si la especificación y el roadmap se contradicen, manda la especificación.
 - Ser de 64 bits pesa más que `armhf` en 1 GB de RAM. Si Chromium en kiosco se arrastra en la Fase 1, regrabar en 32 bits libera 100-200 MB.
 - **`backdrop-filter` tumba el renderizador de Chromium** sobre el driver V3D: «Aw, Snap! Error code: 11», con el `dmesg` limpio. El kiosco carga la pantalla con `?vidrio=solido`, que apaga solo el desenfoque y deja vivas las animaciones, el grano y las sombras.
 - **La interfaz se escala sola** a la pantalla (`util/usarEscala.ts`). En el televisor de 1080p se agranda; en el panel de 7" la escala da 1.
+- **`/usr/bin/chromium` no es el navegador**: es un envoltorio que lee `/etc/chromium.d/` y agrega opciones que no elegimos (`--force-renderer-accessibility`, `--enable-gpu-rasterization`, extensiones). El kiosco llama al binario real, `/usr/lib/chromium/chromium`. Para saber qué corre de verdad, `/proc/<pid>/cmdline`, nunca el guion.
+- **El rasterizado va en la CPU.** Por GPU, el driver V3D deja mosaicos viejos sin invalidar y a las pocas horas la pantalla se ensucia con elementos repetidos y superpuestos, sin un solo error en el journal.
+- **Las opciones de Chromium caducan en silencio.** `--disable-features=Translate` dejó de existir en la 156 y la barra de traducción volvió. Lo que no caduca son las políticas: `/etc/chromium/policies/managed/jarvis.json`.
+- **Se calienta.** 79,5 °C a las 6 h, con el bit de CPU capada ya puesto (`vcgencmd get_throttled`). Necesita disipador.
 - El servicio del kiosco usa `PAMName=login`, así que **`MemoryMax` no se aplica**: los procesos quedan fuera de su grupo de control. Se comprueba con `systemctl show jarvis-kiosco -p MemoryCurrent`.
 - En reposo, sin kiosco: 156 MB usados de 905, 49 °C, 2,8 GB de disco.
 

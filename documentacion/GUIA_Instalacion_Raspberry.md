@@ -283,5 +283,8 @@ El servicio y el script llevan comentarios, pero tres cosas merecen aparecer tam
 | Chromium muestra «Aw, Snap! Error code: 11» | El efecto vidrio tumba al driver V3D. La dirección tiene que llevar `?vidrio=solido`. |
 | El kiosco se ve en un cuarto de pantalla | Normal si el televisor es de 1080p: la interfaz se escala sola. En el panel de 7" se ve a tamaño real. |
 | `MemoryCurrent=[not set]` en el servicio | Con `PAMName=login` los procesos quedan fuera del grupo de control, así que `MemoryMax` no se aplica. |
+| Tras horas encendida la pantalla se ensucia: botones repetidos, elementos pisados | Rasterizado por GPU sobre el driver V3D: deja mosaicos viejos sin invalidar. El guion de arranque rasteriza en la CPU. No hay error en el journal, así que no busques uno. |
+| Aparece un cartel «Spanish / English» ofreciendo traducir | Las opciones `--disable-features=Translate` ya no existen con ese nombre en Chromium 156 y no hacen nada. Hace falta `/etc/chromium/policies/managed/jarvis.json` con `TranslateEnabled: false`. |
+| El navegador arranca con opciones que no están en el guion | `/usr/bin/chromium` es un envoltorio que lee `/etc/chromium.d/`. Mirá `/proc/<pid>/cmdline`, que es lo único que dice la verdad. El guion llama al binario real para evitarlo. |
 
 **Un reinicio al azar casi siempre es la fuente, no el software.** Es el error más común y el más difícil de diagnosticar si no se sospecha primero.
