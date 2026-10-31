@@ -202,43 +202,60 @@ export const IconoReproducir = ({ tamano = 14 }: PropsIcono) => (
 )
 
 /* Los tres motivos de emergencia, redibujados sobre las referencias de
-   documentacion/ejemplos/. Van en color y rellenos, no en trazo gris:
-   se eligen de un vistazo y en pánico, cuando nadie lee las etiquetas.
-   Son símbolos genéricos dibujados de cero, no los archivos de muestra. */
+   documentacion/ejemplos/. Son símbolos genéricos dibujados de cero.
+ 
+   Los tres comparten un mismo lenguaje: **relleno plano con contorno
+   oscuro**. Sin esa regla, uno sale relleno y otro en trazo fino y
+   parecen venir de dos juegos distintos. En la figura que cae el
+   contorno se consigue dibujando cada trazo dos veces —primero oscuro y
+   grueso, después el color encima y más fino—, que es la manera de
+   darle contorno a algo hecho con líneas. */
 
-export const IconoCaida = ({ tamano = 32 }: PropsIcono) => (
-  <svg width={tamano} height={tamano} viewBox="0 0 48 48" fill="none" aria-hidden="true">
-    {/* Las rayas de caída: sin ellas la figura parece estar bailando */}
-    <g stroke="#F7C96B" strokeWidth="2.4" strokeLinecap="round" opacity=".6">
-      <path d="M11 4.5v5" />
-      <path d="M24.5 2.5v4" />
-      <path d="M38 6v5.5" />
-      <path d="M43 15v4.5" />
-    </g>
-    <g stroke="#F5C534" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21.4 19.6 28.5 26.4" />
-      <path d="M22.6 16.4 29.4 9.8 32.2 7.2" />
-      <path d="M16.8 18.6 8.8 15.8 6.2 18.8" />
-      <path d="M28.5 26.4 22.6 32.6 16.6 34.8" />
-      <path d="M28.5 26.4 35.4 29.4 34.6 37.2" />
-    </g>
-    <circle cx="18.4" cy="14.6" r="4.4" fill="#F5C534" />
-  </svg>
-)
+const CONTORNO = '#15191E'
+
+export const IconoCaida = ({ tamano = 32 }: PropsIcono) => {
+  const cuerpo = (
+    <>
+      <path d="M20 18.6 28.2 25.8" />
+      <path d="M21.6 15.4 28.8 8.8 31.8 6" />
+      <path d="M16.2 18 8.2 15 5.4 18.4" />
+      <path d="M28.2 25.8 21.8 32.4 15.4 35" />
+      <path d="M28.2 25.8 35.6 29 34.6 37.4" />
+    </>
+  )
+  return (
+    <svg width={tamano} height={tamano} viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      {/* Rayas de caída: sin ellas la figura parece estar bailando */}
+      <g stroke="#F5C534" strokeWidth="2.6" strokeLinecap="round" opacity=".55">
+        <path d="M10 5v5.5" />
+        <path d="M24 2.5v4.5" />
+        <path d="M39 7v5.5" />
+      </g>
+      <g stroke={CONTORNO} strokeWidth="9.4" strokeLinecap="round" strokeLinejoin="round">
+        {cuerpo}
+      </g>
+      <circle cx="17.2" cy="13.8" r="7.1" fill={CONTORNO} />
+      <g stroke="#F5C534" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+        {cuerpo}
+      </g>
+      <circle cx="17.2" cy="13.8" r="4.8" fill="#F5C534" />
+    </svg>
+  )
+}
 
 export const IconoSalud = ({ tamano = 32 }: PropsIcono) => (
   <svg width={tamano} height={tamano} viewBox="0 0 48 48" fill="none" aria-hidden="true">
     <path
       d="M24 41.6S4 28.8 4 16.8A9.8 9.8 0 0 1 24 12.4 9.8 9.8 0 0 1 44 16.8c0 12-20 24.8-20 24.8Z"
       fill="#E8534B"
-      stroke="#15191E"
+      stroke={CONTORNO}
       strokeWidth="2.6"
       strokeLinejoin="round"
     />
     <path
       d="M20.5 14.5h7v5h5v7h-5v5h-7v-5h-5v-7h5Z"
       fill="#DCEBF7"
-      stroke="#15191E"
+      stroke={CONTORNO}
       strokeWidth="2.4"
       strokeLinejoin="round"
     />
@@ -247,15 +264,17 @@ export const IconoSalud = ({ tamano = 32 }: PropsIcono) => (
 
 export const IconoPeligro = ({ tamano = 32 }: PropsIcono) => (
   <svg width={tamano} height={tamano} viewBox="0 0 48 48" fill="none" aria-hidden="true">
+    {/* El borde rojo más fino deja respirar el interior, que es donde
+        vive el signo: con el trazo grueso se lo comía. */}
     <path
-      d="M24 7 43 39.5H5L24 7Z"
+      d="M24 6.4 43.4 40.2H4.6L24 6.4Z"
       fill="#FFFFFF"
       stroke="#E8201B"
-      strokeWidth="6.6"
+      strokeWidth="4.4"
       strokeLinejoin="round"
     />
-    <path d="M24 19v10.4" stroke="#121212" strokeWidth="5" strokeLinecap="round" />
-    <circle cx="24" cy="34.2" r="2.8" fill="#121212" />
+    <path d="M24 18.4v10.2" stroke={CONTORNO} strokeWidth="5.4" strokeLinecap="round" />
+    <circle cx="24" cy="34" r="3" fill={CONTORNO} />
   </svg>
 )
 
