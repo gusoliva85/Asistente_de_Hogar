@@ -133,7 +133,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 - [x] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API. — *31/10/2026. Rejilla de 600 px exactos, con datos ficticios con la forma de la API.*
 - [x] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente. — *31/10/2026. Menta implementado; el selector se saca de la pantalla y vuelve en ajustes (Fase 3). Se suma el modo oscuro, adelantado de F10.2.*
 - [x] **F1.6 — Implementar los estados vacíos y de error.** Lista vacía, agenda vacía, sin conexión, micrófono ausente, cargando. Una interfaz que solo contempla el caso feliz es inservible en una casa real. — *31/10/2026. Agenda, compras, recordatorio, música, micrófono, clima y dispositivos sin respuesta. Se miran con ?datos=vacio.*
-- [ ] **F1.7 — Implementar las otras pantallas de la maqueta:** escucha, emergencia y música, por ahora con datos fijos.
+- [x] **F1.7 — Implementar las otras pantallas de la maqueta:** escucha, emergencia y música, por ahora con datos fijos. — *31/10/2026. Tres pantallas completas, con navegación entre ellas. Aprobadas tras tres rondas de ajustes.*
 - [ ] **F1.8 — Desplegar el frontend** desde Caddy con las cabeceras de caché correctas.
 - [ ] **F1.9 — Configurar el modo kiosco.** Arranque automático a Chromium a pantalla completa, sin cursor ni barras ni diálogos de recuperación. Acá se decide entre `cage` sobre Wayland y Xorg con openbox, según cuál arranque más rápido en 1 GB de RAM.
 - [ ] **F1.10 — Medir el rendimiento real.** Tiempo hasta pantalla pintada, fluidez, memoria de Chromium, temperatura tras una hora. Números, no impresiones.
