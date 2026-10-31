@@ -95,14 +95,19 @@
   white-space: nowrap;
 }
 
-.pastilla {
+/* Las pastillas y el botón de modo comparten caja: mismo alto, mismo
+   relleno, mismo radio. Si difieren aunque sea dos píxeles, la fila de
+   arriba se ve desprolija. */
+.pastilla,
+.boton-modo {
+  height: 28px;
   display: flex;
   align-items: center;
   gap: 7px;
+  padding: 0 13px;
   font-size: 12px;
   font-weight: var(--peso-semi);
   color: var(--texto-2);
-  padding: 5px 12px;
   border-radius: var(--radio-pastilla);
   background: var(--vidrio);
   box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -139,25 +144,12 @@
   }
 }
 
-/* Del alto del encabezado, como las pastillas que tiene al lado. Queda
-   por debajo del área táctil mínima de 44 px: se acepta porque es un
-   ajuste de preferencia, no un control crítico, y la fila de arriba no
-   puede crecer sin sacarle alto a las tarjetas. */
+/* Queda por debajo del área táctil mínima de 44 px: se acepta porque es
+   un ajuste de preferencia y no un control crítico, y la fila de arriba
+   no puede crecer sin sacarle alto a las tarjetas. */
 .boton-modo {
-  height: 30px;
-  min-height: 30px;
-  padding: 0 13px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border-radius: var(--radio-pastilla);
-  font-size: 12px;
-  font-weight: var(--peso-semi);
-  color: var(--texto-2);
-  background: var(--vidrio);
-  box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-height: 28px;
   flex: none;
-  white-space: nowrap;
 }
 
 .boton-modo:hover {
@@ -268,7 +260,8 @@
 .panel__clima {
   display: flex;
   align-items: center;
-  padding-left: 22px;
+  padding-left: 24px;
+  padding-right: 4px;
 }
 
 .clima {
@@ -335,12 +328,12 @@
 
 /* ── Pronóstico por franjas ─────────────────────────────────────────────── */
 
-/* Ocupa todo el ancho del bloque de clima, del ícono al borde, y es
-   baja: se lee como un subrayado del clima, no como otra tarjeta. */
+/* Ocupa todo el ancho del bloque de clima y es baja: se lee como un
+   subrayado del clima, no como otra tarjeta. */
 .pronostico {
   list-style: none;
   margin: 0;
-  padding: 5px 2px;
+  padding: 8px 6px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-radius: var(--radio-chip);
@@ -349,25 +342,37 @@
 }
 
 .pronostico__franja {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
+  padding: 0 10px;
   color: var(--sobre-oscuro);
 }
 
-.pronostico__franja + .pronostico__franja {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+/* El separador es un pseudoelemento y no un borde para que no llegue a
+   los bordes de arriba y abajo: una línea que toca el canto se lee como
+   una tabla, una línea corta se lee como una pausa. */
+.pronostico__franja + .pronostico__franja::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.13);
 }
 
 .pronostico__hora {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: var(--peso-semi);
+  letter-spacing: 0.02em;
   color: var(--sobre-oscuro-2);
 }
 
 .pronostico__grados {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
 }
@@ -988,23 +993,25 @@
   inset: 0;
   border-radius: inherit;
   background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.24) 50%,
-    transparent 60%
+    100deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.1) 42%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0.1) 58%,
+    transparent 72%
   );
-  transform: translateX(-140%);
-  animation: destello 7s var(--curva) infinite;
+  transform: translateX(-125%);
+  animation: destello 6s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes destello {
   0%,
-  84% {
-    transform: translateX(-140%);
+  72% {
+    transform: translateX(-125%);
   }
-  97%,
+  95%,
   100% {
-    transform: translateX(140%);
+    transform: translateX(125%);
   }
 }
