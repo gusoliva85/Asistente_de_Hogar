@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Principal } from './pantallas/Principal'
+import { PrincipalAmplia } from './pantallas/PrincipalAmplia'
 import { Escucha } from './pantallas/Escucha'
 import { Emergencia } from './pantallas/Emergencia'
 import { Musica } from './pantallas/Musica'
@@ -13,6 +14,7 @@ import {
 } from './datos/ficticios'
 import { usarLuz, usarTema } from './temas/usarTema'
 import { usarReloj } from './util/usarReloj'
+import { usarEscala } from './util/usarEscala'
 
 /**
  * Fase 1: los datos son ficticios pero tienen la forma exacta que va a
@@ -38,6 +40,7 @@ function pantallaInicial(): Pantalla {
 
 export function App() {
   const ahora = usarReloj()
+  usarEscala()
   // El tema queda fijo en Lavanda: Menta se descarta por ahora, pero los
   // tokens siguen ahí y el selector vuelve en la pantalla de ajustes.
   usarTema()
@@ -81,9 +84,13 @@ export function App() {
           onAyuda={() => setPantalla('emergencia')}
         />
       )
-    default:
+    default: {
+      // Variante en evaluación: sin compras ni dispositivos, con el panel
+      // y la agenda más grandes. Convive con la completa hasta decidir.
+      const Pantalla =
+        new URLSearchParams(location.search).get('diseno') === 'amplio' ? PrincipalAmplia : Principal
       return (
-        <Principal
+        <Pantalla
           estado={estado}
           ahora={ahora}
           luz={luz}
@@ -94,5 +101,6 @@ export function App() {
           onMusica={() => setPantalla('musica')}
         />
       )
+    }
   }
 }
