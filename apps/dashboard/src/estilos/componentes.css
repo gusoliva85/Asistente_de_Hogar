@@ -176,7 +176,9 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 20px 26px;
+  /* 20 px a los lados y no 26: esos 12 px van a la barra de pronóstico,
+     que es lo que estaba quedando comprimido. */
+  padding: 20px 20px;
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -216,6 +218,11 @@
 .panel__tiempo,
 .panel__clima {
   position: relative;
+}
+
+/* La hora no se encoge; el clima ocupa lo que queda y se ajusta */
+.panel__tiempo {
+  flex: none;
 }
 
 .panel__hora {
@@ -258,16 +265,19 @@
 }
 
 .panel__clima {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  padding-left: 24px;
-  padding-right: 4px;
+  padding-left: 20px;
 }
 
 .clima {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .clima__arriba {
@@ -333,7 +343,7 @@
 .pronostico {
   list-style: none;
   margin: 0;
-  padding: 8px 6px;
+  padding: 7px 4px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-radius: var(--radio-chip);
@@ -346,8 +356,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 10px;
+  gap: 7px;
+  padding: 0 6px;
   color: var(--sobre-oscuro);
 }
 
@@ -365,14 +375,14 @@
 }
 
 .pronostico__hora {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: var(--peso-semi);
   letter-spacing: 0.02em;
   color: var(--sobre-oscuro-2);
 }
 
 .pronostico__grados {
-  font-size: 15.5px;
+  font-size: 16.5px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
 }

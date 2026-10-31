@@ -49,7 +49,7 @@ export function PanelPrincipal({ ahora, clima }: Props) {
              pronóstico ocupando todo el ancho, como un subrayado. */
           <div className="clima">
             <div className="clima__arriba">
-              <IconoClima condicion={clima.condicion} esDeNoche={clima.esDeNoche} ancho={112} />
+              <IconoClima condicion={clima.condicion} esDeNoche={clima.esDeNoche} ancho={100} />
               <div>
                 <div className="clima__cifras">
                   <span className="clima__temperatura numero">{clima.temperatura}°</span>
