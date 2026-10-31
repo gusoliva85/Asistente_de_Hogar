@@ -1,0 +1,38 @@
+{
+	email {$EMAIL_CERTIFICADO}
+}
+
+{$DOMINIO} {
+	encode gzip zstd
+
+	# API
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	# Salud, para monitoreo
+	handle /health {
+		reverse_proxy api:8000
+	}
+
+	# Frontend y página de prueba
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+
+	log {
+		output file /data/acceso.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+	}
+}

@@ -1,0 +1,56 @@
+name: jarvis
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMINIO: ${DOMINIO:-:80}
+      EMAIL_CERTIFICADO: ${EMAIL_CERTIFICADO:-}
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./infra/caddy/site:/srv:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./services/api
+    restart: unless-stopped
+    environment:
+      ENTORNO: ${ENTORNO:-desarrollo}
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      ZONA_HORARIA: ${ZONA_HORARIA:-America/Argentina/Buenos_Aires}
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USUARIO:-jarvis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-jarvis}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./infra/scripts/backup:/backup
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USUARIO:-jarvis} -d ${POSTGRES_DB:-jarvis}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Sin "ports": la base NO se expone a Internet. Solo la ve la red interna.
+
+volumes:
+  caddy_data:
+  caddy_config:
+  db_data:

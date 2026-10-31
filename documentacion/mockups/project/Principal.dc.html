@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>JARVIS — Pantalla principal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    body { margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #4B47B8; } a:hover { color: #35328C; }
+    button { font: inherit; cursor: pointer; transition: transform .34s cubic-bezier(.2,.8,.2,1), box-shadow .34s ease, filter .34s ease; }
+    button:hover { transform: translateY(-2px); filter: brightness(1.04); }
+    button:active { transform: translateY(0) scale(.985); }
+    .card { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 2px 4px rgba(32,26,70,.05), 0 30px 60px rgba(32,26,70,.17); }
+    .grano { position: absolute; inset: 0; pointer-events: none; opacity: .055; mix-blend-mode: overlay; }
+    .rayos { transform-box: fill-box; transform-origin: center; animation: giro 54s linear infinite; }
+    @keyframes giro { to { transform: rotate(360deg); } }
+    @keyframes flotar { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-4px,-5px); } }
+    .nube { animation: flotar 9s ease-in-out infinite; }
+    @keyframes respirar { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: .9; transform: scale(1.09); } }
+    .aura { animation: respirar 10s ease-in-out infinite; }
+    @keyframes latir { 0%,100% { opacity: .4; box-shadow: 0 0 0 0 rgba(31,107,82,.5); } 50% { opacity: 1; box-shadow: 0 0 0 5px rgba(31,107,82,0); } }
+    .vivo { animation: latir 2.8s ease-in-out infinite; }
+    @keyframes halo { 0%,100% { box-shadow: 0 10px 26px rgba(75,71,184,.42), 0 0 0 0 rgba(123,116,224,.42); } 50% { box-shadow: 0 10px 26px rgba(75,71,184,.42), 0 0 0 14px rgba(123,116,224,0); } }
+    .mic { animation: halo 3.4s ease-out infinite; }
+    @keyframes onda { 0%,100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+    .onda { transform-origin: center; animation: onda 1.5s ease-in-out infinite; }
+  </style>
+</helmet>
+
+<div style="width: 1024px; height: 600px; box-sizing: border-box; padding: 22px; position: relative; display: flex; flex-direction: column; gap: 12px; overflow: hidden; color: #171530; background: radial-gradient(720px 460px at -6% -14%, #D9D3FA, transparent 62%), radial-gradient(640px 440px at 104% 110%, #F7D4E4, transparent 58%), radial-gradient(520px 380px at 88% -10%, #CFE4F7, transparent 56%), #F2F0F9;">
+
+  <svg class="grano" aria-hidden="true"><filter id="granoPri"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#granoPri)"></rect></svg>
+
+  <!-- Encabezado -->
+  <header style="position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 30px;">
+    <div style="display: flex; align-items: center; gap: 11px;">
+      <div style="width: 30px; height: 30px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; color: #FFFFFF; background: linear-gradient(145deg, #6E68E0, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 5px 14px rgba(75,71,184,.4);">J</div>
+      <h1 style="margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -.025em;">Buenas tardes</h1>
+      <span style="font-size: 12px; font-weight: 600; color: #565273; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.78); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(32,26,70,.07);">Hogar principal</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #16603F; padding: 5px 13px; border-radius: 999px; background: linear-gradient(180deg, rgba(31,170,110,.2), rgba(31,140,95,.12)); box-shadow: inset 0 1px 0 rgba(255,255,255,.55);">
+        <span class="vivo" style="width: 7px; height: 7px; border-radius: 50%; background: #1F8C5F;"></span>Casa activa</span>
+      <span style="display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: #565273; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.78); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(32,26,70,.07);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4.5 9.5a11 11 0 0 1 15 0"></path><path d="M7.7 13a6.6 6.6 0 0 1 8.6 0"></path><path d="M12 16.6h.01"></path></svg>Conectado</span>
+      <button type="button" aria-label="Ajustes" style="width: 30px; height: 30px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: #565273; background: rgba(255,255,255,.78); border: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(32,26,70,.07);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.6v3"></path><path d="M12 18.4v3"></path><path d="M2.6 12h3"></path><path d="M18.4 12h3"></path><path d="m5.5 5.5 2.1 2.1"></path><path d="m16.4 16.4 2.1 2.1"></path><path d="m18.5 5.5-2.1 2.1"></path><path d="m7.6 16.4-2.1 2.1"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cuerpo -->
+  <div style="position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; height: 406px;">
+
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+
+      <!-- Hero oscuro -->
+      <section style="height: 186px; position: relative; overflow: hidden; box-sizing: border-box; padding: 20px 26px; border-radius: 30px; display: flex; align-items: center; justify-content: space-between; gap: 18px; color: #F4F2FF; background: linear-gradient(150deg, #322A6E 0%, #1A1734 52%, #3D2552 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(0,0,0,.3), 0 26px 58px rgba(26,20,60,.4);">
+        <div class="aura" aria-hidden="true" style="position: absolute; top: -120px; left: -70px; width: 360px; height: 330px; border-radius: 50%; background: radial-gradient(circle, rgba(150,138,255,.5), transparent 68%);"></div>
+        <div class="aura" aria-hidden="true" style="position: absolute; bottom: -150px; right: -40px; width: 330px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(244,150,196,.38), transparent 68%); animation-delay: -4s;"></div>
+        <svg class="grano" aria-hidden="true" style="opacity: .09;"><filter id="granoHero"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#granoHero)"></rect></svg>
+
+        <div style="position: relative;">
+          <div style="font-size: 80px; font-weight: 700; line-height: .88; letter-spacing: -.055em; font-variant-numeric: tabular-nums; background: linear-gradient(176deg, #FFFFFF 18%, #BDB4F2 96%); -webkit-background-clip: text; background-clip: text; color: transparent;">18:42</div>
+          <div style="margin-top: 11px; display: flex; align-items: center; gap: 9px;">
+            <span style="font-size: 14.5px; font-weight: 600; color: #C6BFEC;">Martes 28 de octubre</span>
+            <span style="width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.3);"></span>
+            <span style="font-size: 13px; font-weight: 500; color: #9C94C8;">Semana 44</span>
+          </div>
+        </div>
+
+        <div style="position: relative; display: flex; align-items: center; gap: 18px; padding-left: 22px;">
+          <span aria-hidden="true" style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px; background: linear-gradient(180deg, transparent, rgba(255,255,255,.26), transparent);"></span>
+
+          <svg width="92" height="74" viewBox="0 0 112 90" fill="none" style="flex-shrink: 0;" role="img" aria-label="Parcialmente nublado">
+            <defs>
+              <radialGradient id="solPri" cx="36%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#FFFBEC"></stop><stop offset="48%" stop-color="#FFE194"></stop><stop offset="100%" stop-color="#F2A648"></stop>
+              </radialGradient>
+              <linearGradient id="nubePri" x1="0" y1="0" x2="0.3" y2="1">
+                <stop offset="0%" stop-color="#FFFFFF"></stop><stop offset="100%" stop-color="#B9B1E2"></stop>
+              </linearGradient>
+              <filter id="brilloSol" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter>
+            </defs>
+            <circle cx="42" cy="34" r="20" fill="#FFD36E" opacity=".5" filter="url(#brilloSol)"></circle>
+            <g class="rayos" stroke="#FFE9B0" stroke-width="3.2" stroke-linecap="round" opacity=".92">
+              <path d="M42 4v9"></path><path d="M42 55v9"></path><path d="M9 34h9"></path><path d="M66 34h9"></path>
+              <path d="m19.4 11.4 6 6"></path><path d="m58.6 50.6 6 6"></path><path d="m64.6 11.4-6 6"></path><path d="m25.4 50.6-6 6"></path>
+            </g>
+            <circle cx="42" cy="34" r="15" fill="url(#solPri)"></circle>
+            <path class="nube" d="M54 76h36a13 13 0 0 0 1.6-26 19.4 19.4 0 0 0-36.8-4.8A14.5 14.5 0 0 0 54 76Z" fill="url(#nubePri)"></path>
+          </svg>
+
+          <div>
+            <div style="display: flex; align-items: baseline; gap: 9px;">
+              <span style="font-size: 46px; font-weight: 700; letter-spacing: -.045em; font-variant-numeric: tabular-nums;">19°</span>
+              <span style="font-size: 13px; font-weight: 600; color: #B5ACDE; font-variant-numeric: tabular-nums;">23° / 14°</span>
+            </div>
+            <div style="margin-top: 2px; font-size: 13.5px; font-weight: 600; color: #EDE9FF;">Parcialmente nublado</div>
+
+            <svg width="138" height="30" viewBox="0 0 138 30" fill="none" style="margin-top: 8px; display: block;" aria-hidden="true">
+              <defs>
+                <linearGradient id="curvaTemp" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(255,205,120,.45)"></stop><stop offset="100%" stop-color="rgba(255,205,120,0)"></stop>
+                </linearGradient>
+              </defs>
+              <path d="M2 8 L30 6 L58 11 L86 17 L114 22 L136 26 L136 30 L2 30 Z" fill="url(#curvaTemp)"></path>
+              <path d="M2 8 L30 6 L58 11 L86 17 L114 22 L136 26" stroke="#FFD08A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="30" cy="6" r="3" fill="#FFF3D6"></circle>
+            </svg>
+
+            <div style="margin-top: 5px; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: #B5ACDE;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l2-5h8l2 5h3"></path><path d="M5 12v5h14v-5"></path><circle cx="8" cy="17.5" r="1.6"></circle><circle cx="16" cy="17.5" r="1.6"></circle></svg>
+              24 min al centro
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Agenda y compras -->
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; height: 208px;">
+
+        <section class="card" style="position: relative; overflow: hidden; box-sizing: border-box; padding: 17px 19px; border-radius: 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.62)); backdrop-filter: blur(24px) saturate(165%); -webkit-backdrop-filter: blur(24px) saturate(165%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(32,26,70,.04), 0 18px 42px rgba(32,26,70,.12);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="width: 27px; height: 27px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(145deg, #6E68E0, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 4px 10px rgba(75,71,184,.35);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3.5 10h17"></path></svg>
+            </span>
+            <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #7A7598;">Hoy tenés</h2>
+            <span style="margin-left: auto; font-size: 11.5px; font-weight: 600; color: #7A7598;">3 eventos</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 9px 11px; margin: 0 -11px; border-radius: 16px; background: linear-gradient(100deg, rgba(110,104,224,.13), rgba(110,104,224,0));">
+              <span style="width: 4px; height: 36px; border-radius: 3px; flex-shrink: 0; background: linear-gradient(180deg, #8C86F0, {{accent}});"></span>
+              <div style="min-width: 0;">
+                <div style="font-size: 19px; font-weight: 800; letter-spacing: -.025em; font-variant-numeric: tabular-nums;">10:00</div>
+                <div style="font-size: 13.5px; font-weight: 500; color: #4A4663; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Médico — Dr. Ramos</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 0 11px; margin: 0 -11px;">
+              <span style="width: 4px; height: 36px; border-radius: 3px; flex-shrink: 0; background: rgba(23,21,48,.12);"></span>
+              <div style="min-width: 0;">
+                <div style="font-size: 19px; font-weight: 800; letter-spacing: -.025em; color: #5A5676; font-variant-numeric: tabular-nums;">19:30</div>
+                <div style="font-size: 13.5px; font-weight: 500; color: #5A5676; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Videollamada con mamá</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" style="position: relative; overflow: hidden; box-sizing: border-box; padding: 17px 19px; border-radius: 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.62)); backdrop-filter: blur(24px) saturate(165%); -webkit-backdrop-filter: blur(24px) saturate(165%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(32,26,70,.04), 0 18px 42px rgba(32,26,70,.12);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="width: 27px; height: 27px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(145deg, #3FA87C, #1F7A58); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 4px 10px rgba(31,122,88,.32);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11"></path><path d="M9 12h11"></path><path d="M9 18h11"></path><path d="m3.5 6 1.3 1.3L7.2 4.9"></path><path d="m3.5 12 1.3 1.3 2.4-2.4"></path></svg>
+            </span>
+            <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #7A7598;">Compras</h2>
+            <span style="margin-left: auto; font-size: 11px; font-weight: 800; color: #FFFFFF; padding: 3px 10px; border-radius: 999px; background: linear-gradient(145deg, #3FA87C, #1F7A58); box-shadow: 0 3px 8px rgba(31,122,88,.3);">4</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 12px;">
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.9); box-shadow: inset 0 0 0 2px rgba(23,21,48,.15), 0 1px 2px rgba(32,26,70,.08);"></span>Leche
+            </div>
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.9); box-shadow: inset 0 0 0 2px rgba(23,21,48,.15), 0 1px 2px rgba(32,26,70,.08);"></span>Pan
+            </div>
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.9); box-shadow: inset 0 0 0 2px rgba(23,21,48,.15), 0 1px 2px rgba(32,26,70,.08);"></span>Papas 2 kg
+            </div>
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.9); box-shadow: inset 0 0 0 2px rgba(23,21,48,.15), 0 1px 2px rgba(32,26,70,.08);"></span>Detergente
+            </div>
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500; color: #8D8AA6; text-decoration: line-through;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #3FA87C, #1F7A58); box-shadow: inset 0 1px 0 rgba(255,255,255,.35);">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+              </span>Café
+            </div>
+            <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500; color: #8D8AA6; text-decoration: line-through;">
+              <span style="width: 17px; height: 17px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #3FA87C, #1F7A58); box-shadow: inset 0 1px 0 rgba(255,255,255,.35);">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+              </span>Arroz
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Columna derecha -->
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+
+      <section class="card" style="height: 110px; position: relative; overflow: hidden; box-sizing: border-box; padding: 15px 17px; border-radius: 28px; display: flex; align-items: center; gap: 13px; background: linear-gradient(140deg, rgba(255,232,205,.9), rgba(255,255,255,.66)); backdrop-filter: blur(24px) saturate(165%); -webkit-backdrop-filter: blur(24px) saturate(165%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 42px rgba(32,26,70,.12);">
+        <div style="width: 46px; height: 46px; border-radius: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(145deg, #F0A651, #C9742A); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 7px 16px rgba(201,116,42,.36);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9.5V13l2.3 1.4"></path><path d="M9 2.5h6"></path></svg>
+        </div>
+        <div style="min-width: 0;">
+          <div style="font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: #9A6B32;">Próximo</div>
+          <div style="margin-top: 2px; font-size: 25px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums;">21:30</div>
+          <div style="font-size: 13px; font-weight: 500; color: #51493F;">Pastilla de la noche</div>
+        </div>
+      </section>
+
+      <section class="card" style="height: 140px; position: relative; overflow: hidden; box-sizing: border-box; padding: 15px 17px; border-radius: 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.62)); backdrop-filter: blur(24px) saturate(165%); -webkit-backdrop-filter: blur(24px) saturate(165%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 42px rgba(32,26,70,.12);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px;">
+          <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #7A7598;">Casa</h2>
+          <span style="font-size: 11.5px; font-weight: 600; color: #7A7598;">4 dispositivos</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 31px; height: 31px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(145deg, #FFC869, #E09326); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 5px 12px rgba(224,147,38,.38);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21.5h4"></path><path d="M12 2.5a6.5 6.5 0 0 1 4 11.6V18H8v-3.9A6.5 6.5 0 0 1 12 2.5Z"></path></svg>
+            </span>
+            <span style="font-size: 13.5px; font-weight: 600;">Luces del living</span>
+            <span style="margin-left: auto; display: flex; align-items: center; width: 42px; height: 23px; padding: 2px; border-radius: 999px; background: linear-gradient(145deg, #FFC869, #E09326); box-shadow: inset 0 1px 2px rgba(0,0,0,.14);">
+              <span style="margin-left: auto; width: 19px; height: 19px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,.24);"></span>
+            </span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 31px; height: 31px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(145deg, #4FB98C, #1F7A58); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 5px 12px rgba(31,122,88,.3);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+            </span>
+            <span style="font-size: 13.5px; font-weight: 600;">Aspiradora</span>
+            <span style="margin-left: auto; font-size: 12px; font-weight: 700; color: #1F7A58;">84%</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="flex-grow: 1; position: relative; overflow: hidden; box-sizing: border-box; padding: 13px 15px; border-radius: 28px; display: flex; align-items: center; gap: 12px; color: #F4F2FF; background: linear-gradient(140deg, #342A63 0%, #1D1A38 60%, #4A2A5A 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 18px 42px rgba(26,20,60,.34);">
+        <div style="width: 52px; height: 52px; border-radius: 15px; flex-shrink: 0; overflow: hidden; position: relative; background: linear-gradient(145deg, #2B2456, #5B3F8E 48%, #C45F86); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 6px 14px rgba(0,0,0,.3);">
+          <svg viewBox="0 0 52 52" width="52" height="52" style="position: relative; display: block;" aria-hidden="true">
+            <g fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.1">
+              <circle cx="26" cy="26" r="19"></circle><circle cx="26" cy="26" r="13"></circle><circle cx="26" cy="26" r="7"></circle>
+            </g>
+            <circle cx="26" cy="26" r="2.6" fill="rgba(255,255,255,.9)"></circle>
+          </svg>
+        </div>
+        <div style="min-width: 0; flex-grow: 1;">
+          <div style="font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">De música ligera</div>
+          <div style="font-size: 12px; font-weight: 500; color: #B5ACDE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Soda Stereo</div>
+          <div style="margin-top: 5px; display: flex; align-items: center; gap: 7px;">
+            <div style="display: flex; align-items: flex-end; gap: 2px; height: 10px;">
+              <span class="onda" style="width: 2.5px; height: 10px; border-radius: 2px; background: #9A92F0; animation-delay: 0s;"></span>
+              <span class="onda" style="width: 2.5px; height: 10px; border-radius: 2px; background: #9A92F0; animation-delay: .2s;"></span>
+              <span class="onda" style="width: 2.5px; height: 10px; border-radius: 2px; background: #9A92F0; animation-delay: .4s;"></span>
+            </div>
+            <span style="font-size: 11px; font-weight: 600; color: #9C94C8;">YouTube</span>
+          </div>
+        </div>
+        <button type="button" aria-label="Pausar" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #241F44; background: #FFFFFF; border: none; box-shadow: 0 6px 16px rgba(0,0,0,.3);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"></path></svg>
+        </button>
+      </section>
+    </div>
+  </div>
+
+  <!-- Voz y ayuda -->
+  <div style="position: relative; display: flex; align-items: center; gap: 12px; height: 96px;">
+
+    <div style="flex-grow: 1; min-width: 0; height: 100%; position: relative; overflow: hidden; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 18px; border-radius: 30px; background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.66)); backdrop-filter: blur(26px) saturate(165%); -webkit-backdrop-filter: blur(26px) saturate(165%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 20px 46px rgba(32,26,70,.14);">
+      <div class="mic" style="width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #8A83F2, {{accent}} 60%, #3C38A0); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 10px 26px rgba(75,71,184,.42);">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.6" width="6" height="11" rx="3"></rect><path d="M5.5 11.2a6.5 6.5 0 0 0 13 0"></path><path d="M12 17.7v3.7"></path></svg>
+      </div>
+      <div style="min-width: 0;">
+        <div style="font-size: 20px; font-weight: 300; letter-spacing: -.01em; color: #2A2748;">Decime <strong style="font-weight: 700;">«Jarvis»</strong> y hablá</div>
+        <div style="margin-top: 4px; font-size: 13px; font-weight: 500; color: #6B6688;">Nada sale de casa hasta que me nombres</div>
+      </div>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 4px; height: 32px;">
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: 0s;"></span>
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: .14s;"></span>
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: .28s;"></span>
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: .42s;"></span>
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: .56s;"></span>
+        <span class="onda" style="width: 3.5px; height: 32px; border-radius: 2px; background: linear-gradient(180deg, #9A92F0, #4B47B8); animation-delay: .7s;"></span>
+      </div>
+    </div>
+
+    <button type="button" style="width: 252px; height: 100%; flex-shrink: 0; position: relative; overflow: hidden; box-sizing: border-box; padding: 0 20px; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 30px; color: #FFFFFF; background: linear-gradient(150deg, #F07070 0%, #D13A3A 48%, #9E1F1F 100%); border: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 18px 38px rgba(158,31,31,.38);">
+      <span aria-hidden="true" style="position: absolute; top: -40px; left: -20px; width: 150px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.26), transparent 70%);"></span>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="position: relative;" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.5-3.3 7.4-8 8.6-4.7-1.2-8-4.1-8-8.6V7Z"></path><path d="M12 9v3.6"></path><path d="M12 16h.01"></path></svg>
+      <span style="position: relative; font-size: 21px; font-weight: 800; letter-spacing: -.02em; text-align: left; line-height: 1.12;">Necesito<br>ayuda</span>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#4B47B8","options":["#4B47B8","#1E6FA8","#0E8C77","#A8551F"]},"$preview":{"width":1024,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#4B47B8' };
+  }
+}
+</script>
+</body>
+</html>

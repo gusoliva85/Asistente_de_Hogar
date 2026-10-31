@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>JARVIS — Principal, tema Menta</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    body { margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #0E8C77; } a:hover { color: #0A6A5B; }
+    button { font: inherit; cursor: pointer; transition: transform .34s cubic-bezier(.2,.8,.2,1), filter .34s ease, box-shadow .34s ease; }
+    button:hover { transform: translateY(-2px); filter: brightness(1.04); }
+    button:active { transform: translateY(0) scale(.985); }
+    .card { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 2px 4px rgba(10,50,42,.05), 0 30px 58px rgba(10,50,42,.16); }
+    .grano { position: absolute; inset: 0; pointer-events: none; opacity: .05; mix-blend-mode: overlay; }
+    .fila { transition: background .28s ease, transform .28s cubic-bezier(.2,.8,.2,1); }
+    .fila:hover { background: rgba(14,140,119,.08); transform: translateX(3px); }
+    .rayos { transform-box: fill-box; transform-origin: center; animation: giro 52s linear infinite; }
+    @keyframes giro { to { transform: rotate(360deg); } }
+    @keyframes flotar { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-4px,-5px); } }
+    .nube { animation: flotar 8s ease-in-out infinite; }
+    @keyframes halo { 0%,100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 10px 24px rgba(14,140,119,.4), 0 0 0 0 rgba(14,140,119,.4); } 50% { box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 10px 24px rgba(14,140,119,.4), 0 0 0 13px rgba(14,140,119,0); } }
+    .mic { animation: halo 3.2s ease-out infinite; }
+    @keyframes latir { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+    .vivo { animation: latir 2.6s ease-in-out infinite; }
+    @keyframes onda { 0%,100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+    .onda { transform-origin: center; animation: onda 1.4s ease-in-out infinite; }
+  </style>
+</helmet>
+
+<div style="width: 1024px; height: 600px; box-sizing: border-box; padding: 16px 20px 18px 16px; position: relative; display: flex; gap: 14px; overflow: hidden; color: #0F2420; background: radial-gradient(700px 460px at -4% -12%, #BFE8DC, transparent 60%), radial-gradient(620px 440px at 104% 108%, #C7DEF2, transparent 58%), radial-gradient(480px 360px at 76% -8%, #E6F2D9, transparent 56%), #EFF5F3;">
+
+  <svg class="grano" aria-hidden="true"><filter id="granoMen"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#granoMen)"></rect></svg>
+
+  <!-- Riel -->
+  <nav aria-label="Secciones" style="position: relative; width: 72px; flex-shrink: 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; padding: 14px 0; gap: 8px; border-radius: 30px; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.68)); backdrop-filter: blur(26px) saturate(170%); -webkit-backdrop-filter: blur(26px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 44px rgba(10,50,42,.13);">
+
+    <div style="width: 40px; height: 40px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}} 55%, #065F4E); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 18px rgba(14,140,119,.42);">J</div>
+    <div style="height: 8px;"></div>
+
+    <button type="button" aria-label="Inicio" aria-current="page" style="width: 48px; height: 48px; border-radius: 17px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}} 60%, #0A6A5B); border: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 8px 18px rgba(14,140,119,.4);">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V20h13V9.5"></path></svg>
+    </button>
+
+    <button type="button" aria-label="Listas" style="width: 48px; height: 48px; border-radius: 17px; display: flex; align-items: center; justify-content: center; color: #4A5F59; background: transparent; border: none;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11"></path><path d="M9 12h11"></path><path d="M9 18h11"></path><path d="m3.5 6 1.3 1.3L7.2 4.9"></path><path d="m3.5 12 1.3 1.3 2.4-2.4"></path></svg>
+    </button>
+
+    <button type="button" aria-label="Agenda" style="width: 48px; height: 48px; border-radius: 17px; display: flex; align-items: center; justify-content: center; color: #4A5F59; background: transparent; border: none;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3.5 10h17"></path></svg>
+    </button>
+
+    <button type="button" aria-label="Música" style="width: 48px; height: 48px; border-radius: 17px; display: flex; align-items: center; justify-content: center; color: #4A5F59; background: transparent; border: none;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5.5l11-2V16"></path><circle cx="6.5" cy="18" r="2.6"></circle><circle cx="17.5" cy="16" r="2.6"></circle></svg>
+    </button>
+
+    <button type="button" aria-label="Dispositivos del hogar" style="width: 48px; height: 48px; border-radius: 17px; display: flex; align-items: center; justify-content: center; color: #4A5F59; background: transparent; border: none;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3"></path><path d="M12 18.5v3"></path><path d="M2.5 12h3"></path><path d="M18.5 12h3"></path><path d="m5.4 5.4 2.1 2.1"></path><path d="m16.5 16.5 2.1 2.1"></path><path d="m18.6 5.4-2.1 2.1"></path><path d="m7.5 16.5-2.1 2.1"></path></svg>
+    </button>
+
+    <div style="flex-grow: 1;"></div>
+
+    <button type="button" style="width: 56px; height: 56px; border-radius: 20px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #FFFFFF; background: linear-gradient(150deg, #FF8A6E, #E0533D 50%, #B32F1C); border: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.34), 0 12px 24px rgba(179,47,28,.42);">
+      <span aria-hidden="true" style="position: absolute; top: -18px; left: -10px; width: 70px; height: 50px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.3), transparent 70%);"></span>
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: relative;" aria-hidden="true"><path d="M12 3.2 20 7v5.4c0 4.5-3.3 7.4-8 8.6-4.7-1.2-8-4.1-8-8.6V7Z"></path><path d="M12 9v3.6"></path><path d="M12 16h.01"></path></svg>
+      <span style="position: relative; font-size: 9px; font-weight: 800; letter-spacing: .1em;">SOS</span>
+    </button>
+  </nav>
+
+  <!-- Contenido -->
+  <div style="position: relative; flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 30px;">
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <h1 style="margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -.025em;">Buenas tardes</h1>
+        <span style="font-size: 12px; font-weight: 600; color: #4A5F59; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.82); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(10,50,42,.07);">Hogar principal</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #07614F; padding: 5px 13px; border-radius: 999px; background: linear-gradient(180deg, rgba(14,170,142,.22), rgba(14,140,119,.12)); box-shadow: inset 0 1px 0 rgba(255,255,255,.6);">
+          <span class="vivo" style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}};"></span>Casa activa</span>
+        <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #4A5F59; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.82); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(10,50,42,.07);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E6FA8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l2-5h8l2 5h3"></path><path d="M5 12v5h14v-5"></path><circle cx="8" cy="17.5" r="1.7"></circle><circle cx="16" cy="17.5" r="1.7"></circle></svg>
+          24 min al centro</span>
+        <span style="display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: #4A5F59; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.82); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px rgba(10,50,42,.07);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4.5 9.5a11 11 0 0 1 15 0"></path><path d="M7.7 13a6.6 6.6 0 0 1 8.6 0"></path><path d="M12 16.6h.01"></path></svg>Conectado</span>
+      </div>
+    </header>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) 342px; gap: 12px; height: 436px;">
+
+      <!-- Izquierda -->
+      <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+
+        <!-- Hero -->
+        <section style="height: 232px; position: relative; overflow: hidden; box-sizing: border-box; padding: 22px 26px; border-radius: 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #052A24; background: linear-gradient(145deg, #FFFFFF 0%, #E4F4EE 46%, #D4E9F5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 2px 4px rgba(10,50,42,.05), 0 26px 58px rgba(10,50,42,.16);">
+          <span aria-hidden="true" style="position: absolute; top: -90px; right: 140px; width: 280px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,120,.38), transparent 68%);"></span>
+          <svg class="grano" aria-hidden="true" style="opacity: .045;"><filter id="granoHeroMen"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#granoHeroMen)"></rect></svg>
+
+          <div style="position: relative;">
+            <div style="font-size: 88px; font-weight: 700; line-height: .88; letter-spacing: -.055em; font-variant-numeric: tabular-nums; background: linear-gradient(172deg, #0B3B32 20%, #2E7F6E 96%); -webkit-background-clip: text; background-clip: text; color: transparent;">18:42</div>
+            <div style="margin-top: 12px; font-size: 15.5px; font-weight: 600; color: #3C5B54;">Martes 28 de octubre</div>
+
+            <!-- Arco del día -->
+            <svg width="208" height="58" viewBox="0 0 208 58" fill="none" style="margin-top: 14px; display: block;" role="img" aria-label="El sol se pone a las 19:54">
+              <defs>
+                <linearGradient id="arcoDia" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(255,196,96,.25)"></stop>
+                  <stop offset="62%" stop-color="#FFC460"></stop>
+                  <stop offset="100%" stop-color="rgba(255,150,96,.3)"></stop>
+                </linearGradient>
+              </defs>
+              <path d="M8 46a96 96 0 0 1 192 0" stroke="rgba(10,50,42,.1)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 7"></path>
+              <path d="M8 46a96 96 0 0 1 192 0" stroke="url(#arcoDia)" stroke-width="3" stroke-linecap="round" stroke-dasharray="186 300"></path>
+              <circle cx="168" cy="17" r="9" fill="#FFD67A" opacity=".35"></circle>
+              <circle cx="168" cy="17" r="5" fill="#F7A93C"></circle>
+              <text x="4" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700" fill="#6B827B">7:12</text>
+              <text x="178" y="57" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700" fill="#6B827B">19:54</text>
+            </svg>
+          </div>
+
+          <div style="position: relative; text-align: center; padding: 20px 24px; border-radius: 26px; background: linear-gradient(170deg, rgba(126,178,224,.3), rgba(14,140,119,.14)); box-shadow: inset 0 1px 0 rgba(255,255,255,.8);">
+            <svg width="112" height="86" viewBox="0 0 112 90" fill="none" style="display: block; margin: 0 auto;" role="img" aria-label="Parcialmente nublado">
+              <defs>
+                <radialGradient id="solMen" cx="36%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFFBEC"></stop><stop offset="48%" stop-color="#FFDE86"></stop><stop offset="100%" stop-color="#F0A33C"></stop>
+                </radialGradient>
+                <linearGradient id="nubeMen" x1="0" y1="0" x2="0.28" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"></stop><stop offset="100%" stop-color="#BCD4E2"></stop>
+                </linearGradient>
+                <filter id="brilloMen" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"></feGaussianBlur></filter>
+              </defs>
+              <circle cx="40" cy="33" r="19" fill="#FFD36E" opacity=".55" filter="url(#brilloMen)"></circle>
+              <g class="rayos" stroke="#F7C651" stroke-width="3.2" stroke-linecap="round" opacity=".92">
+                <path d="M40 4v8"></path><path d="M40 54v8"></path><path d="M8 33h8"></path><path d="M64 33h8"></path>
+                <path d="m17.8 10.8 5.6 5.6"></path><path d="m56.6 49.6 5.6 5.6"></path><path d="m62.2 10.8-5.6 5.6"></path><path d="m23.4 49.6-5.6 5.6"></path>
+              </g>
+              <circle cx="40" cy="33" r="14.5" fill="url(#solMen)"></circle>
+              <path class="nube" d="M50 74h35a12.8 12.8 0 0 0 1.6-25.5 19 19 0 0 0-36-4.7A14.2 14.2 0 0 0 50 74Z" fill="url(#nubeMen)"></path>
+            </svg>
+            <div style="margin-top: 6px; display: flex; align-items: baseline; justify-content: center; gap: 9px;">
+              <span style="font-size: 46px; font-weight: 700; letter-spacing: -.045em; font-variant-numeric: tabular-nums;">19°</span>
+              <span style="font-size: 13px; font-weight: 700; color: #3C5B54; font-variant-numeric: tabular-nums;">23° / 14°</span>
+            </div>
+            <div style="margin-top: 2px; font-size: 13.5px; font-weight: 600; color: #2C4B44;">Parcialmente nublado</div>
+          </div>
+        </section>
+
+        <!-- Compras -->
+        <section class="card" style="flex-grow: 1; position: relative; overflow: hidden; box-sizing: border-box; padding: 17px 20px; border-radius: 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.68)); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 42px rgba(10,50,42,.12);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 13px;">
+            <span style="width: 27px; height: 27px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.42), 0 4px 10px rgba(14,140,119,.34);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11"></path><path d="M9 12h11"></path><path d="M9 18h11"></path><path d="m3.5 6 1.3 1.3L7.2 4.9"></path><path d="m3.5 12 1.3 1.3 2.4-2.4"></path></svg>
+            </span>
+            <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #67807A;">Lista de compras</h2>
+            <span style="margin-left: auto; font-size: 11px; font-weight: 800; color: #FFFFFF; padding: 3px 11px; border-radius: 999px; background: linear-gradient(150deg, #3FC8A4, {{accent}}); box-shadow: 0 3px 8px rgba(14,140,119,.3);">4 pendientes</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 14px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.95); box-shadow: inset 0 0 0 2px rgba(15,36,32,.16), 0 1px 2px rgba(10,50,42,.1);"></span>Leche
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.95); box-shadow: inset 0 0 0 2px rgba(15,36,32,.16), 0 1px 2px rgba(10,50,42,.1);"></span>Pan
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.95); box-shadow: inset 0 0 0 2px rgba(15,36,32,.16), 0 1px 2px rgba(10,50,42,.1);"></span>Papas 2 kg
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; background: rgba(255,255,255,.95); box-shadow: inset 0 0 0 2px rgba(15,36,32,.16), 0 1px 2px rgba(10,50,42,.1);"></span>Detergente
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500; color: #7E918C; text-decoration: line-through;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #3FC8A4, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.4);">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+              </span>Café
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500; color: #7E918C; text-decoration: line-through;">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #3FC8A4, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.4);">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+              </span>Arroz
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Derecha -->
+      <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+
+        <section class="card" style="height: 232px; position: relative; overflow: hidden; box-sizing: border-box; padding: 17px 19px; border-radius: 30px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.68)); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 42px rgba(10,50,42,.12);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #67807A;">Agenda de hoy</h2>
+            <span style="font-size: 11.5px; font-weight: 600; color: #67807A;">3 eventos</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div class="fila" style="display: flex; align-items: center; gap: 12px; padding: 10px 9px; margin: 0 -9px; border-radius: 16px; background: linear-gradient(100deg, rgba(14,140,119,.11), rgba(14,140,119,0));">
+              <span style="width: 4px; height: 34px; border-radius: 3px; flex-shrink: 0; background: linear-gradient(180deg, #3FC8A4, {{accent}});"></span>
+              <div style="min-width: 0;">
+                <div style="font-size: 15px; font-weight: 600;">Médico — Dr. Ramos</div>
+                <div style="font-size: 12px; color: #4A5F59;">Consultorio centro</div>
+              </div>
+              <span style="margin-left: auto; font-size: 16px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums;">10:00</span>
+            </div>
+            <div class="fila" style="display: flex; align-items: center; gap: 12px; padding: 10px 9px; margin: 0 -9px; border-radius: 16px;">
+              <span style="width: 4px; height: 34px; border-radius: 3px; flex-shrink: 0; background: rgba(15,36,32,.14);"></span>
+              <div style="min-width: 0;">
+                <div style="font-size: 15px; font-weight: 600;">Videollamada con mamá</div>
+                <div style="font-size: 12px; color: #4A5F59;">30 minutos</div>
+              </div>
+              <span style="margin-left: auto; font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #4A5F59; font-variant-numeric: tabular-nums;">19:30</span>
+            </div>
+            <div class="fila" style="display: flex; align-items: center; gap: 12px; padding: 10px 9px; margin: 0 -9px; border-radius: 16px;">
+              <span style="width: 4px; height: 34px; border-radius: 3px; flex-shrink: 0; background: linear-gradient(180deg, #F7B869, #C9803A);"></span>
+              <div style="min-width: 0;">
+                <div style="font-size: 15px; font-weight: 600;">Pastilla de la noche</div>
+                <div style="font-size: 12px; color: #4A5F59;">Recordatorio</div>
+              </div>
+              <span style="margin-left: auto; font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #4A5F59; font-variant-numeric: tabular-nums;">21:30</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" style="flex-grow: 1; position: relative; overflow: hidden; box-sizing: border-box; padding: 17px 19px; border-radius: 28px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.68)); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 42px rgba(10,50,42,.12);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px;">
+            <h2 style="margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #67807A;">Casa</h2>
+            <span style="font-size: 11.5px; font-weight: 600; color: #67807A;">4 dispositivos</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 13px;">
+            <div style="display: flex; align-items: center; gap: 11px;">
+              <span style="width: 32px; height: 32px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #FFC869, #E09326); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 5px 12px rgba(224,147,38,.4);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21.5h4"></path><path d="M12 2.5a6.5 6.5 0 0 1 4 11.6V18H8v-3.9A6.5 6.5 0 0 1 12 2.5Z"></path></svg>
+              </span>
+              <span style="font-size: 14px; font-weight: 600;">Luces del living</span>
+              <span style="margin-left: auto; display: flex; align-items: center; width: 44px; height: 24px; padding: 2px; border-radius: 999px; background: linear-gradient(150deg, #FFC869, #E09326); box-shadow: inset 0 1px 2px rgba(0,0,0,.14);">
+                <span style="margin-left: auto; width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,.26);"></span>
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 11px;">
+              <span style="width: 32px; height: 32px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}}); box-shadow: inset 0 1px 0 rgba(255,255,255,.42), 0 5px 12px rgba(14,140,119,.32);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+              </span>
+              <span style="font-size: 14px; font-weight: 600;">Aspiradora</span>
+              <span style="margin-left: auto; font-size: 12.5px; font-weight: 700; color: #0A6A5B;">84%</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Voz -->
+    <div style="position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px; height: 68px; box-sizing: border-box; padding: 0 20px 0 13px; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.7)); backdrop-filter: blur(26px) saturate(170%); -webkit-backdrop-filter: blur(26px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 40px rgba(10,50,42,.13);">
+      <div class="mic" style="width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}} 58%, #065F4E);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.6" width="6" height="11" rx="3"></rect><path d="M5.5 11.2a6.5 6.5 0 0 0 13 0"></path><path d="M12 17.7v3.7"></path></svg>
+      </div>
+      <div style="min-width: 0;">
+        <div style="font-size: 17px; font-weight: 300; letter-spacing: -.01em; color: #10322B;">Decime <strong style="font-weight: 700;">«Jarvis»</strong> y hablá</div>
+        <div style="font-size: 12px; font-weight: 500; color: #5A706A;">Nada sale de casa hasta que me nombres</div>
+      </div>
+
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 11px; padding: 7px 14px 7px 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(14,140,119,.14), rgba(14,140,119,.07)); box-shadow: inset 0 1px 0 rgba(255,255,255,.6);">
+        <span style="width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(145deg, #2B2456, #5B3F8E 48%, #C45F86); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 4px 10px rgba(0,0,0,.2);"></span>
+        <div style="min-width: 0;">
+          <div style="font-size: 12.5px; font-weight: 700; white-space: nowrap;">De música ligera</div>
+          <div style="font-size: 10.5px; font-weight: 500; color: #4A5F59;">Soda Stereo · YouTube</div>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 2px; height: 12px;">
+          <span class="onda" style="width: 2.5px; height: 12px; border-radius: 2px; background: {{accent}}; animation-delay: 0s;"></span>
+          <span class="onda" style="width: 2.5px; height: 12px; border-radius: 2px; background: {{accent}}; animation-delay: .2s;"></span>
+          <span class="onda" style="width: 2.5px; height: 12px; border-radius: 2px; background: {{accent}}; animation-delay: .4s;"></span>
+        </div>
+        <button type="button" aria-label="Pausar" style="width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #FFFFFF; background: linear-gradient(150deg, #3FC8A4, {{accent}}); border: none; box-shadow: 0 4px 10px rgba(14,140,119,.36);">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#0E8C77","options":["#0E8C77","#1E6FA8","#7A4FB8","#A8551F"]},"$preview":{"width":1024,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#0E8C77' };
+  }
+}
+</script>
+</body>
+</html>

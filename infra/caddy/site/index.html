@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JARVIS</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #F2F0FF;
+    background:
+      radial-gradient(680px 460px at 12% -10%, rgba(140,130,255,.34), transparent 62%),
+      radial-gradient(620px 440px at 96% 108%, rgba(232,150,190,.28), transparent 58%),
+      #15122A;
+  }
+  .caja {
+    width: min(420px, calc(100% - 32px));
+    padding: 36px 32px;
+    border-radius: 26px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 24px 56px rgba(0,0,0,.42);
+  }
+  .marca {
+    width: 54px; height: 54px; margin: 0 auto 20px;
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 25px; font-weight: 800;
+    background: linear-gradient(150deg, #8A83F2, #4B47B8 60%, #3C38A0);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 12px 28px rgba(75,71,184,.45);
+  }
+  h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  p { margin: 10px 0 0; font-size: 14px; line-height: 1.5; color: #A9A2CC; }
+  .estado {
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 9px;
+    padding: 8px 15px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; color: #9FE8C4;
+    background: rgba(95,210,160,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .punto { width: 8px; height: 8px; border-radius: 50%; background: #5FD2A0; }
+</style>
+</head>
+<body>
+  <main class="caja">
+    <div class="marca">J</div>
+    <h1>JARVIS</h1>
+    <p>El servidor está en pie y sirviendo por HTTPS.<br>La interfaz llega en la Fase 1.</p>
+    <div class="estado"><span class="punto"></span>Fase 0 · infraestructura lista</div>
+  </main>
+</body>
+</html>

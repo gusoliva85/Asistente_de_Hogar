@@ -1,0 +1,38 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-28T12:00:00Z" },
+  "title": "JARVIS — Interfaz del dispositivo",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Principal.dc.html": { "x": 0, "y": 0, "w": 1024, "h": 600, "title": "Principal · Lavanda", "radius": 18 },
+    "Escucha.dc.html": { "x": 1104, "y": 0, "w": 1024, "h": 600, "title": "Escuchando y respondiendo", "radius": 18 },
+    "Emergencia.dc.html": { "x": 2208, "y": 0, "w": 1024, "h": 600, "title": "Emergencia activa", "radius": 18 },
+    "Musica.dc.html": { "x": 0, "y": 920, "w": 1024, "h": 600, "title": "Reproduciendo", "radius": 18 },
+    "Menta.dc.html": { "x": 1104, "y": 920, "w": 1024, "h": 600, "title": "Principal · Menta (tema alternativo)", "radius": 18 }
+  },
+  "order": [
+    "Principal.dc.html",
+    "Escucha.dc.html",
+    "Emergencia.dc.html",
+    "Musica.dc.html",
+    "Menta.dc.html"
+  ],
+  "notes": {
+    "t1": {
+      "x": 0,
+      "y": -300,
+      "text": "JARVIS · pantalla del dispositivo · 1024 × 600",
+      "kind": "title1",
+      "maxW": 3232
+    },
+    "t2": {
+      "x": 0,
+      "y": 660,
+      "text": "Música y tema alternativo",
+      "kind": "title1",
+      "maxW": 2128
+    }
+  },
+  "designSystems": []
+}
