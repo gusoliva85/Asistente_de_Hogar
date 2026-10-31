@@ -49,7 +49,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | Fase | Qué es | Estado |
 |---|---|---|
 | **0** | Preparación | **Casi terminada** — solo faltan el dominio (F0.e) y las copias de seguridad de Contabo (F0.d), ambas dependen del usuario |
-| 1 | La pantalla viva | **En curso** — pantalla principal aprobada; faltan las otras tres pantallas, el kiosco y las mediciones |
+| 1 | La pantalla viva | **En curso** — las cuatro pantallas aprobadas y desplegadas; falta el kiosco en la Pi y medir |
 | 2 | Backend y datos reales | Sin empezar |
 | 3 | El celular | Sin empezar |
 | 4 | La voz | Sin empezar |
@@ -134,7 +134,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 - [x] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente. — *31/10/2026. Menta implementado; el selector se saca de la pantalla y vuelve en ajustes (Fase 3). Se suma el modo oscuro, adelantado de F10.2.*
 - [x] **F1.6 — Implementar los estados vacíos y de error.** Lista vacía, agenda vacía, sin conexión, micrófono ausente, cargando. Una interfaz que solo contempla el caso feliz es inservible en una casa real. — *31/10/2026. Agenda, compras, recordatorio, música, micrófono, clima y dispositivos sin respuesta. Se miran con ?datos=vacio.*
 - [x] **F1.7 — Implementar las otras pantallas de la maqueta:** escucha, emergencia y música, por ahora con datos fijos. — *31/10/2026. Tres pantallas completas, con navegación entre ellas. Aprobadas tras tres rondas de ajustes.*
-- [ ] **F1.8 — Desplegar el frontend** desde Caddy con las cabeceras de caché correctas.
+- [x] **F1.8 — Desplegar el frontend** desde Caddy con las cabeceras de caché correctas. — *31/10/2026. Compilado en Docker, servido desde un volumen. Verificado desde internet: 200, index.html sin cache, estaticos inmutables un anio, gzip 256 KB -> 82 KB en el cable.*
 - [ ] **F1.9 — Configurar el modo kiosco.** Arranque automático a Chromium a pantalla completa, sin cursor ni barras ni diálogos de recuperación. Acá se decide entre `cage` sobre Wayland y Xorg con openbox, según cuál arranque más rápido en 1 GB de RAM.
 - [ ] **F1.10 — Medir el rendimiento real.** Tiempo hasta pantalla pintada, fluidez, memoria de Chromium, temperatura tras una hora. Números, no impresiones.
 - [ ] **F1.11 — Aplicar la degradación si hace falta.** Si el efecto vidrio no rinde, color sólido semitransparente y animaciones ambientales apagadas. Volver a medir y comparar.
