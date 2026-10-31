@@ -49,7 +49,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | Fase | Qué es | Estado |
 |---|---|---|
 | **0** | Preparación | **Casi terminada** — solo faltan el dominio (F0.e) y las copias de seguridad de Contabo (F0.d), ambas dependen del usuario |
-| 1 | La pantalla viva | **En curso** — andamiaje y tokens listos; faltan los componentes y el kiosco |
+| 1 | La pantalla viva | **En curso** — pantalla principal aprobada; faltan las otras tres pantallas, el kiosco y las mediciones |
 | 2 | Backend y datos reales | Sin empezar |
 | 3 | El celular | Sin empezar |
 | 4 | La voz | Sin empezar |
@@ -129,10 +129,10 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 
 - [x] **F1.1 — Montar el frontend.** React con TypeScript sobre Vite, compilado a estáticos livianos, sin librerías que impongan su estética. — *31/10/2026. Compila: 13 archivos, 385 KB; JS 70 KB comprimido, CSS 2,6 KB. Tipografía empaquetada, solo subconjunto latino.*
 - [x] **F1.2 — Implementar los tokens de diseño.** Los temas de `DECISION_Frontend_Temas.md` como variables CSS intercambiables en bloque. Ningún color escrito a mano dentro de un componente. — *31/10/2026. Cambio de tema verificado en pantalla por el usuario. Incluye la capa de refinamiento de la sección 3.4 y el interruptor de rendimiento reducido.*
-- [ ] **F1.3 — Construir los componentes.** Reloj, clima con el ícono SVG animado, agenda, compras, recordatorio, estado de dispositivos, barra de música, pastillas de estado y botón de emergencia.
-- [ ] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API.
-- [ ] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente.
-- [ ] **F1.6 — Implementar los estados vacíos y de error.** Lista vacía, agenda vacía, sin conexión, micrófono ausente, cargando. Una interfaz que solo contempla el caso feliz es inservible en una casa real.
+- [x] **F1.3 — Construir los componentes.** Reloj, clima con el ícono SVG animado, agenda, compras, recordatorio, estado de dispositivos, barra de música, pastillas de estado y botón de emergencia. — *31/10/2026. Once componentes sobre la maqueta, con tokens y sin colores literales.*
+- [x] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API. — *31/10/2026. Rejilla de 600 px exactos, con datos ficticios con la forma de la API.*
+- [x] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente. — *31/10/2026. Menta implementado; el selector se saca de la pantalla y vuelve en ajustes (Fase 3). Se suma el modo oscuro, adelantado de F10.2.*
+- [x] **F1.6 — Implementar los estados vacíos y de error.** Lista vacía, agenda vacía, sin conexión, micrófono ausente, cargando. Una interfaz que solo contempla el caso feliz es inservible en una casa real. — *31/10/2026. Agenda, compras, recordatorio, música, micrófono, clima y dispositivos sin respuesta. Se miran con ?datos=vacio.*
 - [ ] **F1.7 — Implementar las otras pantallas de la maqueta:** escucha, emergencia y música, por ahora con datos fijos.
 - [ ] **F1.8 — Desplegar el frontend** desde Caddy con las cabeceras de caché correctas.
 - [ ] **F1.9 — Configurar el modo kiosco.** Arranque automático a Chromium a pantalla completa, sin cursor ni barras ni diálogos de recuperación. Acá se decide entre `cage` sobre Wayland y Xorg con openbox, según cuál arranque más rápido en 1 GB de RAM.
@@ -141,7 +141,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 
 ### 🔧 Lo que hacés vos
 
-- [ ] **F1.a — Mirar la pantalla y opinar.** Es el momento más barato para cambiar cosas.
+- [x] **F1.a — Mirar la pantalla y opinar.** Es el momento más barato para cambiar cosas. — *31/10/2026. Dos rondas de ajustes aplicadas.*
 - [ ] **F1.b — Dejarla encendida un día entero** y contarme si se calienta, se traba o se reinicia.
 
 ### ✅ Cómo sabemos que terminó
