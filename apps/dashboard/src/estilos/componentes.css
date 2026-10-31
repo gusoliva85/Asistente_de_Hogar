@@ -3,11 +3,7 @@
 
    Medidas tomadas de documentacion/mockups/project/Principal.dc.html.
    La suma vertical tiene que dar 600 exactos:
-   22 + 44 + 12 + 392 + 12 + 96 + 22 = 600.
-
-   El encabezado creció de 30 a 44 px para que el botón de modo llegue
-   al área táctil mínima. Los 14 px salen de las tarjetas de agenda y
-   compras, que iban sobradas de alto.
+   22 + 30 + 12 + 406 + 12 + 96 + 22 = 600.
 
    Ningún color literal: todo sale de tokens.css.
    ─────────────────────────────────────────────────────────────────────── */
@@ -29,7 +25,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
   gap: 12px;
-  height: 392px;
+  height: 406px;
 }
 
 .columna {
@@ -43,7 +39,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  height: 194px;
+  height: 208px;
 }
 
 .grano {
@@ -61,7 +57,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  height: 44px;
+  height: 30px;
 }
 
 .encabezado__izquierda,
@@ -77,9 +73,9 @@
 }
 
 .marca {
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,7 +89,7 @@
 
 .encabezado__saludo {
   margin: 0;
-  font-size: 21px;
+  font-size: 19px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.025em;
   white-space: nowrap;
@@ -102,11 +98,11 @@
 .pastilla {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 7px;
+  font-size: 12px;
   font-weight: var(--peso-semi);
   color: var(--texto-2);
-  padding: 8px 14px;
+  padding: 5px 12px;
   border-radius: var(--radio-pastilla);
   background: var(--vidrio);
   box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -143,27 +139,29 @@
   }
 }
 
-/* Área táctil mínima: 44 px. Es una pantalla de 7" que se opera con el
-   dedo, no con el mouse. */
+/* Del alto del encabezado, como las pastillas que tiene al lado. Queda
+   por debajo del área táctil mínima de 44 px: se acepta porque es un
+   ajuste de preferencia, no un control crítico, y la fila de arriba no
+   puede crecer sin sacarle alto a las tarjetas. */
 .boton-modo {
-  height: 44px;
-  padding: 0 18px;
+  height: 30px;
+  min-height: 30px;
+  padding: 0 13px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   border-radius: var(--radio-pastilla);
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: var(--peso-semi);
   color: var(--texto-2);
   background: var(--vidrio);
-  box-shadow: var(--brillo-interior), var(--sombra-tarjeta);
+  box-shadow: var(--brillo-interior), 0 2px 8px rgba(0, 0, 0, 0.05);
   flex: none;
   white-space: nowrap;
 }
 
 .boton-modo:hover {
   color: var(--texto);
-  box-shadow: var(--brillo-interior), var(--sombra-elevada);
 }
 
 /* La señal lleva el color; el texto que la acompaña queda en gris */
@@ -957,6 +955,8 @@
 /* Mismo ancho que la columna de la derecha: las tarjetas de arriba y el
    botón quedan alineados en un solo borde vertical. */
 .ayuda {
+  position: relative;
+  overflow: hidden;
   width: 300px;
   height: 100%;
   flex: none;
@@ -974,4 +974,37 @@
   color: #fff;
   background: var(--emergencia);
   box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
+}
+
+/* Destello del botón de emergencia.
+   Cada siete segundos cruza un reflejo muy tenue. No es decoración: es
+   el único control que alguien podría necesitar sin haberlo mirado
+   nunca, y un destello cada tanto lo mantiene presente sin parpadear ni
+   pedir atención. La franja es un degradado desplazándose, sin
+   desenfoque: no cuesta nada. */
+.ayuda::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.24) 50%,
+    transparent 60%
+  );
+  transform: translateX(-140%);
+  animation: destello 7s var(--curva) infinite;
+  pointer-events: none;
+}
+
+@keyframes destello {
+  0%,
+  84% {
+    transform: translateX(-140%);
+  }
+  97%,
+  100% {
+    transform: translateX(140%);
+  }
 }

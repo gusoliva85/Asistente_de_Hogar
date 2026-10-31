@@ -49,7 +49,7 @@ export function BarraVoz({ microfono }: Props) {
 
       {/* Siempre en pantalla, nunca detrás de un menú. Es la razón por la
           que existe el proyecto. */}
-      <button type="button" className="ayuda realce">
+      <button type="button" className="ayuda">
         <IconoAyuda tamano={22} />
         Necesito ayuda
       </button>
