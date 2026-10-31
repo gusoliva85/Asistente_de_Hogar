@@ -2,7 +2,7 @@ import type { Pista } from '../datos/tipos'
 import { IconoNota, IconoPausa, IconoReproducir } from './Iconos'
 import { Grano } from './Grano'
 
-export function BarraMusica({ pista }: { pista: Pista | null }) {
+export function BarraMusica({ pista, onAbrir }: { pista: Pista | null; onAbrir: () => void }) {
   // Sin música, el visor sigue estando: mismo marco, misma tapa, mismo
   // botón, apagados. Un hueco en blanco no deja saber a qué pertenece
   // ese espacio ni que ahí va a aparecer lo que suene.
@@ -44,6 +44,9 @@ export function BarraMusica({ pista }: { pista: Pista | null }) {
           <span>{pista.origen}</span>
         </div>
       </div>
+      {/* Cubre la tarjeta menos el botón de pausa, que queda por encima.
+          Es un botón real y no un div con onClick. */}
+      <button type="button" className="musica__abrir" onClick={onAbrir} aria-label="Abrir música" />
       <button type="button" className="musica__boton" aria-label={pista.sonando ? 'Pausar' : 'Reproducir'}>
         {pista.sonando ? <IconoPausa /> : <IconoReproducir />}
       </button>

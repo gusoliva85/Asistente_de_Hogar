@@ -16,9 +16,21 @@ interface Props {
   luz: Luz
   automatico: boolean
   onLuz: () => void
+  onEscuchar: () => void
+  onAyuda: () => void
+  onMusica: () => void
 }
 
-export function Principal({ estado, ahora, luz, automatico, onLuz }: Props) {
+export function Principal({
+  estado,
+  ahora,
+  luz,
+  automatico,
+  onLuz,
+  onEscuchar,
+  onAyuda,
+  onMusica,
+}: Props) {
 
   return (
     <div className="pantalla">
@@ -44,11 +56,11 @@ export function Principal({ estado, ahora, luz, automatico, onLuz }: Props) {
         <div className="columna columna--lateral">
           <TarjetaRecordatorio recordatorio={estado.recordatorio} />
           <TarjetaCasa dispositivos={estado.dispositivos} />
-          <BarraMusica pista={estado.musica} />
+          <BarraMusica pista={estado.musica} onAbrir={onMusica} />
         </div>
       </div>
 
-      <BarraVoz microfono={estado.microfono} />
+      <BarraVoz microfono={estado.microfono} onEscuchar={onEscuchar} onAyuda={onAyuda} />
     </div>
   )
 }

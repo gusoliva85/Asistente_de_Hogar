@@ -14,6 +14,7 @@ import '@fontsource/plus-jakarta-sans/latin-800.css'
 import './estilos/tokens.css'
 import './estilos/base.css'
 import './estilos/componentes.css'
+import './estilos/pantallas.css'
 
 import { App } from './App'
 import {

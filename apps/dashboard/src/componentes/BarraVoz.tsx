@@ -3,6 +3,8 @@ import { IconoAyuda, IconoMicrofono, IconoMicrofonoTachado } from './Iconos'
 
 interface Props {
   microfono: EstadoMicrofono
+  onEscuchar: () => void
+  onAyuda: () => void
 }
 
 const MENSAJES: Record<EstadoMicrofono, { titulo: React.ReactNode; nota: string }> = {
@@ -28,13 +30,13 @@ const MENSAJES: Record<EstadoMicrofono, { titulo: React.ReactNode; nota: string 
   },
 }
 
-export function BarraVoz({ microfono }: Props) {
+export function BarraVoz({ microfono, onEscuchar, onAyuda }: Props) {
   const roto = microfono === 'ausente' || microfono === 'silenciado'
   const { titulo, nota } = MENSAJES[microfono]
 
   return (
     <div className="barra-inferior aparece" style={{ animationDelay: '420ms' }}>
-      <div className="voz vidrio">
+      <button type="button" className="voz vidrio" onClick={onEscuchar}>
         <span
           className={`voz__mic${microfono === 'listo' || microfono === 'escuchando' ? ' voz__mic--vivo ambiental' : ''}${roto ? ' voz__mic--roto' : ''}`}
           aria-hidden="true"
@@ -45,11 +47,11 @@ export function BarraVoz({ microfono }: Props) {
           <p className="voz__titulo">{titulo}</p>
           <p className="voz__nota">{nota}</p>
         </div>
-      </div>
+      </button>
 
       {/* Siempre en pantalla, nunca detrás de un menú. Es la razón por la
           que existe el proyecto. */}
-      <button type="button" className="ayuda">
+      <button type="button" className="ayuda" onClick={onAyuda}>
         <IconoAyuda tamano={22} />
         Necesito ayuda
       </button>

@@ -48,6 +48,19 @@
   --grano-opacidad: 0.055;
   --grano-opacidad-oscuro: 0.09;
 
+  /* Pantallas de pantalla completa. Son oscuras siempre, en los cuatro
+     modos: la de escucha porque el contenido es una sola cosa y el fondo
+     tiene que desaparecer, y la de emergencia porque se mira de noche y
+     a los apurones. */
+  --fondo-escucha: radial-gradient(900px 600px at 50% 40%, #2a2456 0%, #171430 55%, #100e22 100%);
+  --fondo-emergencia: radial-gradient(900px 600px at 50% 30%, #3a1620 0%, #24101a 55%, #150a10 100%);
+  --alerta: #ff5a5a;
+  --alerta-tenue: rgba(255, 90, 90, 0.16);
+  --exito: #4fc48d;
+  --exito-tenue: rgba(79, 196, 141, 0.16);
+  --espera: #e8b063;
+  --espera-tenue: rgba(232, 176, 99, 0.14);
+
   /* Rejilla de 1024 × 600 */
   --ancho-pantalla: 1024px;
   --alto-pantalla: 600px;

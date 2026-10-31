@@ -109,3 +109,92 @@ export interface EstadoPantalla {
   dispositivos: Dispositivo[]
   musica: Pista | null
 }
+
+/* ── Pantalla de escucha ────────────────────────────────────────────────── */
+
+/**
+ * Dónde se resolvió lo que se pidió. Se muestra siempre y sin eufemismos:
+ * es la diferencia entre un asistente que explica qué hace con tu voz y
+ * uno que no.
+ */
+export type OrigenRespuesta = 'reglas' | 'modelo-local' | 'nube'
+
+export interface AccionVerificada {
+  /** Lo que se hizo, en pasado y en una línea. */
+  resumen: string
+  /**
+   * Cuándo se comprobó contra la base de datos. **Nulo mientras no se
+   * verificó.** No hay confirmación sin este dato: es la regla 3 del
+   * proyecto puesta en el modelo.
+   */
+  verificadoA: string | null
+  /** Lo concreto que cambió: los artículos, los eventos, lo que sea. */
+  detalles: string[]
+}
+
+export interface EstadoEscucha {
+  /** Lo que se entendió, tal cual. Vacío mientras todavía escucha. */
+  transcripcion: string
+  escuchando: boolean
+  origen: OrigenRespuesta
+  accion: AccionVerificada | null
+  /** Si el cambio ya llegó al celular. Nulo si todavía no se sabe. */
+  sincronizado: boolean | null
+}
+
+/* ── Pantalla de emergencia ─────────────────────────────────────────────── */
+
+export type CanalAviso = 'notificacion' | 'sms' | 'llamada'
+
+/**
+ * El estado real de un aviso, sin suavizar.
+ *
+ * «Entregado» y «confirmó» son cosas distintas y se muestran distintas:
+ * que un mensaje llegue al teléfono no significa que alguien lo haya
+ * leído, y decir lo contrario sería exactamente lo que no hacemos.
+ */
+export type EstadoAviso =
+  | 'pendiente'
+  | 'enviado'
+  | 'entregado'
+  | 'confirmado'
+  | 'fallido'
+  | 'llamando'
+
+export interface Aviso {
+  id: string
+  nombre: string
+  vinculo: string
+  canal: CanalAviso
+  estado: EstadoAviso
+  /** Línea de detalle ya redactada por el servidor. */
+  detalle: string
+  /** Etiqueta corta del resultado: «VA EN CAMINO», «SMS ENVIADO». */
+  etiqueta: string | null
+  /** Segundos hasta el siguiente intento. Nulo si no hay escalamiento. */
+  escalaEn: number | null
+}
+
+export interface Emergencia {
+  /** Cómo se disparó: botón, voz, caída detectada. */
+  origen: string
+  comenzo: string
+  alarmaSonando: boolean
+  servidorEnLinea: boolean
+  escalando: boolean
+  avisos: Aviso[]
+}
+
+/* ── Pantalla de música ─────────────────────────────────────────────────── */
+
+export interface PistaCompleta extends Pista {
+  album: string | null
+  /** Segundos. Nulo si la fuente no los informa. */
+  duracion: number | null
+  posicion: number | null
+}
+
+export interface EstadoMusica {
+  pista: PistaCompleta
+  cola: Pista[]
+}

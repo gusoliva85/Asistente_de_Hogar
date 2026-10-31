@@ -1,0 +1,895 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   JARVIS — Escucha, emergencia y música (F1.7)
+
+   Las tres ocupan los 1024 × 600 completos. Las dos primeras son oscuras
+   en los cuatro modos: en la de escucha el fondo tiene que desaparecer
+   para que quede una sola cosa en pantalla, y la de emergencia se mira
+   de noche y a los apurones.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.escucha,
+.emergencia {
+  width: var(--ancho-pantalla);
+  height: var(--alto-pantalla);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: var(--sobre-oscuro);
+}
+
+/* ── Escucha ────────────────────────────────────────────────────────────── */
+
+.escucha {
+  padding: 22px 26px;
+  background: var(--fondo-escucha);
+}
+
+.escucha__aura {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: aura 11s ease-in-out infinite;
+}
+
+.escucha__aura--1 {
+  top: -180px;
+  left: -120px;
+  width: 520px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(150, 138, 255, 0.4), transparent 68%);
+}
+
+.escucha__aura--2 {
+  bottom: -220px;
+  right: -140px;
+  width: 560px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(244, 150, 196, 0.26), transparent 68%);
+  animation-delay: -5s;
+}
+
+.escucha__encabezado {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.escucha__volver,
+.ayuda--escucha {
+  border-radius: var(--radio-pastilla);
+}
+
+.escucha__volver {
+  height: 30px;
+  min-height: 30px;
+  padding: 0 15px;
+  font-size: 12px;
+  font-weight: var(--peso-semi);
+  color: var(--sobre-oscuro-2);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.escucha__estado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* El sello de dónde se resolvió. Verde cuando no salió de casa: es una
+   promesa cumplida, no una etiqueta decorativa. */
+.sello {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: var(--radio-pastilla);
+  font-size: 12px;
+  font-weight: var(--peso-semi);
+  color: var(--sobre-oscuro-2);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.sello--casa {
+  color: var(--exito);
+  background: var(--exito-tenue);
+  border-color: transparent;
+}
+
+.sello__punto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: latir 2.4s ease-in-out infinite;
+}
+
+.escucha__hora {
+  font-size: 15px;
+  font-weight: var(--peso-fuerte);
+  color: var(--sobre-oscuro-2);
+}
+
+.escucha__cuerpo {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* ── Orbe del micrófono ─────────────────────────────────────────────────── */
+
+.orbe {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: flotar-orbe 6s ease-in-out infinite;
+}
+
+@keyframes flotar-orbe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.orbe__nucleo {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--acento-contraste);
+  background: var(--acento-degradado);
+  box-shadow: var(--brillo-interior-boton), var(--halo-acento-fuerte);
+}
+
+.orbe__anillo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--acento);
+  animation: pulso 4s cubic-bezier(0.25, 0.6, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
+.orbe__anillo--2 {
+  animation-delay: -2s;
+}
+
+@keyframes pulso {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.45;
+  }
+  70%,
+  100% {
+    transform: scale(1.32);
+    opacity: 0;
+  }
+}
+
+.escucha__titulo {
+  margin: 0;
+  font-size: 30px;
+  font-weight: var(--peso-normal);
+  letter-spacing: -0.02em;
+}
+
+/* Lo que se entendió, tal cual se dijo. Entre comillas y en grande:
+   si entendimos mal, tiene que saltar a la vista. */
+.escucha__dicho {
+  margin: 0;
+  max-width: 740px;
+  text-align: center;
+  font-size: 27px;
+  font-weight: var(--peso-normal);
+  line-height: 1.26;
+  letter-spacing: -0.02em;
+  color: var(--sobre-oscuro);
+}
+
+/* ── El resultado verificado ────────────────────────────────────────────── */
+
+.resultado {
+  margin-top: 6px;
+  width: 640px;
+  box-sizing: border-box;
+  padding: 18px 22px;
+  border-radius: var(--radio-tarjeta-grande);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  box-shadow: var(--sombra-elevada);
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sube {
+  animation: subir 750ms var(--curva-entrada) both;
+}
+
+.resultado__titulo {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 20px;
+  font-weight: var(--peso-fuerte);
+  letter-spacing: -0.02em;
+}
+
+.resultado__tilde {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--exito);
+}
+
+/* La prueba de que pasó. Sin esta línea, el título de arriba sería una
+   promesa y no un hecho verificado. */
+.resultado__prueba {
+  margin: 7px 0 0 36px;
+  font-size: 12.5px;
+  font-weight: var(--peso-medio);
+  color: var(--exito);
+}
+
+.resultado__prueba--pendiente {
+  color: var(--espera);
+}
+
+.resultado__detalles {
+  list-style: none;
+  margin: 14px 0 0 36px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resultado__detalles li {
+  padding: 7px 13px;
+  border-radius: var(--radio-chip);
+  font-size: 13.5px;
+  font-weight: var(--peso-semi);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.resultado__pie {
+  margin: 16px 0 0 36px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  font-weight: var(--peso-medio);
+}
+
+.resultado__pista {
+  color: var(--sobre-oscuro-2);
+}
+
+.resultado__sincro {
+  color: var(--exito);
+}
+
+.resultado__sincro--no {
+  color: var(--espera);
+}
+
+.ayuda--escucha {
+  position: absolute;
+  right: 26px;
+  bottom: 22px;
+  width: auto;
+  height: 52px;
+  padding: 0 24px;
+  gap: 10px;
+  font-size: 16px;
+}
+
+/* ── Emergencia ─────────────────────────────────────────────────────────── */
+
+.emergencia {
+  padding: 20px 24px;
+  gap: 14px;
+  background: var(--fondo-emergencia);
+}
+
+.emergencia__aura {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: alerta-respira 2s ease-in-out infinite;
+}
+
+@keyframes alerta-respira {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.78;
+    transform: scale(1.06);
+  }
+}
+
+.emergencia__aura--1 {
+  top: -200px;
+  left: -100px;
+  width: 520px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(255, 90, 90, 0.34), transparent 68%);
+}
+
+.emergencia__aura--2 {
+  bottom: -240px;
+  right: -120px;
+  width: 540px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(255, 140, 90, 0.22), transparent 68%);
+  animation-delay: -1s;
+}
+
+/* Marco que late en el borde de la pantalla. Se ve desde el otro lado
+   de la habitación, que es de donde se va a mirar. */
+.emergencia__marco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 4px var(--alerta);
+  animation: marco 2s ease-in-out infinite;
+}
+
+@keyframes marco {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.emergencia__encabezado {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.faro {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--alerta);
+  animation: faro 2s ease-out infinite;
+}
+
+@keyframes faro {
+  0%,
+  100% {
+    box-shadow: 0 0 16px 2px rgba(255, 90, 90, 0.8), 0 0 0 0 rgba(255, 90, 90, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 16px 2px rgba(255, 90, 90, 0.8), 0 0 0 16px rgba(255, 90, 90, 0);
+  }
+}
+
+.emergencia__titulo {
+  margin: 0;
+  font-size: 26px;
+  font-weight: var(--peso-extra);
+  letter-spacing: -0.025em;
+}
+
+.emergencia__origen {
+  margin: 3px 0 0;
+  font-size: 13px;
+  font-weight: var(--peso-medio);
+  color: var(--sobre-oscuro-2);
+}
+
+.emergencia__origen strong {
+  color: var(--sobre-oscuro);
+  font-variant-numeric: tabular-nums;
+}
+
+.emergencia__alarma {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 15px;
+  border-radius: var(--radio-pastilla);
+  font-size: 12.5px;
+  font-weight: var(--peso-fuerte);
+  color: var(--alerta);
+  background: var(--alerta-tenue);
+}
+
+.emergencia__cuerpo {
+  position: relative;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 282px;
+  gap: 14px;
+  min-height: 0;
+}
+
+.emergencia__avisos,
+.emergencia__estado {
+  box-sizing: border-box;
+  padding: 15px 18px;
+  border-radius: var(--radio-tarjeta-grande);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  min-height: 0;
+}
+
+.emergencia__cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.emergencia__subtitulo {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: var(--peso-extra);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sobre-oscuro-2);
+}
+
+.emergencia__conteo {
+  font-size: 12.5px;
+  font-weight: var(--peso-fuerte);
+  color: var(--sobre-oscuro);
+}
+
+.avisos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radio-bloque);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.aviso__marca {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 3px;
+  flex: none;
+  background: var(--sobre-oscuro-2);
+  opacity: 0.4;
+}
+
+.aviso--bien .aviso__marca {
+  background: var(--exito);
+  opacity: 1;
+}
+
+.aviso--mal .aviso__marca {
+  background: var(--alerta);
+  opacity: 1;
+}
+
+.aviso--curso .aviso__marca,
+.aviso--espera .aviso__marca {
+  background: var(--espera);
+  opacity: 1;
+}
+
+.aviso__texto {
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.aviso__nombre {
+  font-size: 14.5px;
+  font-weight: var(--peso-fuerte);
+}
+
+.aviso__vinculo {
+  font-weight: var(--peso-normal);
+  color: var(--sobre-oscuro-2);
+}
+
+.aviso__detalle {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: var(--peso-normal);
+  color: var(--sobre-oscuro-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aviso--mal .aviso__detalle {
+  color: var(--alerta);
+}
+
+.aviso__derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex: none;
+}
+
+.aviso__etiqueta {
+  padding: 4px 10px;
+  border-radius: var(--radio-pastilla);
+  font-size: 10.5px;
+  font-weight: var(--peso-extra);
+  letter-spacing: 0.06em;
+}
+
+.aviso__etiqueta--bien {
+  color: var(--exito);
+  background: var(--exito-tenue);
+}
+
+.aviso__etiqueta--mal {
+  color: var(--alerta);
+  background: var(--alerta-tenue);
+}
+
+.aviso__etiqueta--espera,
+.aviso__etiqueta--curso {
+  color: var(--espera);
+  background: var(--espera-tenue);
+}
+
+.aviso__escala {
+  font-size: 11px;
+  font-weight: var(--peso-semi);
+  color: var(--espera);
+}
+
+.estado-lista {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: var(--peso-semi);
+}
+
+.estado-lista li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.estado-lista li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+  background: currentColor;
+}
+
+.estado-lista .bien {
+  color: var(--exito);
+}
+
+.estado-lista .mal {
+  color: var(--alerta);
+}
+
+.estado-lista .curso {
+  color: var(--espera);
+}
+
+.emergencia__aclaracion {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--vidrio-sobre-oscuro-borde);
+  font-size: 12.5px;
+  font-weight: var(--peso-medio);
+  color: var(--sobre-oscuro-2);
+}
+
+.emergencia__aclaracion strong {
+  color: var(--sobre-oscuro);
+}
+
+.emergencia__aclaracion span {
+  display: block;
+  margin-top: 5px;
+  font-weight: var(--peso-normal);
+}
+
+.emergencia__acciones {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  flex: none;
+}
+
+.emergencia__boton {
+  height: 62px;
+  flex: 1;
+  border-radius: 24px;
+  font-size: 17px;
+  font-weight: var(--peso-fuerte);
+}
+
+.emergencia__boton--hablar {
+  color: var(--sobre-oscuro);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+/* Cancelar es la acción menos reversible de todo el sistema y aun así
+   tiene que ser fácil de encontrar: quien está bien quiere apagar esto
+   ya. Se distingue por color, no por tamaño. */
+.emergencia__boton--cancelar {
+  color: #fff;
+  background: var(--emergencia);
+  box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
+}
+
+/* ── Música ─────────────────────────────────────────────────────────────── */
+
+.pantalla--musica {
+  gap: 14px;
+}
+
+.musica__aura {
+  position: absolute;
+  top: -160px;
+  right: -120px;
+  width: 460px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--acento), transparent 68%);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: aura 9s ease-in-out infinite;
+}
+
+.boton-modo--ayuda {
+  color: var(--emergencia-plano);
+}
+
+.repro {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-height: 0;
+}
+
+.repro__arte {
+  position: relative;
+  width: 218px;
+  height: 218px;
+  flex: none;
+}
+
+/* El disco asoma por detrás de la carátula y gira. Es el guiño que hace
+   que la pantalla de música se sienta música. */
+.repro__disco {
+  position: absolute;
+  top: 50%;
+  right: -46px;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--fondo-base) 0 16%, transparent 17%),
+    repeating-radial-gradient(circle at center, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 5px),
+    linear-gradient(145deg, #2b2456, #1a1733);
+  box-shadow: var(--sombra-elevada);
+  animation: giro 24s linear infinite;
+}
+
+.repro__tapa {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(145deg, #2b2456, #5b3f8e 48%, #c45f86);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), var(--sombra-elevada);
+}
+
+.repro__texto {
+  min-width: 0;
+}
+
+.repro__origen {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: var(--peso-fuerte);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.repro__titulo {
+  margin: 10px 0 0;
+  font-size: 44px;
+  font-weight: var(--peso-extra);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.repro__artista {
+  margin: 6px 0 0;
+  font-size: 20px;
+  font-weight: var(--peso-semi);
+  color: var(--texto-2);
+}
+
+.repro__album {
+  margin: 3px 0 0;
+  font-size: 13.5px;
+  font-weight: var(--peso-normal);
+  color: var(--texto-3);
+}
+
+.repro__avance {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: var(--peso-semi);
+  color: var(--texto-3);
+}
+
+.barra-avance {
+  width: 300px;
+  height: 6px;
+  border-radius: var(--radio-pastilla);
+  background: var(--realce-fila);
+  box-shadow: var(--sombra-hundida);
+  overflow: hidden;
+}
+
+.barra-avance__relleno {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--acento-degradado);
+}
+
+.repro__sin-tiempo {
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  font-weight: var(--peso-medio);
+  color: var(--texto-3);
+}
+
+.repro__boton {
+  margin-top: 20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--acento-contraste);
+  background: var(--acento-degradado);
+  box-shadow: var(--brillo-interior-boton), var(--halo-acento-fuerte);
+}
+
+.cola {
+  position: relative;
+  box-sizing: border-box;
+  height: 158px;
+  padding: 14px 18px;
+  border-radius: var(--radio-tarjeta-grande);
+  background: var(--vidrio);
+  border: 1px solid var(--vidrio-borde);
+  backdrop-filter: var(--vidrio-desenfoque);
+  -webkit-backdrop-filter: var(--vidrio-desenfoque);
+  box-shadow: var(--sombra-tarjeta), var(--brillo-interior);
+  flex: none;
+}
+
+.cola__lista {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cola__fila {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 6px 10px;
+  margin: 0 -10px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  transition: background var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.cola__fila:hover {
+  background: var(--realce-fila);
+  transform: translateX(3px);
+}
+
+.cola__nota {
+  display: flex;
+  color: var(--acento);
+}
+
+.cola__titulo {
+  font-weight: var(--peso-semi);
+}
+
+.cola__artista {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-3);
+}
+
+.cola__pista {
+  margin: 10px 0 0;
+  font-size: 12px;
+  font-weight: var(--peso-medio);
+  color: var(--texto-3);
+}

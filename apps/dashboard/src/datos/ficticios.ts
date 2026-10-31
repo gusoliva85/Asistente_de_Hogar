@@ -1,4 +1,4 @@
-import type { EstadoPantalla } from './tipos'
+import type { Emergencia, EstadoEscucha, EstadoMusica, EstadoPantalla } from './tipos'
 
 /**
  * Datos de la Fase 1. Se reemplazan por la API en la Fase 2.
@@ -85,5 +85,93 @@ export function estadoVacio(): EstadoPantalla {
       { id: 'd1', nombre: 'Luces del living', clase: 'luz', encendido: null, nivel: null },
     ],
     musica: null,
+  }
+}
+
+/* ── Las otras tres pantallas (F1.7) ────────────────────────────────────── */
+
+export function escuchaFicticia(): EstadoEscucha {
+  return {
+    transcripcion: 'Agregá dos kilos de papa, leche y detergente a las compras',
+    escuchando: false,
+    origen: 'modelo-local',
+    accion: {
+      resumen: 'Agregué 3 productos a la lista',
+      verificadoA: new Date().toISOString(),
+      detalles: ['Papa · 2 kg', 'Leche', 'Detergente'],
+    },
+    sincronizado: true,
+  }
+}
+
+export function emergenciaFicticia(): Emergencia {
+  const hace = (segundos: number) => new Date(Date.now() - segundos * 1000).toISOString()
+  return {
+    origen: 'Activada con el botón',
+    comenzo: hace(74),
+    alarmaSonando: true,
+    servidorEnLinea: true,
+    escalando: true,
+    avisos: [
+      {
+        id: 'a1',
+        nombre: 'María',
+        vinculo: 'hija',
+        canal: 'notificacion',
+        estado: 'confirmado',
+        detalle: 'Notificación · confirmó a las 18:43',
+        etiqueta: 'VA EN CAMINO',
+        escalaEn: null,
+      },
+      {
+        id: 'a2',
+        nombre: 'Jorge',
+        vinculo: 'hijo',
+        canal: 'notificacion',
+        estado: 'entregado',
+        detalle: 'Notificación entregada 18:42 · todavía no respondió',
+        etiqueta: null,
+        escalaEn: 48,
+      },
+      {
+        id: 'a3',
+        nombre: 'Ana',
+        vinculo: 'vecina',
+        canal: 'sms',
+        estado: 'fallido',
+        detalle: 'No se pudo entregar · teléfono sin conexión',
+        etiqueta: 'SMS ENVIADO',
+        escalaEn: null,
+      },
+      {
+        id: 'a4',
+        nombre: 'Carlos',
+        vinculo: 'hermano',
+        canal: 'llamada',
+        estado: 'llamando',
+        detalle: 'Llamada telefónica en curso',
+        etiqueta: null,
+        escalaEn: null,
+      },
+    ],
+  }
+}
+
+export function musicaFicticia(): EstadoMusica {
+  return {
+    pista: {
+      titulo: 'De música ligera',
+      artista: 'Soda Stereo',
+      origen: 'YouTube',
+      sonando: true,
+      album: 'Canción Animal · 1990',
+      duracion: 212,
+      posicion: 88,
+    },
+    cola: [
+      { titulo: 'Un millón de años luz', artista: 'Soda Stereo', origen: 'YouTube', sonando: false },
+      { titulo: 'Té para tres', artista: 'Soda Stereo', origen: 'YouTube', sonando: false },
+      { titulo: 'En el séptimo día', artista: 'Soda Stereo', origen: 'YouTube', sonando: false },
+    ],
   }
 }

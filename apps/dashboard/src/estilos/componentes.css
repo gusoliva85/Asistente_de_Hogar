@@ -1047,3 +1047,34 @@
     transform: translateX(125%);
   }
 }
+
+/* Cubre la tarjeta de música para abrir la pantalla completa. El botón
+   de pausa queda por encima con z-index. */
+.musica__abrir {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: inherit;
+  background: none;
+}
+
+.musica__abrir:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.musica__boton {
+  position: relative;
+  z-index: 1;
+}
+
+/* La barra de voz es un botón: tocarla abre la pantalla de escucha. */
+.voz {
+  text-align: left;
+  color: var(--texto);
+}
+
+.voz:hover {
+  transform: none;
+  box-shadow: var(--sombra-elevada), var(--brillo-interior);
+}
