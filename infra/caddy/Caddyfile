@@ -1,6 +1,8 @@
-{
-	email {$EMAIL_CERTIFICADO}
-}
+# Sin bloque global de opciones a propósito.
+# La directiva "email" no admite valor vacío: si EMAIL_CERTIFICADO no está
+# definido, Caddy no arranca. Let's Encrypt no exige correo, así que se
+# omite. Cuando haya dominio y quieras avisos de vencimiento, agregá
+# dentro del bloque del sitio:  tls tu@correo.com
 
 {$DOMINIO} {
 	encode gzip zstd
