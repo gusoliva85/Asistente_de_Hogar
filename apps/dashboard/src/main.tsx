@@ -21,6 +21,7 @@ import {
   aplicarLuz,
   aplicarMovimiento,
   aplicarRendimiento,
+  aplicarVidrio,
   aplicarTema,
   leerModoLuz,
   leerTemaGuardado,
@@ -33,6 +34,7 @@ aplicarTema(leerTemaGuardado())
 aplicarLuz(resolverLuz(leerModoLuz(new Date()), new Date()))
 const parametros = new URLSearchParams(location.search)
 aplicarRendimiento(parametros.get('rendimiento') === 'reducido')
+aplicarVidrio(parametros.get('vidrio') === 'solido')
 // Por defecto encendidas: ver aplicarMovimiento. Con ?movimiento=sistema
 // se vuelve a obedecer la preferencia del sistema operativo.
 aplicarMovimiento(parametros.get('movimiento') !== 'sistema')

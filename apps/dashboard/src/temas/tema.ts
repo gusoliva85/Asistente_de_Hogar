@@ -56,9 +56,22 @@ export function aplicarTema(tema: Tema): void {
 }
 
 /**
- * Modo de rendimiento reducido: cambia el vidrio por color sólido y apaga
- * las animaciones ambientales. Se decide con números en F1.10, no por
- * impresión. Mientras tanto se puede forzar con ?rendimiento=reducido.
+ * Vidrio sólido: apaga **solo** el desenfoque, que es lo único que de
+ * verdad hace sufrir a la GPU. En la Pi 3, `backdrop-filter` llega a
+ * tumbar el renderizador de Chromium. Las animaciones, el grano y las
+ * sombras siguen encendidos.
+ *
+ * Se fuerza con ?vidrio=solido
+ */
+export function aplicarVidrio(solido: boolean): void {
+  if (solido) document.documentElement.dataset.vidrio = 'solido'
+  else delete document.documentElement.dataset.vidrio
+}
+
+/**
+ * El martillo: desenfoque, grano y animaciones ambientales, todo
+ * apagado. Solo si lo anterior no alcanza. Se fuerza con
+ * ?rendimiento=reducido
  */
 export function aplicarRendimiento(reducido: boolean): void {
   if (reducido) {

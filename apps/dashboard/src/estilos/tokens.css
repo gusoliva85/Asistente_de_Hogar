@@ -245,25 +245,38 @@
 }
 
 /* ── Degradación para la Raspberry Pi 3 ─────────────────────────────────────
-   backdrop-filter con desenfoque es caro en GPU. Si F1.10 muestra que no
-   rinde, se activa este atributo en <html> y el vidrio pasa a ser color
-   sólido semitransparente, sin desenfoque. Es un interruptor, no un
-   rediseño: los componentes no se enteran.
+   Son dos interruptores separados y no uno, porque lo que cuesta caro y
+   lo que se ve lindo no son lo mismo:
+
+   `data-vidrio="solido"` apaga **solo** el desenfoque. Es lo único que
+   de verdad hace sufrir a la GPU: en la Pi 3, `backdrop-filter` llega a
+   tumbar el renderizador de Chromium con una violación de segmento.
+   Todo lo demás —animaciones, grano, sombras en capas, brillo interior,
+   lustre— sigue encendido, y es lo que sostiene la sensación de
+   material. El vidrio pasa a ser color sólido semitransparente.
+
+   `data-rendimiento="reducido"` es el martillo: apaga además el grano y
+   las animaciones ambientales. Solo si lo anterior no alcanza.
+
+   Ninguno de los dos es un rediseño: los componentes no se enteran.
    ─────────────────────────────────────────────────────────────────────── */
 
+[data-vidrio='solido'],
 [data-rendimiento='reducido'] {
-  --grano-opacidad: 0;
-  --grano-opacidad-oscuro: 0;
-  /* Se apaga el desenfoque, que es lo caro en GPU. El brillo interior, el
-     lustre y las sombras en capas se conservan: cuestan prácticamente
-     nada y son lo que sostiene la sensación de material. */
   --vidrio-desenfoque: none;
 }
 
+[data-tema='lavanda'][data-vidrio='solido'],
 [data-tema='lavanda'][data-rendimiento='reducido'] {
   --vidrio: rgba(255, 255, 255, 0.88);
 }
 
+[data-luz='oscuro'][data-vidrio='solido'],
 [data-luz='oscuro'][data-rendimiento='reducido'] {
   --vidrio: rgba(255, 255, 255, 0.09);
+}
+
+[data-rendimiento='reducido'] {
+  --grano-opacidad: 0;
+  --grano-opacidad-oscuro: 0;
 }
