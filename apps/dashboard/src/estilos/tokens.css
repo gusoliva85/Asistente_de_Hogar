@@ -1,0 +1,152 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   JARVIS — Tokens de diseño
+
+   Este archivo es el contrato visual. Los valores salen de
+   documentacion/DECISION_Frontend_Temas.md, sección 3.
+
+   REGLA QUE NO SE NEGOCIA: ningún componente escribe un color, un radio
+   ni una sombra a mano. Todo sale de acá. Un literal dentro de un
+   componente rompe el cambio de tema, y el tema es una preferencia por
+   hogar: la casa principal puede usar Lavanda mientras la de la madre
+   usa Menta.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* ── Compartido por ambos temas (3.1) ───────────────────────────────────── */
+
+:root {
+  /* Tipografía */
+  --fuente: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semi: 600;
+  --peso-fuerte: 700;
+  --peso-extra: 800;
+
+  /* Movimiento */
+  --curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transicion-boton: 300ms var(--curva);
+  --transicion-tarjeta: 450ms var(--curva);
+  --elevacion-boton: translateY(-2px);
+  --elevacion-tarjeta: translateY(-3px);
+
+  /* Radios */
+  --radio-tarjeta-grande: 28px;
+  --radio-tarjeta-chica: 24px;
+  --radio-bloque: 20px;
+  --radio-chip: 14px;
+  --radio-pastilla: 999px;
+
+  /* Área táctil mínima: la usa una persona mayor, no se achica */
+  --tactil-minimo: 44px;
+
+  /* Rejilla de 1024 × 600 */
+  --ancho-pantalla: 1024px;
+  --alto-pantalla: 600px;
+  --margen-pantalla: 18px;
+  --separacion: 14px;
+}
+
+/* ── Lavanda Suave — por defecto (3.2) ──────────────────────────────────── */
+
+[data-tema='lavanda'] {
+  --fondo-base: #f3f1fa;
+  --fondo-aurora-1: radial-gradient(680px 420px at 0% -10%, rgba(123, 116, 224, 0.24), transparent 60%);
+  --fondo-aurora-2: radial-gradient(620px 420px at 100% 108%, rgba(230, 150, 180, 0.22), transparent 58%);
+
+  --texto: #1b1930;
+  --texto-2: #5a5676;
+  --texto-3: #83809b;
+
+  --acento: #4b47b8;
+  --acento-degradado: linear-gradient(140deg, #4b47b8, #7b74e0);
+  --acento-contraste: #ffffff;
+
+  --confirmacion: #2a6b52;
+  --recordatorio: #c9803a;
+  --emergencia: linear-gradient(140deg, #e05a5a, #b82d2d);
+  --emergencia-plano: #b82d2d;
+
+  --vidrio: rgba(255, 255, 255, 0.7);
+  --vidrio-borde: rgba(255, 255, 255, 0.92);
+  --vidrio-desenfoque: blur(22px) saturate(140%);
+
+  --sombra-tarjeta: 0 14px 32px rgba(32, 26, 70, 0.1);
+  --sombra-elevada: 0 24px 48px rgba(32, 26, 70, 0.16);
+
+  /* Panel oscuro: el único elemento oscuro de la pantalla, a propósito */
+  --panel-oscuro: linear-gradient(142deg, #272250 0%, #1b1933 58%, #2c2142 100%);
+  --sobre-oscuro: #f2f0ff;
+  --sobre-oscuro-2: #bdb8e0;
+  --vidrio-sobre-oscuro: rgba(255, 255, 255, 0.1);
+  --vidrio-sobre-oscuro-borde: rgba(255, 255, 255, 0.17);
+
+  --cielo: linear-gradient(170deg, #8d9be0 0%, #b6a4dc 52%, #f0b59a 100%);
+  --nube-desde: #ffffff;
+  --nube-hasta: #dad6f0;
+
+  /* Menta define estos; en Lavanda se asimilan para que ningún componente
+     tenga que preguntar en qué tema está */
+  --viaje: var(--acento);
+  --realce-fila: rgba(75, 71, 184, 0.07);
+}
+
+/* ── Menta Clínica — opcional (3.3) ─────────────────────────────────────── */
+
+[data-tema='menta'] {
+  --fondo-base: #eef4f4;
+  --fondo-aurora-1: radial-gradient(720px 420px at 2% -8%, rgba(14, 140, 119, 0.17), transparent 60%);
+  --fondo-aurora-2: radial-gradient(640px 440px at 100% 104%, rgba(94, 140, 200, 0.16), transparent 58%);
+
+  --texto: #13241f;
+  --texto-2: #51635d;
+  --texto-3: #7a8a85;
+
+  --acento: #0e8c77;
+  --acento-oscuro: #0a6a5b;
+  --acento-degradado: linear-gradient(140deg, #0e8c77, #14a88e);
+  --acento-contraste: #ffffff;
+
+  --confirmacion: #0a6a5b;
+  --recordatorio: #c9803a;
+  --emergencia: linear-gradient(140deg, #e0533d, #c23d28);
+  --emergencia-plano: #c23d28;
+
+  --vidrio: rgba(255, 255, 255, 0.72);
+  --vidrio-borde: rgba(255, 255, 255, 0.92);
+  --vidrio-desenfoque: blur(22px) saturate(140%);
+
+  --sombra-tarjeta: 0 14px 32px rgba(16, 46, 40, 0.09);
+  --sombra-elevada: 0 22px 44px rgba(16, 46, 40, 0.14);
+
+  --panel-oscuro: linear-gradient(142deg, #17322c 0%, #0f2420 58%, #16342c 100%);
+  --sobre-oscuro: #eaf5f2;
+  --sobre-oscuro-2: #a9c6bf;
+  --vidrio-sobre-oscuro: rgba(255, 255, 255, 0.1);
+  --vidrio-sobre-oscuro-borde: rgba(255, 255, 255, 0.17);
+
+  --cielo: linear-gradient(165deg, rgba(126, 178, 224, 0.3), rgba(14, 140, 119, 0.16));
+  --nube-desde: #ffffff;
+  --nube-hasta: #cfe0ec;
+
+  --viaje: #3a6fa8;
+  --realce-fila: rgba(14, 140, 119, 0.07);
+}
+
+/* ── Degradación para la Raspberry Pi 3 ─────────────────────────────────────
+   backdrop-filter con desenfoque es caro en GPU. Si F1.10 muestra que no
+   rinde, se activa este atributo en <html> y el vidrio pasa a ser color
+   sólido semitransparente, sin desenfoque. Es un interruptor, no un
+   rediseño: los componentes no se enteran.
+   ─────────────────────────────────────────────────────────────────────── */
+
+[data-rendimiento='reducido'] {
+  --vidrio-desenfoque: none;
+}
+
+[data-tema='lavanda'][data-rendimiento='reducido'] {
+  --vidrio: rgba(255, 255, 255, 0.88);
+}
+
+[data-tema='menta'][data-rendimiento='reducido'] {
+  --vidrio: rgba(255, 255, 255, 0.9);
+}

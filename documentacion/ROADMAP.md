@@ -49,7 +49,7 @@ Las tareas van numeradas (`F2.4` = fase 2, tarea 4).
 | Fase | Qué es | Estado |
 |---|---|---|
 | **0** | Preparación | **Casi terminada** — solo faltan el dominio (F0.e) y las copias de seguridad de Contabo (F0.d), ambas dependen del usuario |
-| 1 | La pantalla viva | Sin empezar |
+| 1 | La pantalla viva | **En curso** — andamiaje y tokens listos; faltan los componentes y el kiosco |
 | 2 | Backend y datos reales | Sin empezar |
 | 3 | El celular | Sin empezar |
 | 4 | La voz | Sin empezar |
@@ -127,7 +127,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 
 ### 💻 Lo que programo yo
 
-- [ ] **F1.1 — Montar el frontend.** React con TypeScript sobre Vite, compilado a estáticos livianos, sin librerías que impongan su estética.
+- [x] **F1.1 — Montar el frontend.** React con TypeScript sobre Vite, compilado a estáticos livianos, sin librerías que impongan su estética. — *31/10/2026. Compila: 13 archivos, 385 KB; JS 70 KB comprimido, CSS 2,6 KB. Tipografía empaquetada, solo subconjunto latino.*
 - [ ] **F1.2 — Implementar los tokens de diseño.** Los temas de `DECISION_Frontend_Temas.md` como variables CSS intercambiables en bloque. Ningún color escrito a mano dentro de un componente.
 - [ ] **F1.3 — Construir los componentes.** Reloj, clima con el ícono SVG animado, agenda, compras, recordatorio, estado de dispositivos, barra de música, pastillas de estado y botón de emergencia.
 - [ ] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API.
