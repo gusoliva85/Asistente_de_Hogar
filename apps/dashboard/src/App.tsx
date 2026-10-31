@@ -5,6 +5,7 @@ import { Emergencia } from './pantallas/Emergencia'
 import { Musica } from './pantallas/Musica'
 import {
   emergenciaFicticia,
+  escuchaConResultado,
   escuchaFicticia,
   estadoFicticio,
   estadoVacio,
@@ -47,7 +48,13 @@ export function App() {
     const vacio = new URLSearchParams(location.search).get('datos') === 'vacio'
     return vacio ? estadoVacio() : estadoFicticio()
   }, [])
-  const escucha = useMemo(escuchaFicticia, [])
+  const escucha = useMemo(
+    () =>
+      new URLSearchParams(location.search).get('escucha') === 'resultado'
+        ? escuchaConResultado()
+        : escuchaFicticia(),
+    [],
+  )
   const emergencia = useMemo(emergenciaFicticia, [])
   const musica = useMemo(musicaFicticia, [])
 

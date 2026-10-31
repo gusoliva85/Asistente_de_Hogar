@@ -22,8 +22,35 @@
 /* ── Escucha ────────────────────────────────────────────────────────────── */
 
 .escucha {
-  padding: 22px 26px;
+  padding: 20px 26px 22px;
   background: var(--fondo-escucha);
+}
+
+/* Latido: toda la pantalla respira mientras escucha. Es lo que hace que
+   se entienda que el aparato está captando sin tener que leer nada. */
+.escucha__latido {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 1100px;
+  height: 1100px;
+  margin: -550px 0 0 -550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(138, 131, 242, 0.22) 0%, transparent 62%);
+  pointer-events: none;
+  animation: latido 3.4s ease-in-out infinite;
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    transform: scale(0.94);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
 }
 
 .escucha__aura {
@@ -53,65 +80,12 @@
 .escucha__encabezado {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.escucha__volver,
-.ayuda--escucha {
-  border-radius: var(--radio-pastilla);
-}
-
-.escucha__volver {
-  height: 30px;
-  min-height: 30px;
-  padding: 0 15px;
-  font-size: 12px;
-  font-weight: var(--peso-semi);
-  color: var(--sobre-oscuro-2);
-  background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
-}
-
-.escucha__estado {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* El sello de dónde se resolvió. Verde cuando no salió de casa: es una
-   promesa cumplida, no una etiqueta decorativa. */
-.sello {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 30px;
-  padding: 0 14px;
-  border-radius: var(--radio-pastilla);
-  font-size: 12px;
-  font-weight: var(--peso-semi);
-  color: var(--sobre-oscuro-2);
-  background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
-}
-
-.sello--casa {
-  color: var(--exito);
-  background: var(--exito-tenue);
-  border-color: transparent;
-}
-
-.sello__punto {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: latir 2.4s ease-in-out infinite;
+  justify-content: flex-end;
+  flex: none;
 }
 
 .escucha__hora {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: var(--peso-fuerte);
   color: var(--sobre-oscuro-2);
 }
@@ -123,7 +97,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   min-height: 0;
 }
 
@@ -131,12 +105,13 @@
 
 .orbe {
   position: relative;
-  width: 92px;
-  height: 92px;
+  width: 124px;
+  height: 124px;
   flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 8px;
   animation: flotar-orbe 6s ease-in-out infinite;
 }
 
@@ -151,8 +126,8 @@
 }
 
 .orbe__nucleo {
-  width: 92px;
-  height: 92px;
+  width: 124px;
+  height: 124px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -162,59 +137,81 @@
   box-shadow: var(--brillo-interior-boton), var(--halo-acento-fuerte);
 }
 
+/* Tres anillos escalonados: el radar llega más lejos y se nota que está
+   captando algo, no que hay un ícono con un borde. */
 .orbe__anillo {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   border: 2px solid var(--acento);
-  animation: pulso 4s cubic-bezier(0.25, 0.6, 0.3, 1) infinite;
+  animation: pulso 4.2s cubic-bezier(0.22, 0.6, 0.3, 1) infinite;
   pointer-events: none;
 }
 
 .orbe__anillo--2 {
-  animation-delay: -2s;
+  animation-delay: -1.4s;
+}
+
+.orbe__anillo--3 {
+  animation-delay: -2.8s;
 }
 
 @keyframes pulso {
   0% {
-    transform: scale(0.92);
-    opacity: 0.45;
+    transform: scale(0.96);
+    opacity: 0.6;
   }
-  70%,
+  80%,
   100% {
-    transform: scale(1.32);
+    transform: scale(2.35);
     opacity: 0;
   }
 }
 
 .escucha__titulo {
   margin: 0;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: var(--peso-normal);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  color: var(--sobre-oscuro);
 }
 
-/* Lo que se entendió, tal cual se dijo. Entre comillas y en grande:
-   si entendimos mal, tiene que saltar a la vista. */
+/* Gris claro y chico: está ahí para quien no sabe qué decir, no para
+   leerse cada vez. */
+.escucha__ayuda {
+  margin: 0;
+  font-size: 16px;
+  font-weight: var(--peso-normal);
+  color: var(--sobre-oscuro-2);
+  opacity: 0.75;
+}
+
+/* Lo que se entendió, tal cual se dijo. Si entendimos mal, tiene que
+   saltar a la vista. */
 .escucha__dicho {
   margin: 0;
-  max-width: 740px;
+  max-width: 760px;
   text-align: center;
-  font-size: 27px;
+  font-size: 30px;
   font-weight: var(--peso-normal);
-  line-height: 1.26;
+  line-height: 1.24;
   letter-spacing: -0.02em;
   color: var(--sobre-oscuro);
 }
 
 /* ── El resultado verificado ────────────────────────────────────────────── */
 
+/* Una sola fila: tilde, texto y artículos. Apilado dejaba una tarjeta
+   enorme con aire muerto en el medio. */
 .resultado {
-  margin-top: 6px;
-  width: 640px;
+  margin-top: 14px;
+  max-width: 820px;
   box-sizing: border-box;
-  padding: 18px 22px;
+  padding: 14px 20px;
   border-radius: var(--radio-tarjeta-grande);
+  display: flex;
+  align-items: center;
+  gap: 16px;
   background: var(--vidrio-sobre-oscuro);
   border: 1px solid var(--vidrio-sobre-oscuro-borde);
   box-shadow: var(--sombra-elevada);
@@ -235,19 +232,9 @@
   animation: subir 750ms var(--curva-entrada) both;
 }
 
-.resultado__titulo {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  font-size: 20px;
-  font-weight: var(--peso-fuerte);
-  letter-spacing: -0.02em;
-}
-
 .resultado__tilde {
-  width: 25px;
-  height: 25px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   flex: none;
   display: flex;
@@ -257,10 +244,22 @@
   background: var(--exito);
 }
 
+.resultado__texto {
+  min-width: 0;
+}
+
+.resultado__titulo {
+  margin: 0;
+  font-size: 19px;
+  font-weight: var(--peso-fuerte);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
 /* La prueba de que pasó. Sin esta línea, el título de arriba sería una
    promesa y no un hecho verificado. */
 .resultado__prueba {
-  margin: 7px 0 0 36px;
+  margin: 3px 0 0;
   font-size: 12.5px;
   font-weight: var(--peso-medio);
   color: var(--exito);
@@ -272,52 +271,93 @@
 
 .resultado__detalles {
   list-style: none;
-  margin: 14px 0 0 36px;
+  margin: 0 0 0 auto;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 7px;
+  flex: none;
 }
 
 .resultado__detalles li {
-  padding: 7px 13px;
+  padding: 6px 12px;
   border-radius: var(--radio-chip);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: var(--peso-semi);
-  background: var(--vidrio-sobre-oscuro);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--vidrio-sobre-oscuro-borde);
 }
 
-.resultado__pie {
-  margin: 16px 0 0 36px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.resultado__pista {
+  flex: none;
+  padding-left: 16px;
+  border-left: 1px solid var(--vidrio-sobre-oscuro-borde);
   font-size: 12px;
   font-weight: var(--peso-medio);
-}
-
-.resultado__pista {
   color: var(--sobre-oscuro-2);
+  max-width: 96px;
+  line-height: 1.3;
 }
 
-.resultado__sincro {
-  color: var(--exito);
+/* ── Los dos botones de abajo ───────────────────────────────────────────── */
+
+/* Del mismo porte: en una pantalla táctil de 7" lo que se toca va al
+   alcance del pulgar, no arriba en una esquina. */
+.escucha__pie {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex: none;
 }
 
-.resultado__sincro--no {
-  color: var(--espera);
+.boton-grande {
+  height: 66px;
+  min-width: 232px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: var(--radio-pastilla);
+  font-size: 19px;
+  font-weight: var(--peso-fuerte);
 }
 
-.ayuda--escucha {
+.boton-grande--volver {
+  color: var(--sobre-oscuro);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sombra-tarjeta);
+}
+
+.boton-grande--ayuda {
+  color: #fff;
+  background: var(--emergencia);
+  box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
+  overflow: hidden;
+}
+
+/* El mismo destello que en la pantalla principal: el botón de ayuda se
+   comporta igual esté donde esté. */
+.boton-grande--ayuda::after {
+  content: '';
   position: absolute;
-  right: 26px;
-  bottom: 22px;
-  width: auto;
-  height: 52px;
-  padding: 0 24px;
-  gap: 10px;
-  font-size: 16px;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.1) 42%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0.1) 58%,
+    transparent 72%
+  );
+  transform: translateX(-125%);
+  animation: destello 5s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* ── Emergencia ─────────────────────────────────────────────────────────────

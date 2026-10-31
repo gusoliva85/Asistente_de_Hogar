@@ -1,21 +1,8 @@
-import type { EstadoEscucha, OrigenRespuesta } from '../datos/tipos'
+import type { EstadoEscucha } from '../datos/tipos'
 import { Grano } from '../componentes/Grano'
-import { IconoAyuda, IconoMicrofono, IconoTilde } from '../componentes/Iconos'
+import { IconoAyuda, IconoMicrofono, IconoTilde, IconoVolver } from '../componentes/Iconos'
 
 const HORA = new Intl.DateTimeFormat('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
-
-/**
- * De dónde salió la respuesta. Se dice siempre y sin eufemismos.
- *
- * Es la diferencia entre un asistente que explica qué hace con tu voz y
- * uno que no. Que algo se resuelva en casa no es un detalle técnico:
- * significa que lo que dijiste no salió de la casa.
- */
-const ORIGEN: Record<OrigenRespuesta, { texto: string; enCasa: boolean }> = {
-  reglas: { texto: 'Resuelto en casa · sin salir a la nube', enCasa: true },
-  'modelo-local': { texto: 'Resuelto en casa · sin salir a la nube', enCasa: true },
-  nube: { texto: 'Consultado en la nube', enCasa: false },
-}
 
 interface Props {
   estado: EstadoEscucha
@@ -24,65 +11,76 @@ interface Props {
   onAyuda: () => void
 }
 
+/**
+ * Pantalla de escucha.
+ *
+ * El estado por defecto es «escuchando sin haber oído nada todavía», que
+ * es donde la pantalla pasa la mayor parte del tiempo. Sigue el patrón
+ * que usan los asistentes que ya existen: una frase corta de que está
+ * escuchando, que la transcripción en vivo va reemplazando a medida que
+ * la persona habla. Nunca un texto de ejemplo fijo.
+ */
 export function Escucha({ estado, ahora, onSalir, onAyuda }: Props) {
-  const origen = ORIGEN[estado.origen]
+  const hayTexto = estado.transcripcion.trim().length > 0
 
   return (
     <div className="escucha">
+      {/* Latido de fondo: toda la pantalla respira mientras escucha. Es
+          lo que hace que se entienda que el aparato está captando, sin
+          tener que leer nada. */}
+      {estado.escuchando && <div className="escucha__latido ambiental" aria-hidden="true" />}
       <div className="escucha__aura escucha__aura--1 ambiental" aria-hidden="true" />
       <div className="escucha__aura escucha__aura--2 ambiental" aria-hidden="true" />
       <Grano intenso />
 
       <header className="escucha__encabezado">
-        <button type="button" className="escucha__volver" onClick={onSalir}>
-          Volver
-        </button>
-        <div className="escucha__estado">
-          <span className={`sello${origen.enCasa ? ' sello--casa' : ''}`}>
-            <span className="sello__punto ambiental" aria-hidden="true" />
-            {origen.texto}
-          </span>
-          <time className="escucha__hora numero" dateTime={ahora.toISOString()}>
-            {HORA.format(ahora)}
-          </time>
-        </div>
+        <time className="escucha__hora numero" dateTime={ahora.toISOString()}>
+          {HORA.format(ahora)}
+        </time>
       </header>
 
       <main className="escucha__cuerpo">
         <div className={`orbe${estado.escuchando ? ' orbe--activo' : ''}`} aria-hidden="true">
           <span className="orbe__anillo ambiental" />
           <span className="orbe__anillo orbe__anillo--2 ambiental" />
+          <span className="orbe__anillo orbe__anillo--3 ambiental" />
           <span className="orbe__nucleo">
-            <IconoMicrofono tamano={38} grosor={1.8} />
+            <IconoMicrofono tamano={52} grosor={1.7} />
           </span>
         </div>
 
-        {estado.escuchando ? (
-          <p className="escucha__titulo">Te estoy escuchando</p>
+        {hayTexto ? (
+          /* La transcripción en vivo reemplaza a la frase de espera */
+          <p className="escucha__dicho">{estado.transcripcion}</p>
         ) : (
-          <p className="escucha__dicho">«{estado.transcripcion}»</p>
+          <>
+            <p className="escucha__titulo">Te escucho</p>
+            <p className="escucha__ayuda">Decime qué necesitás</p>
+          </>
         )}
 
         {estado.accion && (
           <section className="resultado sube">
-            {/* La confirmación y la prueba van juntas. Sin la hora de
-                verificación esto sería una promesa, no un hecho. */}
-            <h2 className="resultado__titulo">
-              <span className="resultado__tilde" aria-hidden="true">
-                <IconoTilde tamano={13} />
-              </span>
-              {estado.accion.resumen}
-            </h2>
-            {estado.accion.verificadoA ? (
-              <p className="resultado__prueba">
-                Verificado en la base de datos a las{' '}
-                {HORA.format(new Date(estado.accion.verificadoA))}
-              </p>
-            ) : (
-              <p className="resultado__prueba resultado__prueba--pendiente">
-                Todavía no pude confirmarlo contra la base de datos
-              </p>
-            )}
+            <span className="resultado__tilde" aria-hidden="true">
+              <IconoTilde tamano={16} />
+            </span>
+
+            <div className="resultado__texto">
+              <h2 className="resultado__titulo">{estado.accion.resumen}</h2>
+              {/* Sin la hora de verificación, el título de arriba sería
+                  una promesa y no un hecho comprobado. */}
+              {estado.accion.verificadoA ? (
+                <p className="resultado__prueba">
+                  Verificado en la base a las {HORA.format(new Date(estado.accion.verificadoA))}
+                  {estado.sincronizado === true && ' · ya está en tu celular'}
+                  {estado.sincronizado === false && ' · todavía no llegó al celular'}
+                </p>
+              ) : (
+                <p className="resultado__prueba resultado__prueba--pendiente">
+                  Todavía no pude confirmarlo contra la base de datos
+                </p>
+              )}
+            </div>
 
             <ul className="resultado__detalles">
               {estado.accion.detalles.map((d) => (
@@ -90,25 +88,24 @@ export function Escucha({ estado, ahora, onSalir, onAyuda }: Props) {
               ))}
             </ul>
 
-            <footer className="resultado__pie">
-              <span className="resultado__pista">Decí «cancelá» para deshacer</span>
-              {estado.sincronizado === true && (
-                <span className="resultado__sincro">Ya está en tu celular</span>
-              )}
-              {estado.sincronizado === false && (
-                <span className="resultado__sincro resultado__sincro--no">
-                  Todavía no llegó al celular
-                </span>
-              )}
-            </footer>
+            <span className="resultado__pista">Decí «cancelá» para deshacer</span>
           </section>
         )}
       </main>
 
-      <button type="button" className="ayuda ayuda--escucha" onClick={onAyuda}>
-        <IconoAyuda tamano={22} />
-        Necesito ayuda
-      </button>
+      {/* Los dos botones grandes, abajo y del mismo porte: en una
+          pantalla táctil de 7" lo que se toca va al alcance del pulgar,
+          no arriba en una esquina. */}
+      <footer className="escucha__pie">
+        <button type="button" className="boton-grande boton-grande--volver" onClick={onSalir}>
+          <IconoVolver tamano={24} grosor={2.4} />
+          Volver
+        </button>
+        <button type="button" className="boton-grande boton-grande--ayuda" onClick={onAyuda}>
+          <IconoAyuda tamano={24} />
+          Necesito ayuda
+        </button>
+      </footer>
     </div>
   )
 }

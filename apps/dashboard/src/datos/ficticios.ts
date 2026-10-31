@@ -90,7 +90,26 @@ export function estadoVacio(): EstadoPantalla {
 
 /* ── Las otras tres pantallas (F1.7) ────────────────────────────────────── */
 
+/**
+ * El estado habitual: escuchando, sin haber oído nada todavía. Es donde
+ * la pantalla pasa la mayor parte del tiempo.
+ */
 export function escuchaFicticia(): EstadoEscucha {
+  return {
+    transcripcion: '',
+    escuchando: true,
+    origen: 'modelo-local',
+    accion: null,
+    sincronizado: null,
+  }
+}
+
+/**
+ * Después de una orden cumplida. El resultado solo existe cuando hubo
+ * una instrucción; antes, la pantalla no tiene nada que confirmar.
+ * Se mira con ?escucha=resultado
+ */
+export function escuchaConResultado(): EstadoEscucha {
   return {
     transcripcion: 'Agregá dos kilos de papa, leche y detergente a las compras',
     escuchando: false,

@@ -324,6 +324,13 @@ export const IconoVolumen = (p: PropsIcono) => (
   </Trazo>
 )
 
+export const IconoVolver = (p: PropsIcono) => (
+  <Trazo grosor={2.4} {...p}>
+    <path d="M20 12H4.5" />
+    <path d="m10.5 5.5-6 6.5 6 6.5" />
+  </Trazo>
+)
+
 export const IconoNota = (p: PropsIcono) => (
   <Trazo grosor={2} {...p}>
     <path d="M9 18V5.5l10-2V16" />
