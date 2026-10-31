@@ -1,13 +1,10 @@
 import type { EstadoConexion, Hogar } from '../datos/tipos'
-import { IconoAjustes, IconoConexion, IconoLuna, IconoSinConexion, IconoSol } from './Iconos'
+import { IconoConexion, IconoLuna, IconoSinConexion, IconoSol } from './Iconos'
 import type { Luz } from '../temas/tema'
 
 interface Props {
   hogar: Hogar
   conexion: EstadoConexion
-  /** Provisional: hasta que exista la pantalla de ajustes (Fase 3),
-      este botón alterna el tema para poder compararlos (F1.5). */
-  onAjustes: () => void
   luz: Luz
   /** Si la luz la está decidiendo el horario y no una elección a mano. */
   automatico: boolean
@@ -27,7 +24,7 @@ const TEXTO_CONEXION: Record<EstadoConexion, string> = {
   'sin-conexion': 'Sin conexión',
 }
 
-export function Encabezado({ hogar, conexion, onAjustes, luz, automatico, onLuz }: Props) {
+export function Encabezado({ hogar, conexion, luz, automatico, onLuz }: Props) {
   const hora = new Date().getHours()
   const caido = conexion === 'sin-conexion'
 
@@ -67,9 +64,6 @@ export function Encabezado({ hogar, conexion, onAjustes, luz, automatico, onLuz 
           {luz === 'oscuro' ? <IconoSol tamano={15} /> : <IconoLuna tamano={15} />}
         </button>
 
-        <button type="button" className="boton-icono" aria-label="Cambiar tema" onClick={onAjustes}>
-          <IconoAjustes tamano={15} />
-        </button>
       </div>
     </header>
   )

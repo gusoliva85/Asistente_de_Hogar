@@ -208,9 +208,9 @@
 
 .panel__hora {
   display: block;
-  font-size: 90px;
+  font-size: 102px;
   font-weight: var(--peso-fuerte);
-  line-height: 0.86;
+  line-height: 0.84;
   letter-spacing: -0.055em;
   font-variant-numeric: tabular-nums;
   /* La hora no es texto plano: el degradado se recorta sobre el tipo */
@@ -229,14 +229,14 @@
 
 /* El día de la semana es lo que se lee primero */
 .panel__dia {
-  font-size: 22px;
+  font-size: 27px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
   color: var(--sobre-oscuro);
 }
 
 .panel__numero {
-  font-size: 16px;
+  font-size: 19px;
   font-weight: var(--peso-medio);
   color: var(--sobre-oscuro-2);
 }
@@ -244,8 +244,19 @@
 .panel__clima {
   display: flex;
   align-items: center;
-  gap: 18px;
   padding-left: 22px;
+}
+
+.clima {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.clima__arriba {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .panel__division {
@@ -280,33 +291,34 @@
 }
 
 .clima__temperatura {
-  font-size: 46px;
+  font-size: 56px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.045em;
 }
 
 .clima__extremos {
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro-2);
 }
 
 .clima__condicion {
   margin-top: 2px;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro);
 }
 
 /* ── Pronóstico por franjas ─────────────────────────────────────────────── */
 
+/* Ocupa todo el ancho del bloque de clima, del ícono al borde, y es
+   baja: se lee como un subrayado del clima, no como otra tarjeta. */
 .pronostico {
   list-style: none;
-  margin: 10px 0 0;
-  padding: 7px 4px;
+  margin: 0;
+  padding: 5px 2px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2px;
   border-radius: var(--radio-chip);
   background: var(--vidrio-sobre-oscuro);
   border: 1px solid var(--vidrio-sobre-oscuro-borde);
@@ -314,9 +326,9 @@
 
 .pronostico__franja {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 3px;
+  justify-content: center;
+  gap: 7px;
   color: var(--sobre-oscuro);
 }
 
@@ -325,25 +337,15 @@
 }
 
 .pronostico__hora {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: var(--peso-semi);
   color: var(--sobre-oscuro-2);
 }
 
 .pronostico__grados {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: var(--peso-fuerte);
   letter-spacing: -0.02em;
-}
-
-.clima__viaje {
-  margin: 7px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: var(--peso-medio);
-  color: var(--sobre-oscuro-2);
 }
 
 /* ── Animación del ícono del clima ──────────────────────────────────────── */

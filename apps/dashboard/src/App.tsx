@@ -14,7 +14,9 @@ import { usarReloj } from './util/usarReloj'
  */
 export function App() {
   const ahora = usarReloj()
-  const { alternar } = usarTema()
+  // El tema queda fijo en Lavanda: Menta se descarta por ahora, pero los
+  // tokens siguen ahí y el selector vuelve en la pantalla de ajustes.
+  usarTema()
   const { luz, alternarLuz, automatico } = usarLuz(ahora)
 
   const estado = useMemo(() => {
@@ -26,7 +28,6 @@ export function App() {
     <Principal
       estado={estado}
       ahora={ahora}
-      onAjustes={alternar}
       luz={luz}
       automatico={automatico}
       onLuz={alternarLuz}

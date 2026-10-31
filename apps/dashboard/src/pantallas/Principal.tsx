@@ -13,13 +13,12 @@ import type { Luz } from '../temas/tema'
 interface Props {
   estado: EstadoPantalla
   ahora: Date
-  onAjustes: () => void
   luz: Luz
   automatico: boolean
   onLuz: () => void
 }
 
-export function Principal({ estado, ahora, onAjustes, luz, automatico, onLuz }: Props) {
+export function Principal({ estado, ahora, luz, automatico, onLuz }: Props) {
 
   return (
     <div className="pantalla">
@@ -28,7 +27,6 @@ export function Principal({ estado, ahora, onAjustes, luz, automatico, onLuz }: 
       <Encabezado
         hogar={estado.hogar}
         conexion={estado.conexion}
-        onAjustes={onAjustes}
         luz={luz}
         automatico={automatico}
         onLuz={onLuz}
@@ -36,7 +34,7 @@ export function Principal({ estado, ahora, onAjustes, luz, automatico, onLuz }: 
 
       <div className="pantalla__cuerpo">
         <div className="columna">
-          <PanelPrincipal ahora={ahora} clima={estado.clima} viaje={estado.viaje} />
+          <PanelPrincipal ahora={ahora} clima={estado.clima} />
           <div className="columna__par">
             <TarjetaAgenda eventos={estado.eventos} />
             <TarjetaCompras articulos={estado.compras} />

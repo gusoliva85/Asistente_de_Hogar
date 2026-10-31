@@ -1,12 +1,10 @@
-import type { Clima, Viaje } from '../datos/tipos'
+import type { Clima } from '../datos/tipos'
 import { IconoClima, Pronostico } from './IconoClima'
-import { IconoViaje } from './Iconos'
 import { Grano } from './Grano'
 
 interface Props {
   ahora: Date
   clima: Clima | null
-  viaje: Viaje | null
 }
 
 const DIA = new Intl.DateTimeFormat('es-AR', { weekday: 'long' })
@@ -23,7 +21,7 @@ function mayuscula(texto: string): string {
  * Es el único elemento oscuro de la pantalla y es deliberado: da
  * jerarquía sin volver oscura toda la interfaz.
  */
-export function PanelPrincipal({ ahora, clima, viaje }: Props) {
+export function PanelPrincipal({ ahora, clima }: Props) {
 
   return (
     <section className="panel aparece">
@@ -47,25 +45,23 @@ export function PanelPrincipal({ ahora, clima, viaje }: Props) {
       <div className="panel__clima">
         <span className="panel__division" aria-hidden="true" />
         {clima ? (
-          <>
-            <IconoClima condicion={clima.condicion} esDeNoche={clima.esDeNoche} />
-            <div>
-              <div className="clima__cifras">
-                <span className="clima__temperatura numero">{clima.temperatura}°</span>
-                <span className="clima__extremos numero">
-                  {clima.maxima}° / {clima.minima}°
-                </span>
+          /* Dos filas: arriba el ícono con la temperatura, abajo el
+             pronóstico ocupando todo el ancho, como un subrayado. */
+          <div className="clima">
+            <div className="clima__arriba">
+              <IconoClima condicion={clima.condicion} esDeNoche={clima.esDeNoche} ancho={112} />
+              <div>
+                <div className="clima__cifras">
+                  <span className="clima__temperatura numero">{clima.temperatura}°</span>
+                  <span className="clima__extremos numero">
+                    {clima.maxima}° / {clima.minima}°
+                  </span>
+                </div>
+                <div className="clima__condicion">{clima.condicion}</div>
               </div>
-              <div className="clima__condicion">{clima.condicion}</div>
-              <Pronostico franjas={clima.pronostico} />
-              {viaje && (
-                <p className="clima__viaje">
-                  <IconoViaje tamano={12} grosor={2} />
-                  {viaje.minutos} min a {viaje.destino}
-                </p>
-              )}
             </div>
-          </>
+            <Pronostico franjas={clima.pronostico} />
+          </div>
         ) : (
           /* Sin clima no se inventa un número ni se deja un hueco:
              se dice qué pasa. */
