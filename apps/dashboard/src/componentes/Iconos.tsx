@@ -201,30 +201,60 @@ export const IconoReproducir = ({ tamano = 14 }: PropsIcono) => (
   </svg>
 )
 
-export const IconoCaida = (p: PropsIcono) => (
-  <Trazo {...p}>
-    <circle cx="7.5" cy="4.5" r="2.2" />
-    <path d="M5.4 9.2 10 11l3.4-1.4" />
-    <path d="M10 11v3.5l-5 4" />
-    <path d="M10 14.5 15 18" />
-    <path d="M3 20.5h18" />
-  </Trazo>
+/* Los tres motivos de emergencia van en color y no en trazo gris: se
+   eligen de un vistazo y en pánico, cuando nadie lee las etiquetas. */
+
+export const IconoCaida = ({ tamano = 30 }: PropsIcono) => (
+  <svg width={tamano} height={tamano} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="8.5" cy="12.5" r="3.6" fill="#F7C96B" />
+    <path
+      d="M11.6 15.4h9.2a2.5 2.5 0 0 1 0 5H11.6a2.5 2.5 0 0 1 0-5Z"
+      fill="#F0A651"
+    />
+    <path
+      d="M20.4 16.2 25 11.6"
+      stroke="#F7C96B"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+    <path
+      d="M14.6 20.4 12 25"
+      stroke="#F0A651"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+    <path d="M3 26.4h26" stroke="#FFFFFF" strokeOpacity=".45" strokeWidth="2.4" strokeLinecap="round" />
+  </svg>
 )
 
-export const IconoSalud = (p: PropsIcono) => (
-  <Trazo {...p}>
-    <path d="M3 12.5h3.6l1.6-4 2.6 8 2.2-6 1.4 2h4.6" />
-    <path d="M20.4 8.5a4.4 4.4 0 0 0-8.4-1.6A4.4 4.4 0 0 0 3.6 8.5" />
-    <path d="M4.3 14.6C6.6 17.8 12 21.5 12 21.5s5.4-3.7 7.7-6.9" />
-  </Trazo>
+export const IconoSalud = ({ tamano = 30 }: PropsIcono) => (
+  <svg width={tamano} height={tamano} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <path
+      d="M16 28S3.5 20.4 3.5 12.3A6.4 6.4 0 0 1 16 9.6a6.4 6.4 0 0 1 12.5 2.7C28.5 20.4 16 28 16 28Z"
+      fill="#E8534B"
+    />
+    <path
+      d="M5.6 15.4h4.6l2-4.4 3.2 9 2.6-6.4 1.6 1.8h6.8"
+      stroke="#7FD4F0"
+      strokeWidth="2.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
 )
 
-export const IconoPeligro = (p: PropsIcono) => (
-  <Trazo {...p}>
-    <path d="M12 2.8 21.5 20H2.5L12 2.8Z" />
-    <path d="M12 9.5v4.4" />
-    <path d="M12 17h.01" />
-  </Trazo>
+export const IconoPeligro = ({ tamano = 30 }: PropsIcono) => (
+  <svg width={tamano} height={tamano} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <path
+      d="M16 3.6 30 27.4H2L16 3.6Z"
+      fill="#F5C534"
+      stroke="#D79526"
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+    <path d="M16 12v7" stroke="#C4261C" strokeWidth="3.1" strokeLinecap="round" />
+    <circle cx="16" cy="23.2" r="1.8" fill="#C4261C" />
+  </svg>
 )
 
 export const IconoReenviar = (p: PropsIcono) => (

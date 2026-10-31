@@ -116,8 +116,14 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
             cayó puede no llegar a decir «Jarvis». */}
         {emergencia.escuchando && (
           <span className="emergencia__escuchando">
-            <span className="emergencia__mic ambiental" aria-hidden="true">
-              <IconoMicrofono tamano={17} grosor={2.2} />
+            {/* Radar: el micrófono en un disco con dos anillos que salen
+                desde él. Se lee como «está captando», que es lo que pasa. */}
+            <span className="radar" aria-hidden="true">
+              <span className="radar__onda ambiental" />
+              <span className="radar__onda radar__onda--2 ambiental" />
+              <span className="radar__nucleo">
+                <IconoMicrofono tamano={19} grosor={2.2} />
+              </span>
             </span>
             Te escucho — contame qué pasó
           </span>
@@ -152,7 +158,7 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
             aria-pressed={motivo === id}
             onClick={() => setMotivo(id)}
           >
-            <Icono tamano={30} grosor={2} />
+            <Icono tamano={32} />
             {texto}
           </button>
         ))}
@@ -170,12 +176,6 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
             <FilaAviso key={a.id} aviso={a} />
           ))}
         </ul>
-        {/* No es un detalle de diseño: es el contrato con quien está
-            mirando la pantalla en el peor momento. */}
-        <p className="emergencia__aclaracion">
-          Todo lo que ves es el estado <strong>real</strong> de cada aviso. «Entregado» no quiere
-          decir que lo hayan leído.
-        </p>
       </main>
 
       <footer className="emergencia__acciones">
