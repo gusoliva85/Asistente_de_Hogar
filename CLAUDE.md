@@ -21,7 +21,9 @@ Si la especificación y el roadmap se contradicen, manda la especificación.
 
 **Servidor.** Contabo Cloud VPS 4 (2026) — 4 vCPU, 8 GB RAM, 100 GB, US-east, Ubuntu, root por SSH.
 
-**Interfaz.** Dos temas: **Lavanda Suave por defecto** y **Menta Clínica opcional**. Cinco pantallas maquetadas en [documentacion/mockups/](documentacion/mockups/), editables en <https://claude.ai/artifact/3dozfkTjcVtj7wCBAwrSEQ>: principal, escucha, emergencia, música y Menta. No proponer direcciones visuales nuevas: los ajustes van sobre estos temas.
+**Interfaz.** Un solo tema: **Lavanda Suave**, con variante **clara y oscura** (`data-luz`). **Menta Clínica quedó descartado el 31/10/2026**: el modo oscuro resuelve mejor el mismo problema y no obliga a elegir entre la paleta y la legibilidad. **No se hacen otras paletas** salvo pedido explícito. Maquetas en [documentacion/mockups/](documentacion/mockups/), editables en <https://claude.ai/artifact/3dozfkTjcVtj7wCBAwrSEQ>.
+
+**Navegación.** Una sola regla en todas las pantallas, implementada en `componentes/Navegacion.tsx` y no en cada pantalla: **abajo a la izquierda se sale** (Inicio, o «Estoy bien — cancelar» en emergencia), **abajo a la derecha se pide ayuda o se insiste** (Necesito ayuda, o «Reenviar alarma»), **arriba a la derecha va la hora**. Si hace falta mover un botón, se mueve ahí y se mueve en todas.
 
 **Voz e inteligencia.** Palabra de activación y síntesis de voz en el dispositivo; reconocimiento de voz en el servidor. La interpretación va en tres niveles: reglas → modelo local (Liquid AI, en nuestro VPS) → DeepSeek solo para conversación abierta.
 

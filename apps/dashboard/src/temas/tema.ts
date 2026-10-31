@@ -1,14 +1,15 @@
 /**
- * El tema es una preferencia por usuario y por hogar, no una constante
- * del código: la casa principal puede usar Lavanda mientras la de la
- * madre usa Menta (DECISION_Frontend_Temas.md, sección 1).
+ * Hoy hay un solo tema: Lavanda Suave. Menta Clínica quedó descartado el
+ * 31/10/2026, reemplazado por la variante oscura, que resuelve mejor el
+ * mismo problema —mirar la pantalla de noche— sin duplicar la paleta.
  *
- * En la Fase 2 el valor va a venir de la tabla de preferencias del
- * hogar. Hasta entonces vive en el navegador, que alcanza para la Pi en
- * kiosco: es siempre el mismo equipo y el mismo hogar.
+ * La dimensión «tema» se conserva igual, con un solo valor. Cuesta nada
+ * y es lo que permitiría que el hogar de la madre tenga otra paleta sin
+ * tocar un solo componente. Lo que cambia de verdad entre modos ya lo
+ * resuelve `data-luz`.
  */
 
-export const TEMAS = ['lavanda', 'menta'] as const
+export const TEMAS = ['lavanda'] as const
 export type Tema = (typeof TEMAS)[number]
 
 export const TEMA_POR_DEFECTO: Tema = 'lavanda'

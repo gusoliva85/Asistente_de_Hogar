@@ -131,7 +131,7 @@ Entrás por SSH a la Raspberry y al servidor. `https://tu-dominio` muestra la p�
 - [x] **F1.2 — Implementar los tokens de diseño.** Los temas de `DECISION_Frontend_Temas.md` como variables CSS intercambiables en bloque. Ningún color escrito a mano dentro de un componente. — *31/10/2026. Cambio de tema verificado en pantalla por el usuario. Incluye la capa de refinamiento de la sección 3.4 y el interruptor de rendimiento reducido.*
 - [x] **F1.3 — Construir los componentes.** Reloj, clima con el ícono SVG animado, agenda, compras, recordatorio, estado de dispositivos, barra de música, pastillas de estado y botón de emergencia. — *31/10/2026. Once componentes sobre la maqueta, con tokens y sin colores literales.*
 - [x] **F1.4 — Armar la pantalla principal (Lavanda).** El mosaico con el panel oscuro, alimentado con datos ficticios que tienen la forma exacta que va a devolver la API. — *31/10/2026. Rejilla de 600 px exactos, con datos ficticios con la forma de la API.*
-- [x] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente. — *31/10/2026. Menta implementado; el selector se saca de la pantalla y vuelve en ajustes (Fase 3). Se suma el modo oscuro, adelantado de F10.2.*
+- [x] **F1.5 — Armar Menta y el selector de tema**, con cambio en caliente. — *31/10/2026. **Menta quedó descartado**: lo reemplaza la variante oscura de Lavanda, adelantada de F10.2, que resuelve mejor el mismo problema. El selector de tema sale de la pantalla; el de claro/oscuro queda en el encabezado.*
 - [x] **F1.6 — Implementar los estados vacíos y de error.** Lista vacía, agenda vacía, sin conexión, micrófono ausente, cargando. Una interfaz que solo contempla el caso feliz es inservible en una casa real. — *31/10/2026. Agenda, compras, recordatorio, música, micrófono, clima y dispositivos sin respuesta. Se miran con ?datos=vacio.*
 - [x] **F1.7 — Implementar las otras pantallas de la maqueta:** escucha, emergencia y música, por ahora con datos fijos. — *31/10/2026. Tres pantallas completas, con navegación entre ellas. Aprobadas tras tres rondas de ajustes.*
 - [x] **F1.8 — Desplegar el frontend** desde Caddy con las cabeceras de caché correctas. — *31/10/2026. Compilado en Docker, servido desde un volumen. Verificado desde internet: 200, index.html sin cache, estaticos inmutables un anio, gzip 256 KB -> 82 KB en el cable.*
@@ -411,7 +411,7 @@ Decís «apagá las luces del living» y se apagan. «Mandá la aspiradora a lim
 ### 💻 Lo que programo yo
 
 - [ ] **F10.1 — Escala de densidad tipográfica.** Niveles de tamaño que afectan a los tokens en bloque, para que el hogar B tenga texto y botones más grandes sin ser un diseño distinto.
-- [ ] **F10.2 — Modo nocturno y de reposo**, con brillo bajo manteniendo la hora y el acceso a emergencia visibles.
+- [ ] **F10.2 — Modo nocturno y de reposo**, con brillo bajo manteniendo la hora y el acceso a emergencia visibles. — *El modo oscuro ya está hecho desde F1.5 (automático de 20:00 a 07:00, más botón). Acá queda solo el modo de reposo con la pantalla casi apagada.*
 - [ ] **F10.3 — Preparar el segundo dispositivo** con su hogar, sus credenciales y sus contactos.
 - [ ] **F10.4 — Verificar el aislamiento con datos reales de los dos hogares.** Ni listas, ni agenda, ni dispositivos, ni lo que el asistente aprendió. Es la prueba definitiva de F2.4, ahora de verdad.
 - [ ] **F10.5 — Actualizaciones remotas seguras**, con vuelta atrás si algo sale mal.

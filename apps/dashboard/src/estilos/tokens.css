@@ -6,9 +6,12 @@
 
    REGLA QUE NO SE NEGOCIA: ningún componente escribe un color, un radio
    ni una sombra a mano. Todo sale de acá. Un literal dentro de un
-   componente rompe el cambio de tema, y el tema es una preferencia por
-   hogar: la casa principal puede usar Lavanda mientras la de la madre
-   usa Menta.
+   componente rompe el cambio de modo, y hay dos que cambian en caliente:
+   claro/oscuro y rendimiento reducido.
+
+   Hay un solo tema, Lavanda Suave. Menta Clínica quedó descartado el
+   31/10/2026: lo reemplaza la variante oscura, que resuelve mejor el
+   mismo problema sin obligar a elegir entre la paleta y la legibilidad.
    ─────────────────────────────────────────────────────────────────────── */
 
 /* ── Compartido por ambos temas (3.1) ───────────────────────────────────── */
@@ -153,95 +156,14 @@
   --en-vivo-texto: #16603f;
   --en-vivo-fondo: linear-gradient(180deg, rgba(31, 170, 110, 0.2), rgba(31, 140, 95, 0.12));
 
-  /* Menta define estos; en Lavanda se asimilan para que ningún componente
-     tenga que preguntar en qué tema está */
   --viaje: var(--acento);
   --realce-fila: rgba(75, 71, 184, 0.07);
 }
 
-/* ── Menta Clínica — opcional (3.3) ─────────────────────────────────────── */
-
-[data-tema='menta'] {
-  --fondo-base: #eef4f4;
-  --fondo-aurora-1: radial-gradient(720px 420px at 2% -8%, rgba(14, 140, 119, 0.17), transparent 60%);
-  --fondo-aurora-2: radial-gradient(640px 440px at 100% 104%, rgba(94, 140, 200, 0.16), transparent 58%);
-
-  --texto: #13241f;
-  --texto-2: #51635d;
-  --texto-3: #7a8a85;
-
-  --acento: #0e8c77;
-  --acento-oscuro: #0a6a5b;
-  --acento-degradado: linear-gradient(140deg, #0e8c77, #14a88e);
-  --acento-contraste: #ffffff;
-
-  --confirmacion: #0a6a5b;
-  --recordatorio: #c9803a;
-  --emergencia: linear-gradient(140deg, #e0533d, #c23d28);
-  --emergencia-plano: #c23d28;
-
-  --blanco-control: #ffffff;
-  --vidrio: rgba(255, 255, 255, 0.72);
-  --vidrio-borde: rgba(255, 255, 255, 0.92);
-  --vidrio-desenfoque: blur(22px) saturate(140%);
-
-  --sombra-tarjeta:
-    0 1px 2px rgba(16, 46, 40, 0.05),
-    0 6px 14px rgba(16, 46, 40, 0.06),
-    0 18px 38px rgba(16, 46, 40, 0.08);
-  --sombra-elevada:
-    0 2px 4px rgba(16, 46, 40, 0.07),
-    0 10px 22px rgba(16, 46, 40, 0.09),
-    0 26px 52px rgba(16, 46, 40, 0.13);
-  --sombra-hundida: inset 0 1px 3px rgba(16, 46, 40, 0.09);
-
-  --brillo-interior: inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  --brillo-interior-boton: inset 0 1px 0 rgba(255, 255, 255, 0.26);
-
-  --lustre: linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 42%);
-
-  --halo-acento: 0 8px 22px rgba(14, 140, 119, 0.28);
-  --halo-acento-fuerte: 0 12px 30px rgba(14, 140, 119, 0.4);
-  --halo-emergencia: 0 10px 26px rgba(194, 61, 40, 0.32);
-
-  --panel-oscuro: linear-gradient(142deg, #17322c 0%, #0f2420 58%, #16342c 100%);
-  --sobre-oscuro: #eaf5f2;
-  --sobre-oscuro-2: #a9c6bf;
-  --vidrio-sobre-oscuro: rgba(255, 255, 255, 0.1);
-  --vidrio-sobre-oscuro-borde: rgba(255, 255, 255, 0.17);
-
-  --cielo: linear-gradient(165deg, rgba(126, 178, 224, 0.3), rgba(14, 140, 119, 0.16));
-  --nube-desde: #ffffff;
-  --nube-hasta: #cfe0ec;
-
-  --clima-sol: #ffd36e;
-  --clima-luna: #d2e8ff;
-  --clima-nube: #b8d4dc;
-
-  --hora-degradado: linear-gradient(176deg, #ffffff 18%, #a9ddd0 96%);
-
-  --dorado: linear-gradient(145deg, #e8b765, #c08a2c);
-  --dorado-halo: 0 5px 12px rgba(192, 138, 44, 0.34);
-  --verde: linear-gradient(145deg, #17a98f, #0a6a5b);
-  --verde-halo: 0 5px 12px rgba(10, 106, 91, 0.3);
-  --ambar: linear-gradient(145deg, #e0a04f, #b06c28);
-  --ambar-halo: 0 7px 16px rgba(176, 108, 40, 0.32);
-  --ambar-fondo: linear-gradient(140deg, rgba(249, 234, 212, 0.9), rgba(255, 255, 255, 0.68));
-  --ambar-texto: #8a5f2c;
-  --panel-musica: linear-gradient(140deg, #16352e 0%, #0e221e 60%, #1b3f44 100%);
-  --en-vivo: #0e8c77;
-  --en-vivo-texto: #0a5a4d;
-  --en-vivo-fondo: linear-gradient(180deg, rgba(14, 170, 145, 0.18), rgba(14, 140, 119, 0.12));
-
-  --viaje: #3a6fa8;
-  --realce-fila: rgba(14, 140, 119, 0.07);
-}
-
-
 /* ── Variantes oscuras ──────────────────────────────────────────────────────
    La luz es una dimensión aparte del tema: `data-luz="oscuro"` sobre
-   `data-tema`. Así Lavanda y Menta tienen cada uno su versión de noche y
-   nadie tiene que elegir entre el color que prefiere y la hora del día.
+   `data-tema`. Separarlas es lo que evita tener que elegir entre la
+   paleta que gusta y poder mirar la pantalla de noche.
 
    Estas reglas van después de las claras a propósito: sobrescriben solo
    los tokens que cambian. Las formas, los radios y los tiempos son los
@@ -322,52 +244,6 @@
   --viaje: var(--acento);
 }
 
-[data-tema='menta'][data-luz='oscuro'] {
-  --fondo-base: #0e1b1a;
-  --fondo-aurora-1: radial-gradient(720px 420px at 2% -8%, rgba(14, 160, 135, 0.18), transparent 62%);
-  --fondo-aurora-2: radial-gradient(640px 440px at 100% 104%, rgba(70, 120, 180, 0.15), transparent 58%);
-
-  --texto: #e8f3f0;
-  --texto-2: #a3bab4;
-  --texto-3: #74908a;
-
-  --acento: #35c8ab;
-  --acento-oscuro: #1f9d85;
-  --acento-degradado: linear-gradient(140deg, #14a88e, #35c8ab);
-  --acento-contraste: #06201c;
-
-  --confirmacion: #4fd0ab;
-  --recordatorio: #e0a85f;
-  --emergencia: linear-gradient(140deg, #e8705f, #c4402c);
-  --emergencia-plano: #ff8f7a;
-
-  --panel-oscuro: linear-gradient(142deg, #12302a 0%, #0b1f1c 58%, #123530 100%);
-  --cielo: linear-gradient(165deg, rgba(60, 100, 140, 0.4), rgba(14, 140, 119, 0.22));
-  --nube-desde: #c5d8d4;
-  --nube-hasta: #6f8c88;
-  --hora-degradado: linear-gradient(176deg, #ffffff 14%, #4fc9b0 96%);
-
-  --dorado: linear-gradient(145deg, #d9ab5e, #a87a28);
-  --dorado-halo: 0 5px 14px rgba(168, 122, 40, 0.42);
-  --verde: linear-gradient(145deg, #17a98f, #0a6a5b);
-  --verde-halo: 0 5px 14px rgba(10, 106, 91, 0.42);
-  --ambar: linear-gradient(145deg, #d49a52, #9e6424);
-  --ambar-halo: 0 7px 18px rgba(158, 100, 36, 0.4);
-  --ambar-fondo: linear-gradient(140deg, rgba(110, 80, 40, 0.38), rgba(255, 255, 255, 0.04));
-  --ambar-texto: #e2b377;
-  --panel-musica: linear-gradient(140deg, #123029 0%, #0a1d1a 60%, #10333a 100%);
-
-  --en-vivo: #35c8ab;
-  --en-vivo-texto: #6fd9c2;
-  --en-vivo-fondo: linear-gradient(180deg, rgba(20, 168, 142, 0.2), rgba(14, 140, 119, 0.1));
-
-  --halo-acento: 0 8px 24px rgba(20, 168, 142, 0.38);
-  --halo-acento-fuerte: 0 12px 32px rgba(20, 168, 142, 0.5);
-  --halo-emergencia: 0 10px 28px rgba(196, 64, 44, 0.42);
-  --realce-fila: rgba(53, 200, 171, 0.1);
-  --viaje: #74aee0;
-}
-
 /* ── Degradación para la Raspberry Pi 3 ─────────────────────────────────────
    backdrop-filter con desenfoque es caro en GPU. Si F1.10 muestra que no
    rinde, se activa este atributo en <html> y el vidrio pasa a ser color
@@ -386,10 +262,6 @@
 
 [data-tema='lavanda'][data-rendimiento='reducido'] {
   --vidrio: rgba(255, 255, 255, 0.88);
-}
-
-[data-tema='menta'][data-rendimiento='reducido'] {
-  --vidrio: rgba(255, 255, 255, 0.9);
 }
 
 [data-luz='oscuro'][data-rendimiento='reducido'] {

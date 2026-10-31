@@ -18,6 +18,16 @@
 >
 > **Modo nocturno:** sigue pendiente como variante atenuada para una habitación a oscuras (Fase 10). Con un panel LCD no es obligatorio como lo habría sido con AMOLED, pero mejora el uso de noche.
 
+> ## Addendum del 31 de octubre de 2026 — Menta Clínica queda descartado
+>
+> **Menta Clínica se descarta.** Su lugar lo ocupa la **variante oscura de Lavanda Suave**, decidida el mismo día e implementada en la Fase 1.
+>
+> El motivo: los dos temas existían para resolver el mismo problema —poder mirar la pantalla en condiciones distintas— y el modo oscuro lo resuelve mejor. Menta obligaba a elegir entre la paleta que gusta y la legibilidad; la luz, en cambio, es una dimensión aparte del color, así que no hay nada que sacrificar. Mantener dos paletas completas además duplicaba el trabajo de cada componente nuevo.
+>
+> **La estructura de tokens se conserva igual.** `data-tema` sigue existiendo con un solo valor, y `data-luz` decide claro u oscuro. Si alguna vez el hogar B necesita otra paleta, entra sin tocar un componente. Lo que se borró son los valores de Menta, no el mecanismo.
+>
+> Queda sin efecto todo lo que este documento dice sobre Menta Clínica: su disposición de riel lateral, sus tokens de la sección 3.3 y su mockup. **No se va a hacer ninguna otra paleta alternativa** salvo pedido explícito.
+
 **Estado:** DECIDIDO Y CERRADO
 **Fecha de la decisión:** 28 de octubre de 2026
 **Decidido por:** el usuario (propietario del proyecto)
