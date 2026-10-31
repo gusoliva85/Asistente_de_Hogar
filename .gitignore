@@ -1,3 +1,8 @@
+# Material de referencia de terceros. Las muestras de iconos son
+# capturas de bancos de imagenes, con marca de agua y con licencia de
+# sus autores: sirven para dibujar los nuestros, pero no se versionan.
+documentacion/ejemplos/
+
 # Secretos — NUNCA versionar
 .env
 .env.*
