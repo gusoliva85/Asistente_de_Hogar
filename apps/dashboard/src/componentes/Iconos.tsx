@@ -201,6 +201,14 @@ export const IconoReproducir = ({ tamano = 14 }: PropsIcono) => (
   </svg>
 )
 
+export const IconoNota = (p: PropsIcono) => (
+  <Trazo grosor={2} {...p}>
+    <path d="M9 18V5.5l10-2V16" />
+    <circle cx="6.5" cy="18" r="2.6" />
+    <circle cx="16.5" cy="16" r="2.6" />
+  </Trazo>
+)
+
 export const IconoAyuda = (p: PropsIcono) => (
   <Trazo grosor={2.2} {...p}>
     <path d="M12 21s-7.5-4.6-7.5-10a4.3 4.3 0 0 1 7.5-2.9A4.3 4.3 0 0 1 19.5 11c0 5.4-7.5 10-7.5 10Z" />

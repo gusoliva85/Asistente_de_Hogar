@@ -18,6 +18,7 @@ import './estilos/componentes.css'
 import { App } from './App'
 import {
   aplicarLuz,
+  aplicarMovimiento,
   aplicarRendimiento,
   aplicarTema,
   leerModoLuz,
@@ -29,7 +30,11 @@ import {
 // equivocado en el arranque del kiosco.
 aplicarTema(leerTemaGuardado())
 aplicarLuz(resolverLuz(leerModoLuz(new Date()), new Date()))
-aplicarRendimiento(new URLSearchParams(location.search).get('rendimiento') === 'reducido')
+const parametros = new URLSearchParams(location.search)
+aplicarRendimiento(parametros.get('rendimiento') === 'reducido')
+// Por defecto encendidas: ver aplicarMovimiento. Con ?movimiento=sistema
+// se vuelve a obedecer la preferencia del sistema operativo.
+aplicarMovimiento(parametros.get('movimiento') !== 'sistema')
 
 const raiz = document.getElementById('raiz')
 if (!raiz) throw new Error('Falta el elemento #raiz en index.html')

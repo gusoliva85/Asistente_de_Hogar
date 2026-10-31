@@ -793,11 +793,33 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sombra-tarjeta);
 }
 
+/* Apagada conserva el panel oscuro —es el mismo objeto, no otro— pero
+   atenuado, para que se lea como "acá va a sonar algo" y no como una
+   tarjeta distinta. */
 .musica--apagada {
-  color: var(--texto-2);
-  background: var(--vidrio);
-  border: 1px solid var(--vidrio-borde);
-  box-shadow: var(--sombra-tarjeta), var(--brillo-interior);
+  filter: saturate(0.45);
+  opacity: 0.78;
+}
+
+.musica__tapa--vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sobre-oscuro-2);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  box-shadow: none;
+}
+
+.musica__titulo--vacio {
+  font-weight: var(--peso-semi);
+  color: var(--sobre-oscuro-2);
+}
+
+.musica__boton:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
 }
 
 .musica__tapa {
@@ -1011,7 +1033,7 @@
     transparent 72%
   );
   transform: translateX(-125%);
-  animation: destello 6s ease-in-out infinite;
+  animation: destello 5s ease-in-out infinite;
   pointer-events: none;
 }
 

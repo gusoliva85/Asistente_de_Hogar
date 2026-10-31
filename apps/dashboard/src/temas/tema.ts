@@ -37,6 +37,18 @@ export function guardarTema(tema: Tema): void {
   }
 }
 
+/**
+ * Fuerza las animaciones aunque el sistema pida reducirlas.
+ *
+ * En el kiosco va encendido: es un dispositivo dedicado y la preferencia
+ * del sistema operativo donde se desarrolla no tiene por qué mandar.
+ * Para apagarlas de verdad está el modo de rendimiento reducido.
+ */
+export function aplicarMovimiento(siempre: boolean): void {
+  if (siempre) document.documentElement.dataset.movimiento = 'siempre'
+  else delete document.documentElement.dataset.movimiento
+}
+
 /** Aplica el tema al documento. Es lo único que mira el CSS. */
 export function aplicarTema(tema: Tema): void {
   document.documentElement.dataset.tema = tema

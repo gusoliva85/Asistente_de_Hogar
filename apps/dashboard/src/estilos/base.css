@@ -196,12 +196,17 @@ button:active:not(:disabled) {
   }
 }
 
-/* Dos motivos para apagarlas: que el usuario lo pida en el sistema, o que
-   la Pi 3 no rinda (F1.11). El segundo se activa con data-rendimiento. */
+/* Tres motivos para apagarlas: que el usuario lo pida en el sistema, que
+   la Pi 3 no rinda (F1.11), o que se fuercen a mano.
+
+   Lo del sistema se respeta por defecto, pero el dispositivo es un
+   kiosco dedicado y esa decisión no tiene por qué heredarse del sistema
+   operativo donde se está desarrollando: `data-movimiento="siempre"` en
+   <html> la ignora. Se fuerza con ?movimiento=siempre. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html:not([data-movimiento='siempre']) *,
+  html:not([data-movimiento='siempre']) *::before,
+  html:not([data-movimiento='siempre']) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
