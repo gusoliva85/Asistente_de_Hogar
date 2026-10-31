@@ -1078,67 +1078,126 @@
   transform: none;
   box-shadow: var(--sombra-elevada), var(--brillo-interior);
 }
-
 /* ───────────────────────────────────────────────────────────────────────────
    Variante amplia (?diseno=amplio)
 
-   Sin compras ni dispositivos. Ese espacio se reparte: el panel de hora
-   y clima crece de 186 a 240 px de alto, la agenda pasa a ocupar el
-   ancho entero y la música deja de ser una barra para ser una tarjeta
-   con su arte.
+   Sin compras ni dispositivos. Ese espacio se reparte entre lo que
+   queda, y sobre todo se usa para separar: todo respira 14 px en lugar
+   de 12, y cada tarjeta tiene más relleno interno.
 
-   La suma sigue dando 600: 22 + 30 + 12 + 406 + 12 + 96 + 22.
+   La suma vertical, exacta:
+   22 + 30 + 14 + 402 + 14 + 96 + 22 = 600
+   Izquierda: panel 236 + 14 + agenda 152 = 402
+   Derecha:   recordatorio 104 + 14 + música 284 = 402
    ─────────────────────────────────────────────────────────────────────── */
+
+.pantalla--amplia {
+  gap: 14px;
+}
 
 .amplia__cuerpo {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 12px;
-  height: 406px;
+  gap: 14px;
+  height: 402px;
 }
 
-.pantalla--amplia .panel {
-  height: 240px;
+.pantalla--amplia .columna {
+  gap: 14px;
 }
 
-/* Con más alto, la hora y el clima pueden respirar */
-.pantalla--amplia .panel__hora {
-  font-size: 118px;
+/* ── Panel: dos filas, el pronóstico abajo a todo el ancho ──────────────── */
+
+.panel--amplio {
+  height: 236px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px 24px;
 }
 
-.pantalla--amplia .panel__dia {
-  font-size: 31px;
+.panel__superior {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.pantalla--amplia .panel__numero {
-  font-size: 21px;
+.panel--amplio .panel__hora {
+  font-size: 112px;
 }
 
-.pantalla--amplia .clima__temperatura {
-  font-size: 64px;
+.panel--amplio .panel__dia {
+  font-size: 30px;
 }
 
-.pantalla--amplia .columna .tarjeta {
-  flex-grow: 1;
+.panel--amplio .panel__numero {
+  font-size: 20px;
+}
+
+.panel--amplio .panel__clima {
+  flex: none;
+  padding-left: 26px;
+  padding-right: 4px;
+  gap: 18px;
+}
+
+.panel--amplio .clima__temperatura {
+  font-size: 62px;
+}
+
+.panel--amplio .clima__extremos {
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.panel--amplio .clima__condicion {
+  font-size: 16px;
+}
+
+/* A todo el ancho del panel: metido al costado competía con la hora por
+   el mismo espacio y las dos cosas quedaban estrujadas. */
+.panel--amplio .pronostico {
+  position: relative;
+  padding: 9px 10px;
+}
+
+.panel--amplio .pronostico__hora {
+  font-size: 13px;
+}
+
+.panel--amplio .pronostico__grados {
+  font-size: 18px;
 }
 
 /* ── Agenda a lo ancho ──────────────────────────────────────────────────── */
+
+.pantalla--amplia .columna .tarjeta {
+  height: 152px;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
 
 .agenda-ancha {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Repartidas en el alto disponible: con dos eventos o con tres, la
+     tarjeta nunca queda con un bloque de aire muerto abajo. */
+  justify-content: space-evenly;
 }
 
 .agenda-ancha__fila {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 7px 12px;
+  gap: 16px;
+  padding: 6px 12px;
   margin: 0 -12px;
   border-radius: 16px;
   min-width: 0;
@@ -1150,7 +1209,7 @@
 
 .agenda-ancha__marca {
   width: 4px;
-  height: 30px;
+  height: 28px;
   border-radius: 3px;
   flex: none;
   background: currentColor;
@@ -1163,7 +1222,7 @@
 }
 
 .agenda-ancha__hora {
-  font-size: 23px;
+  font-size: 22px;
   font-weight: var(--peso-extra);
   letter-spacing: -0.025em;
   color: var(--texto-2);
@@ -1175,7 +1234,7 @@
 }
 
 .agenda-ancha__titulo {
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: var(--peso-medio);
   color: var(--texto-2);
   white-space: nowrap;
@@ -1188,19 +1247,25 @@
   font-weight: var(--peso-semi);
 }
 
-/* ── Música alta ────────────────────────────────────────────────────────── */
+/* ── Columna derecha ────────────────────────────────────────────────────── */
+
+.pantalla--amplia .tarjeta--ambar {
+  height: 104px;
+  flex: none;
+}
 
 .musica-alta {
   position: relative;
   overflow: hidden;
-  flex-grow: 1;
+  height: 284px;
+  flex: none;
   box-sizing: border-box;
-  padding: 16px;
+  padding: 18px;
   border-radius: var(--radio-tarjeta-grande);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   color: var(--sobre-oscuro);
   background: var(--panel-musica);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sombra-tarjeta);
@@ -1214,9 +1279,14 @@
 }
 
 .musica-alta__texto .musica__titulo {
-  font-size: 15px;
+  font-size: 15.5px;
 }
 
+.musica-alta__texto .musica__artista {
+  margin-top: 2px;
+}
+
+/* Pegado al borde de abajo con su propio aire, no colgando del texto */
 .musica-alta__pie {
   position: relative;
   margin-top: auto;
@@ -1227,11 +1297,15 @@
   gap: 12px;
 }
 
+.musica-alta__pie .musica__origen {
+  margin: 0;
+}
+
 .musica-alta__vacia {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   text-align: center;
   opacity: 0.75;
 }

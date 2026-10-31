@@ -54,7 +54,7 @@ export function PrincipalAmplia({
 
       <div className="amplia__cuerpo">
         <div className="columna">
-          <PanelPrincipal ahora={ahora} clima={estado.clima} />
+          <PanelPrincipal ahora={ahora} clima={estado.clima} amplio />
 
           <section className="tarjeta vidrio vidrio--interactiva aparece" style={{ animationDelay: '120ms' }}>
             <div className="tarjeta__cabecera">
@@ -108,7 +108,7 @@ export function PrincipalAmplia({
                   onClick={onMusica}
                   aria-label="Abrir música"
                 />
-                <Caratula titulo={estado.musica.titulo} tamano={150} />
+                <Caratula titulo={estado.musica.titulo} tamano={134} />
                 <div className="musica-alta__texto">
                   <div className="musica__titulo">{estado.musica.titulo}</div>
                   <div className="musica__artista">{estado.musica.artista}</div>
@@ -135,7 +135,7 @@ export function PrincipalAmplia({
               </>
             ) : (
               <div className="musica-alta__vacia">
-                <Caratula titulo="silencio" tamano={150} />
+                <Caratula titulo="silencio" tamano={134} />
                 <p className="vacio vacio--compacto">
                   Sin música
                   <span>«Jarvis, poné algo»</span>
