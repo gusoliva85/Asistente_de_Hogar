@@ -13,6 +13,7 @@ import '@fontsource/plus-jakarta-sans/latin-800.css'
 
 import './estilos/tokens.css'
 import './estilos/base.css'
+import './estilos/componentes.css'
 
 import { App } from './App'
 import { aplicarRendimiento, aplicarTema, leerTemaGuardado } from './temas/tema'

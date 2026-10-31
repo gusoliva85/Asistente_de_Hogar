@@ -43,6 +43,11 @@
   /* Área táctil mínima: la usa una persona mayor, no se achica */
   --tactil-minimo: 44px;
 
+  /* Grano: ruido tenue sobre el fondo. Es lo que evita que los degradados
+     se vean en bandas y da textura de material impreso. */
+  --grano-opacidad: 0.055;
+  --grano-opacidad-oscuro: 0.09;
+
   /* Rejilla de 1024 × 600 */
   --ancho-pantalla: 1024px;
   --alto-pantalla: 600px;
@@ -109,7 +114,24 @@
 
   --cielo: linear-gradient(170deg, #8d9be0 0%, #b6a4dc 52%, #f0b59a 100%);
   --nube-desde: #ffffff;
-  --nube-hasta: #dad6f0;
+  --nube-hasta: #b9b1e2;
+
+  /* La hora no es texto plano: degradado recortado sobre el tipo */
+  --hora-degradado: linear-gradient(176deg, #ffffff 18%, #bdb4f2 96%);
+
+  /* Familias de color de las tarjetas, cada una con su identidad */
+  --dorado: linear-gradient(145deg, #ffc869, #e09326);
+  --dorado-halo: 0 5px 12px rgba(224, 147, 38, 0.38);
+  --verde: linear-gradient(145deg, #3fa87c, #1f7a58);
+  --verde-halo: 0 5px 12px rgba(31, 122, 88, 0.32);
+  --ambar: linear-gradient(145deg, #f0a651, #c9742a);
+  --ambar-halo: 0 7px 16px rgba(201, 116, 42, 0.36);
+  --ambar-fondo: linear-gradient(140deg, rgba(255, 232, 205, 0.9), rgba(255, 255, 255, 0.66));
+  --ambar-texto: #9a6b32;
+  --panel-musica: linear-gradient(140deg, #342a63 0%, #1d1a38 60%, #4a2a5a 100%);
+  --en-vivo: #1f8c5f;
+  --en-vivo-texto: #16603f;
+  --en-vivo-fondo: linear-gradient(180deg, rgba(31, 170, 110, 0.2), rgba(31, 140, 95, 0.12));
 
   /* Menta define estos; en Lavanda se asimilan para que ningún componente
      tenga que preguntar en qué tema está */
@@ -171,6 +193,21 @@
   --nube-desde: #ffffff;
   --nube-hasta: #cfe0ec;
 
+  --hora-degradado: linear-gradient(176deg, #ffffff 18%, #a9ddd0 96%);
+
+  --dorado: linear-gradient(145deg, #e8b765, #c08a2c);
+  --dorado-halo: 0 5px 12px rgba(192, 138, 44, 0.34);
+  --verde: linear-gradient(145deg, #17a98f, #0a6a5b);
+  --verde-halo: 0 5px 12px rgba(10, 106, 91, 0.3);
+  --ambar: linear-gradient(145deg, #e0a04f, #b06c28);
+  --ambar-halo: 0 7px 16px rgba(176, 108, 40, 0.32);
+  --ambar-fondo: linear-gradient(140deg, rgba(249, 234, 212, 0.9), rgba(255, 255, 255, 0.68));
+  --ambar-texto: #8a5f2c;
+  --panel-musica: linear-gradient(140deg, #16352e 0%, #0e221e 60%, #1b3f44 100%);
+  --en-vivo: #0e8c77;
+  --en-vivo-texto: #0a5a4d;
+  --en-vivo-fondo: linear-gradient(180deg, rgba(14, 170, 145, 0.18), rgba(14, 140, 119, 0.12));
+
   --viaje: #3a6fa8;
   --realce-fila: rgba(14, 140, 119, 0.07);
 }
@@ -183,6 +220,8 @@
    ─────────────────────────────────────────────────────────────────────── */
 
 [data-rendimiento='reducido'] {
+  --grano-opacidad: 0;
+  --grano-opacidad-oscuro: 0;
   /* Se apaga el desenfoque, que es lo caro en GPU. El brillo interior, el
      lustre y las sombras en capas se conservan: cuestan prácticamente
      nada y son lo que sostiene la sensación de material. */
