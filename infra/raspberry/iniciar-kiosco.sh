@@ -49,16 +49,32 @@ if [ -f "$PERFIL/Default/Preferences" ]; then
     "$PERFIL/Default/Preferences" || true
 fi
 
-# Rasterizado. Por omisión en la CPU: el dibujado por GPU sobre el driver
-# V3D deja mosaicos viejos sin invalidar y la pantalla se va ensuciando
-# con el correr de las horas (visto el 31/10/2026 tras 5 h encendida:
-# botones repetidos y superpuestos, sin un solo error en el journal).
-# La pantalla es casi estática, así que la CPU alcanza.
-# Para volver a probar la GPU: JARVIS_RASTER=gpu en el servicio.
-if [ "${JARVIS_RASTER:-cpu}" = "gpu" ]; then
-  RASTER="--enable-gpu-rasterization"
-else
+# Rasterizado. Va en la GPU, y está medido.
+#
+# El 31/10/2026 se probó pasarlo a la CPU para esquivar un defecto del
+# driver V3D —deja mosaicos viejos sin invalidar y tras unas horas la
+# pantalla se ensucia con elementos repetidos y superpuestos, sin un
+# solo error en el journal. Salió peor, y los números lo dicen:
+#
+#                     GPU        CPU
+#   temperatura    79,5 °C    85,4 °C
+#   reloj del ARM  1195 MHz    603 MHz   (capada por calor)
+#   CPU libre         --          7 %
+#
+# Con la CPU, el renderizador solo se comía el 210 % y el proceso
+# gráfico otro 129 %. La máquina quedaba ahogada. Las animaciones
+# ambientales obligan a redibujar seguido, y eso en la CPU de una Pi 3
+# no entra. Así que vuelve a la GPU.
+#
+# Contra los mosaicos viejos queda --disable-partial-raster, que obliga
+# a redibujar el mosaico entero en vez de parchear un pedazo. Es la
+# hipótesis, no un hecho: hay que dejarla encendida horas para saberlo.
+#
+# Para volver a probar la CPU: JARVIS_RASTER=cpu en el servicio.
+if [ "${JARVIS_RASTER:-gpu}" = "cpu" ]; then
   RASTER="--disable-gpu-rasterization"
+else
+  RASTER="--enable-gpu-rasterization --disable-partial-raster"
 fi
 
 exec "$BINARIO" \
