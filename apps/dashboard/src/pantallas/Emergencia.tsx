@@ -7,13 +7,8 @@ import type {
   MotivoEmergencia,
 } from '../datos/tipos'
 import { Grano } from '../componentes/Grano'
-import {
-  IconoCaida,
-  IconoMicrofono,
-  IconoPeligro,
-  IconoReenviar,
-  IconoSalud,
-} from '../componentes/Iconos'
+import { IconoCaida, IconoMicrofono, IconoPeligro, IconoSalud } from '../componentes/Iconos'
+import { BotonCancelar, BotonReenviar, PieAcciones } from '../componentes/Navegacion'
 
 /**
  * Pantalla de emergencia.
@@ -178,19 +173,11 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
         </ul>
       </main>
 
-      <footer className="emergencia__acciones">
-        <button type="button" className="emergencia__boton emergencia__boton--reenviar">
-          <IconoReenviar tamano={24} grosor={2.2} />
-          Reenviar alarma
-        </button>
-        <button
-          type="button"
-          className="emergencia__boton emergencia__boton--cancelar"
-          onClick={onCancelar}
-        >
-          Estoy bien — cancelar
-        </button>
-      </footer>
+      {/* Misma regla que en el resto: izquierda sale, derecha insiste. */}
+      <PieAcciones>
+        <BotonCancelar onClick={onCancelar} />
+        <BotonReenviar onClick={() => undefined} />
+      </PieAcciones>
     </div>
   )
 }

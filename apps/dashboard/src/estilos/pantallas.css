@@ -84,10 +84,28 @@
   flex: none;
 }
 
-.escucha__hora {
-  font-size: 16px;
+/* La hora se ve en todas las pantallas: en una casa, saber la hora no
+   debería obligar a volver al inicio. */
+.reloj {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radio-pastilla);
+  font-size: 19px;
   font-weight: var(--peso-fuerte);
-  color: var(--sobre-oscuro-2);
+  letter-spacing: -0.01em;
+  color: var(--texto);
+  background: var(--vidrio);
+  border: 1px solid var(--vidrio-borde);
+  box-shadow: var(--brillo-interior), var(--sombra-tarjeta);
+}
+
+.reloj--oscuro {
+  color: var(--sobre-oscuro);
+  background: var(--vidrio-sobre-oscuro);
+  border-color: var(--vidrio-sobre-oscuro-borde);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .escucha__cuerpo {
@@ -301,11 +319,18 @@
   line-height: 1.3;
 }
 
-/* ── Los dos botones de abajo ───────────────────────────────────────────── */
+/* ── Navegación compartida ──────────────────────────────────────────────────
+   Una sola regla en las cuatro pantallas:
 
-/* Del mismo porte: en una pantalla táctil de 7" lo que se toca va al
-   alcance del pulgar, no arriba en una esquina. */
-.escucha__pie {
+     abajo a la izquierda  →  salir de acá
+     abajo a la derecha    →  pedir ayuda o insistir
+     arriba a la derecha   →  la hora
+
+   Lo importante no es cuál lado se eligió, sino que no cambie nunca.
+   Quien lo use todos los días tiene que poder tocar sin mirar.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.pie-acciones {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -315,7 +340,7 @@
 
 .boton-grande {
   height: 66px;
-  min-width: 232px;
+  min-width: 236px;
   padding: 0 28px;
   display: flex;
   align-items: center;
@@ -326,11 +351,38 @@
   font-weight: var(--peso-fuerte);
 }
 
-.boton-grande--volver {
+/* Salir: sobrio. Es el camino de vuelta, no una acción a destacar. */
+.boton-grande--salir {
+  color: var(--texto);
+  background: var(--vidrio);
+  border: 1px solid var(--vidrio-borde);
+  box-shadow: var(--brillo-interior), var(--sombra-tarjeta);
+}
+
+.boton-grande--salir:hover {
+  box-shadow: var(--brillo-interior), var(--sombra-elevada);
+}
+
+/* Sobre las pantallas oscuras el vidrio claro no se ve */
+.boton-grande--oscuro {
   color: var(--sobre-oscuro);
   background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  border-color: var(--vidrio-sobre-oscuro-borde);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), var(--sombra-tarjeta);
+}
+
+.boton-grande--cancelar {
+  color: #fff;
+  background: var(--emergencia);
+  box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
+}
+
+/* Reenviar es insistir sobre los canales que fallaron, no una alarma
+   nueva: por eso ámbar y no rojo. */
+.boton-grande--reenviar {
+  color: #2a1c06;
+  background: linear-gradient(140deg, #f5c25e, #d79526);
+  box-shadow: var(--brillo-interior-boton), 0 10px 26px rgba(215, 149, 38, 0.4);
 }
 
 .boton-grande--ayuda {
@@ -340,8 +392,8 @@
   overflow: hidden;
 }
 
-/* El mismo destello que en la pantalla principal: el botón de ayuda se
-   comporta igual esté donde esté. */
+/* El destello acompaña al botón de ayuda a donde vaya: se comporta
+   igual en todas las pantallas. */
 .boton-grande--ayuda::after {
   content: '';
   position: absolute;
@@ -780,42 +832,6 @@
   color: var(--espera);
 }
 
-.emergencia__acciones {
-  position: relative;
-  display: flex;
-  gap: 12px;
-  flex: none;
-}
-
-.emergencia__boton {
-  height: 68px;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 13px;
-  border-radius: 24px;
-  font-size: 20px;
-  font-weight: var(--peso-fuerte);
-}
-
-/* Reenviar es reintentar los canales que fallaron. Ámbar y no rojo: es
-   una acción de insistir, no una alarma nueva. */
-.emergencia__boton--reenviar {
-  color: #2a1c06;
-  background: linear-gradient(140deg, #f5c25e, #d79526);
-  box-shadow: var(--brillo-interior-boton), 0 10px 26px rgba(215, 149, 38, 0.4);
-}
-
-/* Cancelar es la acción menos reversible del sistema y aun así tiene
-   que ser fácil de encontrar: quien está bien quiere apagar esto ya. Se
-   distingue por color, no por tamaño. */
-.emergencia__boton--cancelar {
-  color: #fff;
-  background: var(--emergencia);
-  box-shadow: var(--halo-emergencia), var(--brillo-interior-boton);
-}
-
 /* ── Música ─────────────────────────────────────────────────────────────── */
 
 .pantalla--musica {
@@ -851,8 +867,8 @@
 
 .repro__arte {
   position: relative;
-  width: 208px;
-  height: 208px;
+  width: 190px;
+  height: 190px;
   flex: none;
 }
 
@@ -873,10 +889,10 @@
 .repro__disco {
   position: absolute;
   top: 50%;
-  right: -52px;
+  right: -48px;
   transform: translateY(-50%);
-  width: 182px;
-  height: 182px;
+  width: 166px;
+  height: 166px;
   pointer-events: none;
 }
 
@@ -1057,10 +1073,15 @@
 
 /* ── Cola ───────────────────────────────────────────────────────────────── */
 
+.encabezado--solo-reloj {
+  justify-content: flex-end;
+  height: 38px;
+}
+
 .cola {
   position: relative;
   box-sizing: border-box;
-  height: 150px;
+  height: 138px;
   padding: 13px 18px;
   border-radius: var(--radio-tarjeta-grande);
   background: var(--vidrio);
@@ -1090,7 +1111,7 @@
    lo que sirve una carátula. */
 .cola__fila {
   width: 100%;
-  height: 70px;
+  height: 64px;
   display: flex;
   align-items: center;
   gap: 11px;

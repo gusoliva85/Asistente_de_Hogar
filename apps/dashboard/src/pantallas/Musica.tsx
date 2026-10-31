@@ -4,7 +4,6 @@ import { Grano } from '../componentes/Grano'
 import {
   IconoAleatorio,
   IconoAnterior,
-  IconoAyuda,
   IconoBucle,
   IconoNota,
   IconoPausa,
@@ -12,8 +11,7 @@ import {
   IconoSiguiente,
   IconoVolumen,
 } from '../componentes/Iconos'
-
-const HORA = new Intl.DateTimeFormat('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
+import { BotonAyuda, BotonSalir, PieAcciones, Reloj } from '../componentes/Navegacion'
 
 function reloj(segundos: number): string {
   const m = Math.floor(segundos / 60)
@@ -74,19 +72,10 @@ export function Musica({ musica, ahora, onSalir, onAyuda }: Props) {
       <div className="musica__aura ambiental" aria-hidden="true" />
       <Grano />
 
-      <header className="encabezado">
-        <button type="button" className="boton-modo" onClick={onSalir}>
-          Inicio
-        </button>
-        <div className="encabezado__derecha">
-          <time className="pastilla numero" dateTime={ahora.toISOString()}>
-            {HORA.format(ahora)}
-          </time>
-          <button type="button" className="boton-modo boton-modo--ayuda" onClick={onAyuda}>
-            <IconoAyuda tamano={15} />
-            Ayuda
-          </button>
-        </div>
+      {/* Arriba solo la hora. Inicio y ayuda bajan al pie, al mismo
+          lugar que en el resto de las pantallas. */}
+      <header className="encabezado encabezado--solo-reloj">
+        <Reloj ahora={ahora} />
       </header>
 
       <main className="repro">
@@ -98,7 +87,7 @@ export function Musica({ musica, ahora, onSalir, onAyuda }: Props) {
           <span className="repro__disco" aria-hidden="true">
             <span className="repro__disco-gira ambiental" />
           </span>
-          <Caratula titulo={pista.titulo} tamano={208} />
+          <Caratula titulo={pista.titulo} tamano={190} />
         </div>
 
         <div className="repro__texto">
@@ -201,7 +190,7 @@ export function Musica({ musica, ahora, onSalir, onAyuda }: Props) {
             {cola.slice(0, 3).map((p, i) => (
               <li key={p.titulo}>
                 <button type="button" className="cola__fila">
-                  <Caratula titulo={p.titulo} tamano={46} />
+                  <Caratula titulo={p.titulo} tamano={42} />
                   <span className="cola__texto">
                     <span className="cola__titulo">{p.titulo}</span>
                     <span className="cola__artista">{p.artista}</span>
@@ -215,6 +204,11 @@ export function Musica({ musica, ahora, onSalir, onAyuda }: Props) {
           </ul>
         )}
       </section>
+
+      <PieAcciones>
+        <BotonSalir onClick={onSalir} />
+        <BotonAyuda onClick={onAyuda} />
+      </PieAcciones>
     </div>
   )
 }

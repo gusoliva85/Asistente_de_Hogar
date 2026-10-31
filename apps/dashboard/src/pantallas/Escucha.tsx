@@ -1,6 +1,7 @@
 import type { EstadoEscucha } from '../datos/tipos'
 import { Grano } from '../componentes/Grano'
-import { IconoAyuda, IconoMicrofono, IconoTilde, IconoVolver } from '../componentes/Iconos'
+import { IconoMicrofono, IconoTilde } from '../componentes/Iconos'
+import { BotonAyuda, BotonSalir, PieAcciones, Reloj } from '../componentes/Navegacion'
 
 const HORA = new Intl.DateTimeFormat('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
 
@@ -34,9 +35,7 @@ export function Escucha({ estado, ahora, onSalir, onAyuda }: Props) {
       <Grano intenso />
 
       <header className="escucha__encabezado">
-        <time className="escucha__hora numero" dateTime={ahora.toISOString()}>
-          {HORA.format(ahora)}
-        </time>
+        <Reloj ahora={ahora} sobreOscuro />
       </header>
 
       <main className="escucha__cuerpo">
@@ -93,19 +92,10 @@ export function Escucha({ estado, ahora, onSalir, onAyuda }: Props) {
         )}
       </main>
 
-      {/* Los dos botones grandes, abajo y del mismo porte: en una
-          pantalla táctil de 7" lo que se toca va al alcance del pulgar,
-          no arriba en una esquina. */}
-      <footer className="escucha__pie">
-        <button type="button" className="boton-grande boton-grande--volver" onClick={onSalir}>
-          <IconoVolver tamano={24} grosor={2.4} />
-          Volver
-        </button>
-        <button type="button" className="boton-grande boton-grande--ayuda" onClick={onAyuda}>
-          <IconoAyuda tamano={24} />
-          Necesito ayuda
-        </button>
-      </footer>
+      <PieAcciones>
+        <BotonSalir onClick={onSalir} sobreOscuro />
+        <BotonAyuda onClick={onAyuda} />
+      </PieAcciones>
     </div>
   )
 }
