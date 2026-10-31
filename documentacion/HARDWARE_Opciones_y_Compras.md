@@ -4,6 +4,8 @@
 **Fecha:** 28 de octubre de 2026
 **Mercado:** Argentina (Mercado Libre, tiendas locales) y compra internacional (AliExpress)
 
+> **Dónde comprar cada cosa es una decisión aparte, y está en [HARDWARE_AliExpress_vs_MercadoLibre.md](HARDWARE_AliExpress_vs_MercadoLibre.md)** (31/10/2026). Ese documento concluye que **la pantalla conviene importarla** —sale menos de la mitad y no hace falta hasta la Fase 6— y que existe una opción que acá no estaba contemplada: **monitores de 7" 1024×600 con parlantes incorporados y soporte para montar la Pi atrás**, que reemplazan de una vez al panel, la carcasa, la barra de sonido y el adaptador de audio. Antes de comprar lo de las secciones 4 y 5, leelo.
+
 > **Advertencia sobre los precios.** Todos los valores son de **octubre de 2026** y salen de publicaciones consultadas ese día. En Argentina los precios y el stock cambian semana a semana. Úsalos para comparar entre opciones, no como presupuesto cerrado. Antes de comprar, verificá el precio en la publicación.
 
 ---

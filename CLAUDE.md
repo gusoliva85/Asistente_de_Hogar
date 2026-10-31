@@ -10,8 +10,9 @@ Documentos, en orden de lectura:
 4. [documentacion/DECISION_Frontend_Temas.md](documentacion/DECISION_Frontend_Temas.md) — la interfaz.
 5. [documentacion/GUIA_Servidor_VPS.md](documentacion/GUIA_Servidor_VPS.md) — **cómo se monta el servidor**, de cero a desplegado, con las trampas que ya nos mordieron.
 6. [documentacion/HARDWARE_Opciones_y_Compras.md](documentacion/HARDWARE_Opciones_y_Compras.md) — **qué comprar**: modelos concretos, precios en Argentina y links.
-7. [documentacion/COMPARATIVA_Alexa.md](documentacion/COMPARATIVA_Alexa.md) — contra qué competimos, qué igualar y dónde ganamos.
-8. [documentacion/LIQUID_AI_Evaluacion.md](documentacion/LIQUID_AI_Evaluacion.md) — el modelo de lenguaje local: qué sirve y cómo entra.
+7. [documentacion/HARDWARE_AliExpress_vs_MercadoLibre.md](documentacion/HARDWARE_AliExpress_vs_MercadoLibre.md) — **de dónde traerlo**: el régimen de importación, cuándo conviene importar y cuándo no, y la pantalla con parlantes que reemplaza tres compras.
+8. [documentacion/COMPARATIVA_Alexa.md](documentacion/COMPARATIVA_Alexa.md) — contra qué competimos, qué igualar y dónde ganamos.
+9. [documentacion/LIQUID_AI_Evaluacion.md](documentacion/LIQUID_AI_Evaluacion.md) — el modelo de lenguaje local: qué sirve y cómo entra.
 
 Si la especificación y el roadmap se contradicen, manda la especificación.
 

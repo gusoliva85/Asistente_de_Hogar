@@ -274,7 +274,7 @@ Le decís algo enrevesado —«el jueves que viene tengo que llevar el auto al t
 
 ### 🔧 Lo que hacés vos
 
-- [ ] **F6.a — Comprar el panel táctil de 7" y la carcasa acrílica.** Acá ya viste el diseño andando meses, así que la compra es informada.
+- [ ] **F6.a — Comprar la pantalla.** Acá ya viste el diseño andando meses, así que la compra es informada. **Revisar antes [HARDWARE_AliExpress_vs_MercadoLibre.md](HARDWARE_AliExpress_vs_MercadoLibre.md)**: conviene importarla, y en vez de panel + carcasa + barra de sonido puede alcanzar con **un monitor de 7" 1024×600 con parlantes incorporados**, que es un solo objeto y un solo envío. **Comprar las dos casas en el mismo pedido**: la franquicia es de USD 400 y solo hay cinco envíos por año. Verificar antes las cuatro cosas que lista ese documento, sobre todo **si el audio entra por HDMI** —si entra, sobra el adaptador USB de audio.
 - [ ] **F6.b — Decidir qué calendario sincronizar.**
 
 ### 💻 Lo que programo yo
