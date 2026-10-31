@@ -202,6 +202,71 @@ Con eso confirmo versión del sistema, arquitectura, memoria, temperatura y espa
 
 ---
 
+## Paso 9 — Modo kiosco
+
+**Resultado:** la Raspberry enciende y muestra la pantalla de JARVIS sola, sin teclado ni login.
+
+### Qué se instala y por qué
+
+```bash
+sudo apt install -y cage chromium-browser
+```
+
+**`cage`** es un compositor Wayland mínimo: muestra una sola ventana a pantalla completa y nada más. No tiene barra de tareas, ni fondo de escritorio, ni gestor de archivos, ni menús. Se eligió frente a un escritorio completo porque la Pi 3 tiene 1 GB de RAM y cada cosa que no sea el navegador se la está sacando a Chromium.
+
+### Copiar los archivos desde tu PC
+
+Desde PowerShell, en la carpeta del proyecto:
+
+```powershell
+scp infra/raspberry/iniciar-kiosco.sh infra/raspberry/jarvis-kiosco.service jarvis_gus@jarvis.local:~
+```
+
+Y en la Raspberry:
+
+```bash
+sudo install -m 755 ~/iniciar-kiosco.sh /usr/local/bin/iniciar-kiosco.sh
+sudo install -m 644 ~/jarvis-kiosco.service /etc/systemd/system/jarvis-kiosco.service
+sudo mkdir -p /var/lib/jarvis
+sudo chown jarvis_gus:jarvis_gus /var/lib/jarvis
+```
+
+### Probarlo antes de automatizarlo
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start jarvis-kiosco
+```
+
+Mirá el televisor: en unos segundos tiene que aparecer la pantalla de JARVIS, a pantalla completa y sin ninguna barra.
+
+**Si no aparece**, el error está en los registros:
+
+```bash
+journalctl -u jarvis-kiosco -n 40 --no-pager
+```
+
+### Dejarlo encendido para siempre
+
+Solo cuando lo hayas visto funcionar:
+
+```bash
+sudo systemctl enable jarvis-kiosco
+sudo reboot
+```
+
+Después del reinicio la pantalla tiene que aparecer sola, sin que nadie toque nada.
+
+### Lo que hace cada decisión rara
+
+El servicio y el script llevan comentarios, pero tres cosas merecen aparecer también acá:
+
+- **`MemoryMax=620M`.** Con 1 GB de RAM, un Chromium desbocado deja la máquina sin memoria y ya no se puede ni entrar por SSH para arreglarla. El límite hace que lo mate el sistema y se reinicie solo, en lugar de llevarse puesto todo el equipo.
+- **`Restart=always`.** Es un dispositivo sin teclado colgado de una pared. Si el navegador se cae, nadie va a ir a levantarlo.
+- **El arreglo de `exit_type` en el script.** Ante cualquier corte de luz, Chromium marca la sesión como terminada mal y al arrancar muestra la barra de «restaurar pestañas». En una casa sin teclado, eso se queda en pantalla para siempre. El script limpia esa marca antes de arrancar.
+
+---
+
 ## Si algo sale mal
 
 | Síntoma | Causa más probable |

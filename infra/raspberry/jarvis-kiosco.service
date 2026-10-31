@@ -1,0 +1,39 @@
+# JARVIS — kiosco
+#
+# Arranca cage (un compositor Wayland mínimo) con Chromium adentro.
+# Se eligió cage y no un escritorio completo porque la Pi 3 tiene 1 GB
+# de RAM y cage no trae barra de tareas, ni fondo, ni gestor de
+# archivos: solo muestra una ventana a pantalla completa.
+#
+# Instalar en /etc/systemd/system/jarvis-kiosco.service
+
+[Unit]
+Description=JARVIS en modo kiosco
+# Sin red no hay pantalla que mostrar, pero tampoco se queda esperando
+# para siempre: si la red tarda, igual arranca y el frontend muestra
+# su propio estado de "sin conexión".
+Wants=network-online.target
+After=network-online.target systemd-user-sessions.service
+
+[Service]
+Type=simple
+User=jarvis_gus
+PAMName=login
+TTYPath=/dev/tty1
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=JARVIS_URL=http://13.140.36.93
+ExecStart=/usr/bin/cage -d -- /usr/local/bin/iniciar-kiosco.sh
+
+# Si Chromium se cae, vuelve. Es un dispositivo sin teclado: nadie va a
+# ir a reiniciarlo a mano.
+Restart=always
+RestartSec=3
+
+# Un límite para que un Chromium desbocado no se lleve puesta la
+# máquina: con 1 GB de RAM, si el navegador crece sin control el
+# sistema entero deja de responder y no se puede ni entrar por SSH.
+MemoryMax=620M
+MemoryHigh=560M
+
+[Install]
+WantedBy=multi-user.target
