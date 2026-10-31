@@ -175,6 +175,15 @@ export interface Aviso {
   escalaEn: number | null
 }
 
+/**
+ * Qué le pasa a la persona. Lo elige ella, por voz o tocando.
+ *
+ * Importa porque cambia el mensaje que reciben los contactos: «se cayó»
+ * y «se siente mal» mandan a buscar cosas distintas, y «en peligro»
+ * puede significar llamar a la policía en vez de a la hija.
+ */
+export type MotivoEmergencia = 'caida' | 'peligro' | 'salud'
+
 export interface Emergencia {
   /** Cómo se disparó: botón, voz, caída detectada. */
   origen: string
@@ -182,6 +191,14 @@ export interface Emergencia {
   alarmaSonando: boolean
   servidorEnLinea: boolean
   escalando: boolean
+  /**
+   * Durante una emergencia el micrófono queda abierto sin palabra de
+   * activación: quien se cayó puede no llegar a decir «Jarvis».
+   */
+  escuchando: boolean
+  motivo: MotivoEmergencia | null
+  /** Lo que la persona alcanzó a decir, textual. Nulo si no dijo nada. */
+  mensaje: string | null
   avisos: Aviso[]
 }
 

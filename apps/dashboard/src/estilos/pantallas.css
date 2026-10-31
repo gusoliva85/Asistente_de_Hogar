@@ -320,11 +320,14 @@
   font-size: 16px;
 }
 
-/* ── Emergencia ─────────────────────────────────────────────────────────── */
+/* ── Emergencia ─────────────────────────────────────────────────────────────
+   Todo más grande de lo que parece necesario: la va a mirar una persona
+   mayor, desde lejos y asustada.
+   ─────────────────────────────────────────────────────────────────────── */
 
 .emergencia {
   padding: 20px 24px;
-  gap: 14px;
+  gap: 12px;
   background: var(--fondo-emergencia);
 }
 
@@ -364,8 +367,8 @@
   animation-delay: -1s;
 }
 
-/* Marco que late en el borde de la pantalla. Se ve desde el otro lado
-   de la habitación, que es de donde se va a mirar. */
+/* Marco que late en el borde. Se ve desde el otro lado de la
+   habitación, que es de donde se va a mirar. */
 .emergencia__marco {
   position: absolute;
   inset: 0;
@@ -389,11 +392,16 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  flex: none;
+}
+
+.emergencia__titulos {
+  flex: none;
 }
 
 .faro {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   flex: none;
   background: var(--alerta);
@@ -412,14 +420,14 @@
 
 .emergencia__titulo {
   margin: 0;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: var(--peso-extra);
   letter-spacing: -0.025em;
 }
 
 .emergencia__origen {
-  margin: 3px 0 0;
-  font-size: 13px;
+  margin: 2px 0 0;
+  font-size: 15px;
   font-weight: var(--peso-medio);
   color: var(--sobre-oscuro-2);
 }
@@ -429,36 +437,94 @@
   font-variant-numeric: tabular-nums;
 }
 
-.emergencia__alarma {
+/* Durante la emergencia el micrófono queda abierto sin palabra de
+   activación: quien se cayó puede no llegar a decir «Jarvis». */
+.emergencia__escuchando {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: 34px;
-  padding: 0 15px;
+  gap: 11px;
+  height: 44px;
+  padding: 0 18px;
   border-radius: var(--radio-pastilla);
-  font-size: 12.5px;
+  font-size: 15px;
+  font-weight: var(--peso-fuerte);
+  color: var(--sobre-oscuro);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.emergencia__mic {
+  display: flex;
+  color: var(--exito);
+  animation: latir 1.8s ease-in-out infinite;
+}
+
+.emergencia__alarma {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radio-pastilla);
+  font-size: 15px;
   font-weight: var(--peso-fuerte);
   color: var(--alerta);
   background: var(--alerta-tenue);
 }
 
+.emergencia__mensaje {
+  position: relative;
+  margin: 0;
+  font-size: 17px;
+  font-weight: var(--peso-medio);
+  color: var(--sobre-oscuro-2);
+  flex: none;
+}
+
+.emergencia__mensaje strong {
+  color: var(--sobre-oscuro);
+  font-weight: var(--peso-fuerte);
+}
+
+/* ── Qué pasó ───────────────────────────────────────────────────────────── */
+
+.motivos {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  flex: none;
+}
+
+.motivo {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border-radius: 22px;
+  font-size: 19px;
+  font-weight: var(--peso-fuerte);
+  color: var(--sobre-oscuro);
+  background: var(--vidrio-sobre-oscuro);
+  border: 2px solid var(--vidrio-sobre-oscuro-borde);
+}
+
+.motivo--elegido {
+  color: #fff;
+  background: var(--alerta-tenue);
+  border-color: var(--alerta);
+  box-shadow: 0 0 0 4px rgba(255, 90, 90, 0.18);
+}
+
+/* ── A quién se avisó ───────────────────────────────────────────────────── */
+
 .emergencia__cuerpo {
   position: relative;
   flex-grow: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 282px;
-  gap: 14px;
-  min-height: 0;
-}
-
-.emergencia__avisos,
-.emergencia__estado {
-  box-sizing: border-box;
-  padding: 15px 18px;
-  border-radius: var(--radio-tarjeta-grande);
-  background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+  display: flex;
+  flex-direction: column;
   min-height: 0;
 }
 
@@ -466,12 +532,12 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .emergencia__subtitulo {
   margin: 0;
-  font-size: 10.5px;
+  font-size: 13px;
   font-weight: var(--peso-extra);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -479,7 +545,7 @@
 }
 
 .emergencia__conteo {
-  font-size: 12.5px;
+  font-size: 16px;
   font-weight: var(--peso-fuerte);
   color: var(--sobre-oscuro);
 }
@@ -490,20 +556,23 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
+  flex-grow: 1;
+  min-height: 0;
 }
 
 .aviso {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 14px;
+  padding: 9px 16px;
   border-radius: var(--radio-bloque);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--vidrio-sobre-oscuro);
+  border: 1px solid var(--vidrio-sobre-oscuro-borde);
 }
 
 .aviso__marca {
-  width: 4px;
+  width: 5px;
   align-self: stretch;
   border-radius: 3px;
   flex: none;
@@ -533,7 +602,7 @@
 }
 
 .aviso__nombre {
-  font-size: 14.5px;
+  font-size: 18px;
   font-weight: var(--peso-fuerte);
 }
 
@@ -543,8 +612,8 @@
 }
 
 .aviso__detalle {
-  margin-top: 2px;
-  font-size: 12px;
+  margin-top: 1px;
+  font-size: 14px;
   font-weight: var(--peso-normal);
   color: var(--sobre-oscuro-2);
   white-space: nowrap;
@@ -565,9 +634,9 @@
 }
 
 .aviso__etiqueta {
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: var(--radio-pastilla);
-  font-size: 10.5px;
+  font-size: 12.5px;
   font-weight: var(--peso-extra);
   letter-spacing: 0.06em;
 }
@@ -589,66 +658,20 @@
 }
 
 .aviso__escala {
-  font-size: 11px;
-  font-weight: var(--peso-semi);
-  color: var(--espera);
-}
-
-.estado-lista {
-  list-style: none;
-  margin: 10px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
   font-size: 13px;
   font-weight: var(--peso-semi);
-}
-
-.estado-lista li {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.estado-lista li::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex: none;
-  background: currentColor;
-}
-
-.estado-lista .bien {
-  color: var(--exito);
-}
-
-.estado-lista .mal {
-  color: var(--alerta);
-}
-
-.estado-lista .curso {
   color: var(--espera);
 }
 
 .emergencia__aclaracion {
-  margin: 16px 0 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--vidrio-sobre-oscuro-borde);
-  font-size: 12.5px;
+  margin: 10px 0 0;
+  font-size: 14px;
   font-weight: var(--peso-medio);
   color: var(--sobre-oscuro-2);
 }
 
 .emergencia__aclaracion strong {
   color: var(--sobre-oscuro);
-}
-
-.emergencia__aclaracion span {
-  display: block;
-  margin-top: 5px;
-  font-weight: var(--peso-normal);
 }
 
 .emergencia__acciones {
@@ -659,22 +682,28 @@
 }
 
 .emergencia__boton {
-  height: 62px;
+  height: 68px;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
   border-radius: 24px;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: var(--peso-fuerte);
 }
 
-.emergencia__boton--hablar {
-  color: var(--sobre-oscuro);
-  background: var(--vidrio-sobre-oscuro);
-  border: 1px solid var(--vidrio-sobre-oscuro-borde);
+/* Reenviar es reintentar los canales que fallaron. Ámbar y no rojo: es
+   una acción de insistir, no una alarma nueva. */
+.emergencia__boton--reenviar {
+  color: #2a1c06;
+  background: linear-gradient(140deg, #f5c25e, #d79526);
+  box-shadow: var(--brillo-interior-boton), 0 10px 26px rgba(215, 149, 38, 0.4);
 }
 
-/* Cancelar es la acción menos reversible de todo el sistema y aun así
-   tiene que ser fácil de encontrar: quien está bien quiere apagar esto
-   ya. Se distingue por color, no por tamaño. */
+/* Cancelar es la acción menos reversible del sistema y aun así tiene
+   que ser fácil de encontrar: quien está bien quiere apagar esto ya. Se
+   distingue por color, no por tamaño. */
 .emergencia__boton--cancelar {
   color: #fff;
   background: var(--emergencia);
@@ -709,45 +738,53 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
-  gap: 32px;
+  /* Aire suficiente para que el disco que asoma no toque el texto */
+  gap: 68px;
   min-height: 0;
 }
 
 .repro__arte {
   position: relative;
-  width: 218px;
-  height: 218px;
+  width: 208px;
+  height: 208px;
   flex: none;
 }
 
-/* El disco asoma por detrás de la carátula y gira. Es el guiño que hace
-   que la pantalla de música se sienta música. */
-.repro__disco {
-  position: absolute;
-  top: 50%;
-  right: -46px;
-  transform: translateY(-50%);
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at center, var(--fondo-base) 0 16%, transparent 17%),
-    repeating-radial-gradient(circle at center, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 5px),
-    linear-gradient(145deg, #2b2456, #1a1733);
-  box-shadow: var(--sombra-elevada);
-  animation: giro 24s linear infinite;
-}
-
-.repro__tapa {
-  position: absolute;
-  inset: 0;
+.caratula {
+  position: relative;
   border-radius: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.78);
-  background: linear-gradient(145deg, #2b2456, #5b3f8e 48%, #c45f86);
+  color: rgba(255, 255, 255, 0.82);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), var(--sombra-elevada);
+  flex: none;
+}
+
+/* El giro va en un elemento propio. Si se anima el mismo que está
+   centrado con translate, la rotación pisa ese translate y el disco se
+   descuelga hacia abajo. */
+.repro__disco {
+  position: absolute;
+  top: 50%;
+  right: -52px;
+  transform: translateY(-50%);
+  width: 182px;
+  height: 182px;
+  pointer-events: none;
+}
+
+.repro__disco-gira {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.9) 0 14%, transparent 15%),
+    repeating-radial-gradient(circle at center, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 5px),
+    linear-gradient(145deg, #2b2456, #171430);
+  box-shadow: var(--sombra-elevada);
+  animation: giro 24s linear infinite;
 }
 
 .repro__texto {
@@ -767,15 +804,15 @@
 
 .repro__titulo {
   margin: 10px 0 0;
-  font-size: 44px;
+  font-size: 42px;
   font-weight: var(--peso-extra);
   letter-spacing: -0.035em;
   line-height: 1.04;
 }
 
 .repro__artista {
-  margin: 6px 0 0;
-  font-size: 20px;
+  margin: 5px 0 0;
+  font-size: 19px;
   font-weight: var(--peso-semi);
   color: var(--texto-2);
 }
@@ -788,7 +825,7 @@
 }
 
 .repro__avance {
-  margin-top: 18px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -798,46 +835,127 @@
 }
 
 .barra-avance {
-  width: 300px;
+  width: 320px;
   height: 6px;
   border-radius: var(--radio-pastilla);
   background: var(--realce-fila);
   box-shadow: var(--sombra-hundida);
-  overflow: hidden;
 }
 
 .barra-avance__relleno {
+  position: relative;
   display: block;
   height: 100%;
   border-radius: inherit;
   background: var(--acento-degradado);
 }
 
+.barra-avance__perilla {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--blanco-control);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
 .repro__sin-tiempo {
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   font-size: 12.5px;
   font-weight: var(--peso-medio);
   color: var(--texto-3);
 }
 
-.repro__boton {
-  margin-top: 20px;
-  width: 64px;
-  height: 64px;
+/* ── Controles ──────────────────────────────────────────────────────────── */
+
+.controles {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--texto-2);
+  background: var(--vidrio);
+  border: 1px solid var(--vidrio-borde);
+  box-shadow: var(--brillo-interior);
+}
+
+.control:hover {
+  color: var(--texto);
+}
+
+/* Activados se distinguen por color y por un punto debajo, no solo por
+   color: tiene que notarse también sin distinguir tonos. */
+.control--activo {
+  position: relative;
+  color: var(--acento);
+}
+
+.control--activo::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.control--principal {
+  width: 68px;
+  height: 68px;
   color: var(--acento-contraste);
   background: var(--acento-degradado);
+  border: none;
   box-shadow: var(--brillo-interior-boton), var(--halo-acento-fuerte);
 }
+
+.controles__volumen {
+  margin-left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto-3);
+}
+
+.deslizador {
+  width: 118px;
+  height: 6px;
+  appearance: none;
+  border-radius: var(--radio-pastilla);
+  background: var(--realce-fila);
+  box-shadow: var(--sombra-hundida);
+}
+
+.deslizador::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--blanco-control);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* ── Cola ───────────────────────────────────────────────────────────────── */
 
 .cola {
   position: relative;
   box-sizing: border-box;
-  height: 158px;
-  padding: 14px 18px;
+  height: 150px;
+  padding: 13px 18px;
   border-radius: var(--radio-tarjeta-grande);
   background: var(--vidrio);
   border: 1px solid var(--vidrio-borde);
@@ -847,49 +965,64 @@
   flex: none;
 }
 
+.cola__cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .cola__lista {
   list-style: none;
   margin: 10px 0 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Cada una con su carátula: la cola se lee de un vistazo, que es para
+   lo que sirve una carátula. */
+.cola__fila {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 12px 0 10px;
+  border-radius: var(--radio-bloque);
+  text-align: left;
+  background: var(--realce-fila);
+  box-shadow: var(--brillo-interior);
+}
+
+.cola__texto {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.cola__fila {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 6px 10px;
-  margin: 0 -10px;
-  border-radius: 14px;
-  font-size: 13.5px;
-  transition: background var(--transicion-rapida), transform var(--transicion-rapida);
-}
-
-.cola__fila:hover {
-  background: var(--realce-fila);
-  transform: translateX(3px);
-}
-
-.cola__nota {
-  display: flex;
-  color: var(--acento);
+.cola__titulo,
+.cola__artista {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cola__titulo {
-  font-weight: var(--peso-semi);
+  font-size: 13.5px;
+  font-weight: var(--peso-fuerte);
 }
 
 .cola__artista {
-  margin-left: auto;
   font-size: 12px;
   color: var(--texto-3);
 }
 
-.cola__pista {
-  margin: 10px 0 0;
-  font-size: 12px;
-  font-weight: var(--peso-medio);
+.cola__orden {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: var(--peso-extra);
   color: var(--texto-3);
+  opacity: 0.6;
 }

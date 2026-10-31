@@ -201,6 +201,78 @@ export const IconoReproducir = ({ tamano = 14 }: PropsIcono) => (
   </svg>
 )
 
+export const IconoCaida = (p: PropsIcono) => (
+  <Trazo {...p}>
+    <circle cx="7.5" cy="4.5" r="2.2" />
+    <path d="M5.4 9.2 10 11l3.4-1.4" />
+    <path d="M10 11v3.5l-5 4" />
+    <path d="M10 14.5 15 18" />
+    <path d="M3 20.5h18" />
+  </Trazo>
+)
+
+export const IconoSalud = (p: PropsIcono) => (
+  <Trazo {...p}>
+    <path d="M3 12.5h3.6l1.6-4 2.6 8 2.2-6 1.4 2h4.6" />
+    <path d="M20.4 8.5a4.4 4.4 0 0 0-8.4-1.6A4.4 4.4 0 0 0 3.6 8.5" />
+    <path d="M4.3 14.6C6.6 17.8 12 21.5 12 21.5s5.4-3.7 7.7-6.9" />
+  </Trazo>
+)
+
+export const IconoPeligro = (p: PropsIcono) => (
+  <Trazo {...p}>
+    <path d="M12 2.8 21.5 20H2.5L12 2.8Z" />
+    <path d="M12 9.5v4.4" />
+    <path d="M12 17h.01" />
+  </Trazo>
+)
+
+export const IconoReenviar = (p: PropsIcono) => (
+  <Trazo {...p}>
+    <path d="M20.5 11.5a8.5 8.5 0 1 1-2.6-6.1" />
+    <path d="M20.8 3.5v5h-5" />
+  </Trazo>
+)
+
+export const IconoAnterior = ({ tamano = 20 }: PropsIcono) => (
+  <svg width={tamano} height={tamano} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M6 5h2.4v14H6zM20 5v14L9.6 12z" />
+  </svg>
+)
+
+export const IconoSiguiente = ({ tamano = 20 }: PropsIcono) => (
+  <svg width={tamano} height={tamano} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M15.6 5H18v14h-2.4zM4 5v14l10.4-7z" />
+  </svg>
+)
+
+export const IconoAleatorio = (p: PropsIcono) => (
+  <Trazo grosor={2.2} {...p}>
+    <path d="M3 6.5h3.4l3.1 4" />
+    <path d="M14.4 13.4 17 17h4" />
+    <path d="M3 17.5h3.4L17 6.5h4" />
+    <path d="M18.6 4.3 21 6.5l-2.4 2.2" />
+    <path d="M18.6 14.8 21 17l-2.4 2.2" />
+  </Trazo>
+)
+
+export const IconoBucle = (p: PropsIcono) => (
+  <Trazo grosor={2.2} {...p}>
+    <path d="M6.5 5h11A3.5 3.5 0 0 1 21 8.5v1" />
+    <path d="M17.5 19h-11A3.5 3.5 0 0 1 3 15.5v-1" />
+    <path d="m18.6 2.8 2.6 2.2-2.6 2.2" />
+    <path d="m5.4 21.2-2.6-2.2 2.6-2.2" />
+  </Trazo>
+)
+
+export const IconoVolumen = (p: PropsIcono) => (
+  <Trazo grosor={2.1} {...p}>
+    <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4Z" />
+    <path d="M16 9.4a3.6 3.6 0 0 1 0 5.2" />
+    <path d="M18.6 6.6a7.4 7.4 0 0 1 0 10.8" />
+  </Trazo>
+)
+
 export const IconoNota = (p: PropsIcono) => (
   <Trazo grosor={2} {...p}>
     <path d="M9 18V5.5l10-2V16" />

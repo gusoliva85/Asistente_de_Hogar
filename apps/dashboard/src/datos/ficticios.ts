@@ -112,6 +112,9 @@ export function emergenciaFicticia(): Emergencia {
     alarmaSonando: true,
     servidorEnLinea: true,
     escalando: true,
+    escuchando: true,
+    motivo: null,
+    mensaje: null,
     avisos: [
       {
         id: 'a1',

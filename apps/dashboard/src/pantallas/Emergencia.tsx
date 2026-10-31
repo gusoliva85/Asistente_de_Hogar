@@ -1,5 +1,19 @@
-import type { Aviso, CanalAviso, Emergencia as DatosEmergencia, EstadoAviso } from '../datos/tipos'
+import { useState } from 'react'
+import type {
+  Aviso,
+  CanalAviso,
+  Emergencia as DatosEmergencia,
+  EstadoAviso,
+  MotivoEmergencia,
+} from '../datos/tipos'
 import { Grano } from '../componentes/Grano'
+import {
+  IconoCaida,
+  IconoMicrofono,
+  IconoPeligro,
+  IconoReenviar,
+  IconoSalud,
+} from '../componentes/Iconos'
 
 /**
  * Pantalla de emergencia.
@@ -10,9 +24,9 @@ import { Grano } from '../componentes/Grano'
  * - **No depende de la IA.** Lo que se ve es el estado de cada canal,
  *   reportado por quien lo envió, no la interpretación de un modelo.
  * - **No se finge nada.** «Entregado» y «confirmó» son distintos y se
- *   muestran distintos. Que un mensaje llegue a un teléfono no dice
- *   nada sobre si alguien lo leyó.
- * - **Un fallo se muestra como fallo**, en rojo y con el motivo.
+ *   muestran distintos.
+ * - **Todo es más grande de lo que parece necesario.** La va a mirar
+ *   una persona mayor, desde lejos y asustada.
  */
 
 const CANAL: Record<CanalAviso, string> = {
@@ -29,6 +43,12 @@ const ESTADO: Record<EstadoAviso, { texto: string; clase: string }> = {
   fallido: { texto: 'No llegó', clase: 'mal' },
   llamando: { texto: 'Llamando', clase: 'curso' },
 }
+
+const MOTIVOS: { id: MotivoEmergencia; texto: string; Icono: typeof IconoCaida }[] = [
+  { id: 'caida', texto: 'Me caí', Icono: IconoCaida },
+  { id: 'salud', texto: 'Me siento mal', Icono: IconoSalud },
+  { id: 'peligro', texto: 'Estoy en peligro', Icono: IconoPeligro },
+]
 
 function transcurrido(desde: string, ahora: Date): string {
   const s = Math.max(0, Math.floor((ahora.getTime() - new Date(desde).getTime()) / 1000))
@@ -48,7 +68,9 @@ function FilaAviso({ aviso }: { aviso: Aviso }) {
         <div className="aviso__detalle">{aviso.detalle}</div>
       </div>
       <div className="aviso__derecha">
-        {aviso.etiqueta && <span className={`aviso__etiqueta aviso__etiqueta--${e.clase}`}>{aviso.etiqueta}</span>}
+        {aviso.etiqueta && (
+          <span className={`aviso__etiqueta aviso__etiqueta--${e.clase}`}>{aviso.etiqueta}</span>
+        )}
         {aviso.escalaEn !== null && (
           <span className="aviso__escala numero">
             llamando en 0:{String(aviso.escalaEn).padStart(2, '0')}
@@ -70,8 +92,9 @@ interface Props {
 }
 
 export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
+  // En la Fase 7 esto va al servidor y cambia el mensaje de los avisos.
+  const [motivo, setMotivo] = useState<MotivoEmergencia | null>(emergencia.motivo)
   const confirmaron = emergencia.avisos.filter((a) => a.estado === 'confirmado').length
-  const primero = emergencia.avisos.find((a) => a.estado === 'confirmado')
 
   return (
     <div className="emergencia">
@@ -82,12 +105,24 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
 
       <header className="emergencia__encabezado">
         <span className="faro ambiental" aria-hidden="true" />
-        <div>
+        <div className="emergencia__titulos">
           <h1 className="emergencia__titulo">Emergencia activa</h1>
           <p className="emergencia__origen">
             {emergencia.origen} · <strong>{transcurrido(emergencia.comenzo, ahora)}</strong>
           </p>
         </div>
+
+        {/* El micrófono queda abierto sin palabra de activación: quien se
+            cayó puede no llegar a decir «Jarvis». */}
+        {emergencia.escuchando && (
+          <span className="emergencia__escuchando">
+            <span className="emergencia__mic ambiental" aria-hidden="true">
+              <IconoMicrofono tamano={17} grosor={2.2} />
+            </span>
+            Te escucho — contame qué pasó
+          </span>
+        )}
+
         {emergencia.alarmaSonando && (
           <span className="emergencia__alarma">
             <span className="ondas" aria-hidden="true">
@@ -95,61 +130,65 @@ export function Emergencia({ emergencia, ahora, onCancelar }: Props) {
               <span className="onda ambiental" />
               <span className="onda ambiental" />
             </span>
-            Alarma sonando en casa
+            Alarma sonando
           </span>
         )}
       </header>
 
+      {emergencia.mensaje && (
+        <p className="emergencia__mensaje">
+          Dijiste: <strong>«{emergencia.mensaje}»</strong>
+        </p>
+      )}
+
+      {/* Decir qué pasa cambia lo que reciben los contactos: «se cayó» y
+          «se siente mal» mandan a buscar cosas distintas. */}
+      <section className="motivos">
+        {MOTIVOS.map(({ id, texto, Icono }) => (
+          <button
+            key={id}
+            type="button"
+            className={`motivo${motivo === id ? ' motivo--elegido' : ''}`}
+            aria-pressed={motivo === id}
+            onClick={() => setMotivo(id)}
+          >
+            <Icono tamano={30} grosor={2} />
+            {texto}
+          </button>
+        ))}
+      </section>
+
       <main className="emergencia__cuerpo">
-        <section className="emergencia__avisos">
-          <div className="emergencia__cabecera">
-            <h2 className="emergencia__subtitulo">A quién se avisó</h2>
-            <span className="emergencia__conteo numero">
-              {confirmaron} de {emergencia.avisos.length} confirmó
-            </span>
-          </div>
-          <ul className="avisos">
-            {emergencia.avisos.map((a) => (
-              <FilaAviso key={a.id} aviso={a} />
-            ))}
-          </ul>
-        </section>
-
-        <aside className="emergencia__estado">
-          <h2 className="emergencia__subtitulo">Estado</h2>
-          <ul className="estado-lista">
-            <li className={emergencia.alarmaSonando ? 'bien' : 'mal'}>
-              {emergencia.alarmaSonando ? 'Alarma local sonando' : 'Alarma local apagada'}
-            </li>
-            <li className={emergencia.servidorEnLinea ? 'bien' : 'mal'}>
-              {emergencia.servidorEnLinea
-                ? 'Internet y servidor en línea'
-                : 'Sin internet · avisando por SMS'}
-            </li>
-            {emergencia.escalando && <li className="curso">Escalando al siguiente canal</li>}
-          </ul>
-
-          {/* Esta aclaración no es un detalle de diseño: es el contrato
-              con quien está mirando la pantalla en el peor momento. */}
-          <p className="emergencia__aclaracion">
-            Todo lo que ves es el estado <strong>real</strong> de cada aviso.
-            <span>«Entregado» no quiere decir que lo hayan leído.</span>
-          </p>
-        </aside>
+        <div className="emergencia__cabecera">
+          <h2 className="emergencia__subtitulo">A quién se avisó</h2>
+          <span className="emergencia__conteo numero">
+            {confirmaron} de {emergencia.avisos.length} confirmó
+          </span>
+        </div>
+        <ul className="avisos">
+          {emergencia.avisos.map((a) => (
+            <FilaAviso key={a.id} aviso={a} />
+          ))}
+        </ul>
+        {/* No es un detalle de diseño: es el contrato con quien está
+            mirando la pantalla en el peor momento. */}
+        <p className="emergencia__aclaracion">
+          Todo lo que ves es el estado <strong>real</strong> de cada aviso. «Entregado» no quiere
+          decir que lo hayan leído.
+        </p>
       </main>
 
       <footer className="emergencia__acciones">
-        {primero && (
-          <button type="button" className="emergencia__boton emergencia__boton--hablar">
-            Hablar con {primero.nombre}
-          </button>
-        )}
+        <button type="button" className="emergencia__boton emergencia__boton--reenviar">
+          <IconoReenviar tamano={24} grosor={2.2} />
+          Reenviar alarma
+        </button>
         <button
           type="button"
           className="emergencia__boton emergencia__boton--cancelar"
           onClick={onCancelar}
         >
-          Estoy bien — cancelar la alerta
+          Estoy bien — cancelar
         </button>
       </footer>
     </div>
