@@ -1,0 +1,39 @@
+{
+  "_comentario": [
+    "JARVIS — políticas de Chromium para el kiosco.",
+    "Va en /etc/chromium/policies/managed/jarvis.json.",
+    "",
+    "Existe porque las opciones de línea de comandos no alcanzan: el",
+    "31/10/2026 el kiosco arrancaba con --disable-features=Translate y",
+    "aun así apareció en pantalla el cartel de 'Spanish / English'. Los",
+    "nombres de esas funciones cambian entre versiones de Chromium y la",
+    "opción pasa a no hacer nada, en silencio. La política no: es la",
+    "misma desde hace años y Chromium la respeta aunque la opción muera.",
+    "",
+    "Todo lo de acá apaga cosas que en una pantalla sin teclado, en la",
+    "casa de alguien que vive solo, se quedarían puestas para siempre",
+    "porque no hay nadie que las pueda cerrar."
+  ],
+
+  "TranslateEnabled": false,
+  "SpellcheckEnabled": false,
+
+  "DefaultNotificationsSetting": 2,
+  "DefaultGeolocationSetting": 2,
+  "DefaultPopupsSetting": 2,
+
+  "PasswordManagerEnabled": false,
+  "AutofillAddressEnabled": false,
+  "AutofillCreditCardEnabled": false,
+
+  "BrowserSignin": 0,
+  "SyncDisabled": true,
+  "MetricsReportingEnabled": false,
+  "BackgroundModeEnabled": false,
+  "PromotionalTabsEnabled": false,
+  "DefaultBrowserSettingEnabled": false,
+  "ComponentUpdatesEnabled": false,
+
+  "BookmarkBarEnabled": false,
+  "ShowHomeButton": false
+}
