@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<title>JARVIS — Principal amplia (prueba de concepto)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+<style>
+  /* ─────────────────────────────────────────────────────────────────────────
+     JARVIS — Pantalla principal, variante amplia. PRUEBA DE CONCEPTO.
+
+     Sin lista de compras y sin dispositivos del hogar. Ese espacio se
+     reparte entre lo que queda: el panel de hora y clima crece a lo
+     alto, el pronóstico pasa a ocupar el ancho entero del panel, la
+     agenda se ensancha y la música deja de ser una barra para ser una
+     tarjeta con su arte.
+
+     No está implementada en la aplicación: es para mirar y decidir.
+
+     La suma vertical es exacta:
+       22 + 30 + 14 + 402 + 14 + 96 + 22 = 600
+     Izquierda: panel 236 + 14 + agenda 152 = 402
+     Derecha:   próximo 104 + 14 + música 284 = 402
+     ───────────────────────────────────────────────────────────────────── */
+
+  :root {
+    --fondo: #f3f1fa;
+    --texto: #1b1930;
+    --texto-2: #5a5676;
+    --texto-3: #83809b;
+    --acento: #4b47b8;
+    --acento-deg: linear-gradient(140deg, #4b47b8, #7b74e0);
+    --verde: linear-gradient(145deg, #3fa87c, #1f7a58);
+    --ambar: linear-gradient(145deg, #f0a651, #c9742a);
+    --ambar-fondo: linear-gradient(140deg, rgba(255,232,205,.9), rgba(255,255,255,.66));
+    --ambar-texto: #9a6b32;
+    --emergencia: linear-gradient(140deg, #e05a5a, #b82d2d);
+    --panel-oscuro: linear-gradient(142deg, #272250 0%, #1b1933 58%, #2c2142 100%);
+    --panel-musica: linear-gradient(140deg, #342a63 0%, #1d1a38 60%, #4a2a5a 100%);
+    --sobre-oscuro: #f2f0ff;
+    --sobre-oscuro-2: #bdb8e0;
+    --vidrio: rgba(255,255,255,.7);
+    --vidrio-borde: rgba(255,255,255,.92);
+    --vidrio-oscuro: rgba(255,255,255,.1);
+    --vidrio-oscuro-borde: rgba(255,255,255,.17);
+    --realce: rgba(75,71,184,.07);
+    --brillo: inset 0 1px 0 rgba(255,255,255,.85);
+    --sombra: 0 1px 2px rgba(32,26,70,.06), 0 6px 14px rgba(32,26,70,.07), 0 18px 38px rgba(32,26,70,.09);
+    --sombra-alta: 0 2px 4px rgba(32,26,70,.08), 0 10px 22px rgba(32,26,70,.1), 0 28px 56px rgba(32,26,70,.14);
+    --en-vivo: #1f8c5f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #d9d6e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .numero { font-variant-numeric: tabular-nums; }
+
+  /* ── Lienzo ─────────────────────────────────────────────────────────── */
+
+  .pantalla {
+    width: 1024px;
+    height: 600px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden;
+    color: var(--texto);
+    background:
+      radial-gradient(680px 420px at 0% -10%, rgba(123,116,224,.24), transparent 60%),
+      radial-gradient(620px 420px at 100% 108%, rgba(230,150,180,.22), transparent 58%),
+      var(--fondo);
+  }
+
+  /* ── Encabezado ─────────────────────────────────────────────────────── */
+
+  .encabezado { height: 30px; display: flex; align-items: center; justify-content: space-between; }
+  .izq { display: flex; align-items: center; gap: 11px; }
+  .marca {
+    width: 30px; height: 30px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; color: #fff;
+    background: var(--acento-deg);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 8px 22px rgba(75,71,184,.3);
+  }
+  .saludo { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -.025em; }
+  .der { display: flex; align-items: center; gap: 8px; }
+  .pastilla {
+    height: 28px; display: flex; align-items: center; gap: 7px; padding: 0 13px;
+    border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--texto-2);
+    background: var(--vidrio); box-shadow: var(--brillo), 0 2px 8px rgba(0,0,0,.05);
+    white-space: nowrap;
+  }
+  .senal { display: flex; color: var(--en-vivo); }
+
+  /* ── Cuerpo ─────────────────────────────────────────────────────────── */
+
+  .cuerpo { height: 402px; display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 14px; }
+  .columna { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+  /* ── Panel de hora y clima ──────────────────────────────────────────── */
+
+  .panel {
+    height: 236px; position: relative; overflow: hidden;
+    padding: 20px 24px; border-radius: 30px;
+    display: flex; flex-direction: column; justify-content: center; gap: 14px;
+    color: var(--sobre-oscuro); background: var(--panel-oscuro);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(0,0,0,.3), var(--sombra-alta);
+  }
+  .aura { position: absolute; border-radius: 50%; pointer-events: none; }
+  .aura-1 { top: -120px; left: -70px; width: 360px; height: 330px;
+    background: radial-gradient(circle, rgba(150,138,255,.5), transparent 68%); }
+  .aura-2 { bottom: -150px; right: -40px; width: 330px; height: 300px;
+    background: radial-gradient(circle, rgba(244,150,196,.38), transparent 68%); }
+
+  .panel-sup { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .hora {
+    display: block; font-size: 108px; font-weight: 700; line-height: .84;
+    letter-spacing: -.055em; padding-right: .09em;
+    background: linear-gradient(176deg, #fff 18%, #bdb4f2 96%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .fecha { margin-top: 12px; display: flex; align-items: baseline; gap: 10px; }
+  .dia { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+  .num { font-size: 20px; font-weight: 500; color: var(--sobre-oscuro-2); }
+
+  .clima { position: relative; display: flex; align-items: center; gap: 16px; padding-left: 26px; }
+  .division { position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,.26), transparent); }
+  .cifras { display: flex; align-items: baseline; gap: 9px; }
+  .temp { font-size: 58px; font-weight: 700; letter-spacing: -.045em; }
+  .extremos { font-size: 15px; font-weight: 600; color: var(--sobre-oscuro-2); white-space: nowrap; }
+  .condicion { margin-top: 2px; font-size: 16px; font-weight: 600; }
+
+  /* El pronóstico, a todo el ancho del panel: al costado competía con la
+     hora por el mismo espacio y las dos cosas quedaban estrujadas. */
+  .pronostico {
+    position: relative; list-style: none; margin: 0; padding: 9px 8px;
+    display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+    border-radius: 14px; background: var(--vidrio-oscuro); border: 1px solid var(--vidrio-oscuro-borde);
+  }
+  .franja { position: relative; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 0 10px; }
+  .franja + .franja::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: rgba(255,255,255,.13); }
+  .fr-hora { font-size: 13px; font-weight: 600; color: var(--sobre-oscuro-2); }
+  .fr-grados { font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+
+  /* ── Tarjetas claras ────────────────────────────────────────────────── */
+
+  .tarjeta {
+    position: relative; overflow: hidden; border-radius: 28px;
+    background: var(--vidrio); border: 1px solid var(--vidrio-borde);
+    backdrop-filter: blur(22px) saturate(140%);
+    box-shadow: var(--sombra), var(--brillo);
+  }
+  .cabecera { display: flex; align-items: center; gap: 10px; }
+  .insignia {
+    width: 27px; height: 27px; border-radius: 10px; flex: none;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    background: var(--acento-deg);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 5px 12px rgba(75,71,184,.3);
+  }
+  .titulo { margin: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-3); }
+  .conteo { margin-left: auto; font-size: 11.5px; font-weight: 600; color: var(--texto-3); }
+
+  /* ── Agenda ─────────────────────────────────────────────────────────── */
+
+  .agenda { height: 152px; padding: 16px 20px; display: flex; flex-direction: column; }
+  .eventos { list-style: none; margin: 0; padding: 0; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
+  .evento { display: flex; align-items: center; gap: 16px; padding: 6px 12px; margin: 0 -12px; border-radius: 16px; min-width: 0; }
+  .evento.proximo { background: linear-gradient(100deg, var(--realce), transparent 70%); }
+  .marca-ev { width: 4px; height: 28px; border-radius: 3px; flex: none; background: rgba(27,25,48,.14); }
+  .evento.proximo .marca-ev { background: var(--acento-deg); }
+  .ev-hora { font-size: 22px; font-weight: 800; letter-spacing: -.025em; color: var(--texto-2); flex: none; }
+  .evento.proximo .ev-hora { color: var(--texto); }
+  .ev-titulo { font-size: 16.5px; font-weight: 500; color: var(--texto-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .evento.proximo .ev-titulo { color: var(--texto); font-weight: 600; }
+
+  /* ── Próximo recordatorio ───────────────────────────────────────────── */
+
+  .proximo-card {
+    height: 104px; padding: 15px 17px; display: flex; align-items: center; gap: 13px;
+    background: var(--ambar-fondo); border-radius: 28px; border: 1px solid var(--vidrio-borde);
+    box-shadow: var(--sombra), var(--brillo);
+  }
+  .rec-icono {
+    width: 46px; height: 46px; border-radius: 16px; flex: none;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    background: var(--ambar); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 7px 16px rgba(201,116,42,.36);
+  }
+  .rec-etiqueta { font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--ambar-texto); }
+  .rec-hora { display: block; margin-top: 2px; font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
+  .rec-titulo { font-size: 13px; color: var(--texto-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── Música ─────────────────────────────────────────────────────────── */
+
+  .musica {
+    height: 284px; position: relative; overflow: hidden; padding: 18px; border-radius: 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    color: var(--sobre-oscuro); background: var(--panel-musica);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), var(--sombra);
+  }
+  .caratula {
+    width: 134px; height: 134px; border-radius: 24px; flex: none;
+    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.82);
+    background: linear-gradient(145deg, #5b3f8e, #c45f86);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3), var(--sombra-alta);
+  }
+  .mus-texto { width: 100%; text-align: center; min-width: 0; }
+  .mus-titulo { font-size: 15.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mus-artista { margin-top: 2px; font-size: 12px; color: var(--sobre-oscuro-2); }
+  .mus-pie { margin-top: auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .mus-origen { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; color: var(--sobre-oscuro-2); }
+  .ondas { display: flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .onda { width: 2.5px; height: 10px; border-radius: 2px; background: currentColor; opacity: .8; }
+  .onda:nth-child(1) { height: 5px; }
+  .onda:nth-child(3) { height: 7px; }
+  .mus-boton {
+    width: 38px; height: 38px; border-radius: 50%; flex: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--texto); background: #fff; box-shadow: 0 6px 16px rgba(0,0,0,.28);
+  }
+
+  /* ── Barra de voz y emergencia ──────────────────────────────────────── */
+
+  .barra { height: 96px; display: flex; gap: 14px; }
+  .voz {
+    flex-grow: 1; min-width: 0; padding: 0 24px; border-radius: 30px;
+    display: flex; align-items: center; gap: 18px;
+    background: var(--vidrio); border: 1px solid var(--vidrio-borde);
+    backdrop-filter: blur(22px) saturate(140%); box-shadow: var(--sombra), var(--brillo);
+  }
+  .mic {
+    width: 56px; height: 56px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    background: var(--acento-deg); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 8px 22px rgba(75,71,184,.3);
+  }
+  .voz-titulo { margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -.01em; }
+  .voz-titulo strong { font-weight: 700; }
+  .voz-nota { margin: 4px 0 0; font-size: 13px; color: var(--texto-2); }
+  .ayuda {
+    width: 280px; flex: none; border-radius: 30px; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 11px;
+    font-size: 19px; font-weight: 800; color: #fff; background: var(--emergencia);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 10px 26px rgba(184,45,45,.34);
+  }
+</style>
+</head>
+<body>
+<div class="pantalla">
+
+  <!-- Encabezado -->
+  <header class="encabezado">
+    <div class="izq">
+      <span class="marca">J</span>
+      <h1 class="saludo">Buen día</h1>
+    </div>
+    <div class="der">
+      <span class="pastilla">
+        <span class="senal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4.5 9.5a11 11 0 0 1 15 0"/><path d="M7.7 13a6.6 6.6 0 0 1 8.6 0"/><path d="M12 16.6h.01"/></svg>
+        </span>Conectado</span>
+      <span class="pastilla">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.3A8.8 8.8 0 0 1 9.7 3.5a8.8 8.8 0 1 0 10.8 10.8Z"/></svg>
+        Modo oscuro</span>
+    </div>
+  </header>
+
+  <!-- Cuerpo -->
+  <div class="cuerpo">
+
+    <div class="columna">
+
+      <!-- Hora, clima y pronóstico -->
+      <section class="panel">
+        <div class="aura aura-1"></div>
+        <div class="aura aura-2"></div>
+
+        <div class="panel-sup">
+          <div>
+            <time class="hora numero">11:35</time>
+            <div class="fecha">
+              <span class="dia">Sábado</span>
+              <span class="num">31 de octubre</span>
+            </div>
+          </div>
+
+          <div class="clima">
+            <span class="division"></span>
+            <svg width="100" height="80" viewBox="0 0 112 90" fill="none" role="img" aria-label="Parcialmente nublado">
+              <defs>
+                <radialGradient id="sol" cx="36%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFFBEC"/><stop offset="48%" stop-color="#FFE194"/><stop offset="100%" stop-color="#F2A648"/>
+                </radialGradient>
+                <linearGradient id="nube" x1="0" y1="0" x2="0.3" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#B9B1E2"/>
+                </linearGradient>
+                <filter id="brillo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"/></filter>
+              </defs>
+              <circle cx="42" cy="34" r="20" fill="#FFD36E" opacity=".5" filter="url(#brillo)"/>
+              <g stroke="#FFE9B0" stroke-width="3.2" stroke-linecap="round" opacity=".92">
+                <path d="M42 4v9"/><path d="M42 55v9"/><path d="M9 34h9"/><path d="M66 34h9"/>
+                <path d="m19.4 11.4 6 6"/><path d="m58.6 50.6 6 6"/><path d="m64.6 11.4-6 6"/><path d="m25.4 50.6-6 6"/>
+              </g>
+              <circle cx="42" cy="34" r="15" fill="url(#sol)"/>
+              <path d="M54 76h36a13 13 0 0 0 1.6-26 19.4 19.4 0 0 0-36.8-4.8A14.5 14.5 0 0 0 54 76Z" fill="url(#nube)"/>
+            </svg>
+            <div>
+              <div class="cifras">
+                <span class="temp numero">19°</span>
+                <span class="extremos numero">23° / 14°</span>
+              </div>
+              <div class="condicion">Parcialmente nublado</div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="pronostico">
+          <li class="franja">
+            <span class="fr-hora numero">09:00</span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.6" fill="#ffd36e"/><g stroke="#ffd36e" stroke-width="1.7" stroke-linecap="round" opacity=".85"><path d="M12 2.6v2.2"/><path d="M12 19.2v2.2"/><path d="M2.6 12h2.2"/><path d="M19.2 12h2.2"/><path d="m5.6 5.6 1.6 1.6"/><path d="m16.8 16.8 1.6 1.6"/><path d="m18.4 5.6-1.6 1.6"/><path d="m7.2 16.8-1.6 1.6"/></g></svg>
+            <span class="fr-grados numero">16°</span>
+          </li>
+          <li class="franja">
+            <span class="fr-hora numero">14:00</span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="9.5" cy="8.5" r="3.6" fill="#ffd36e"/><path d="M8.5 19h8.2a3.6 3.6 0 0 0 .4-7.2 5.4 5.4 0 0 0-10.2-1.3A4 4 0 0 0 8.5 19Z" fill="#c4bde8"/></svg>
+            <span class="fr-grados numero">23°</span>
+          </li>
+          <li class="franja">
+            <span class="fr-hora numero">19:00</span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 9.6A5 5 0 0 1 7.4 4a4.2 4.2 0 1 0 5.6 5.6Z" fill="#d7dcff"/><path d="M8.5 19h8.2a3.6 3.6 0 0 0 .4-7.2 5.4 5.4 0 0 0-10.2-1.3A4 4 0 0 0 8.5 19Z" fill="#c4bde8"/></svg>
+            <span class="fr-grados numero">18°</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Agenda -->
+      <section class="tarjeta agenda">
+        <div class="cabecera">
+          <span class="insignia">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/></svg>
+          </span>
+          <h2 class="titulo">Hoy tenés</h2>
+          <span class="conteo">2 pendientes</span>
+        </div>
+        <ul class="eventos">
+          <li class="evento proximo">
+            <span class="marca-ev"></span>
+            <time class="ev-hora numero">16:30</time>
+            <span class="ev-titulo">Entrega del pedido</span>
+          </li>
+          <li class="evento">
+            <span class="marca-ev"></span>
+            <time class="ev-hora numero">19:30</time>
+            <span class="ev-titulo">Videollamada con mamá</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="columna">
+
+      <!-- Próximo recordatorio -->
+      <section class="proximo-card">
+        <span class="rec-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.3 1.4"/><path d="M9 2.5h6"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div class="rec-etiqueta">Próximo</div>
+          <time class="rec-hora numero">21:30</time>
+          <div class="rec-titulo">Pastilla de la noche</div>
+        </div>
+      </section>
+
+      <!-- Música -->
+      <section class="musica">
+        <span class="caratula">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l10-2V16"/><circle cx="6.5" cy="18" r="2.6"/><circle cx="16.5" cy="16" r="2.6"/></svg>
+        </span>
+        <div class="mus-texto">
+          <div class="mus-titulo">De música ligera</div>
+          <div class="mus-artista">Soda Stereo</div>
+        </div>
+        <div class="mus-pie">
+          <span class="mus-origen">
+            <span class="ondas"><span class="onda"></span><span class="onda"></span><span class="onda"></span></span>
+            YouTube
+          </span>
+          <button class="mus-boton" aria-label="Pausar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"/></svg>
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Voz y emergencia -->
+  <div class="barra">
+    <div class="voz">
+      <span class="mic">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.6" width="6" height="11" rx="3"/><path d="M5.5 11.2a6.5 6.5 0 0 0 13 0"/><path d="M12 17.7v3.7"/></svg>
+      </span>
+      <div>
+        <p class="voz-titulo">Decime <strong>«Jarvis»</strong> y hablá</p>
+        <p class="voz-nota">Nada sale de casa hasta que me nombres</p>
+      </div>
+    </div>
+    <button class="ayuda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-7.5-10a4.3 4.3 0 0 1 7.5-2.9A4.3 4.3 0 0 1 19.5 11c0 5.4-7.5 10-7.5 10Z"/></svg>
+      Necesito ayuda
+    </button>
+  </div>
+</div>
+</body>
+</html>

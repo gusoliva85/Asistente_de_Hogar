@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Principal } from './pantallas/Principal'
-import { PrincipalAmplia } from './pantallas/PrincipalAmplia'
 import { Escucha } from './pantallas/Escucha'
 import { Emergencia } from './pantallas/Emergencia'
 import { Musica } from './pantallas/Musica'
@@ -84,13 +83,9 @@ export function App() {
           onAyuda={() => setPantalla('emergencia')}
         />
       )
-    default: {
-      // Variante en evaluación: sin compras ni dispositivos, con el panel
-      // y la agenda más grandes. Convive con la completa hasta decidir.
-      const Pantalla =
-        new URLSearchParams(location.search).get('diseno') === 'amplio' ? PrincipalAmplia : Principal
+    default:
       return (
-        <Pantalla
+        <Principal
           estado={estado}
           ahora={ahora}
           luz={luz}
@@ -101,6 +96,5 @@ export function App() {
           onMusica={() => setPantalla('musica')}
         />
       )
-    }
   }
 }
