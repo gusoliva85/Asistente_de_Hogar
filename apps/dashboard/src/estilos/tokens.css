@@ -117,6 +117,12 @@
   --nube-desde: #ffffff;
   --nube-hasta: #b9b1e2;
 
+  /* Clima chico del pronóstico. Siempre va sobre el panel oscuro, así
+     que los colores se eligen para leerse ahí y no cambian con la luz. */
+  --clima-sol: #ffd36e;
+  --clima-luna: #d7dcff;
+  --clima-nube: #c4bde8;
+
   /* La hora no es texto plano: degradado recortado sobre el tipo */
   --hora-degradado: linear-gradient(176deg, #ffffff 18%, #bdb4f2 96%);
 
@@ -194,6 +200,10 @@
   --cielo: linear-gradient(165deg, rgba(126, 178, 224, 0.3), rgba(14, 140, 119, 0.16));
   --nube-desde: #ffffff;
   --nube-hasta: #cfe0ec;
+
+  --clima-sol: #ffd36e;
+  --clima-luna: #d2e8ff;
+  --clima-nube: #b8d4dc;
 
   --hora-degradado: linear-gradient(176deg, #ffffff 18%, #a9ddd0 96%);
 

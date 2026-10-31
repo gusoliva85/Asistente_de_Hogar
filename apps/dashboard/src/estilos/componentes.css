@@ -213,6 +213,10 @@
   line-height: 0.84;
   letter-spacing: -0.055em;
   font-variant-numeric: tabular-nums;
+  /* El espaciado negativo le resta ancho al último dígito y la caja del
+     degradado lo cortaba por la derecha. El relleno devuelve ese ancho
+     sin mover la hora de lugar. */
+  padding-right: 0.09em;
   /* La hora no es texto plano: el degradado se recorta sobre el tipo */
   background: var(--hora-degradado);
   -webkit-background-clip: text;

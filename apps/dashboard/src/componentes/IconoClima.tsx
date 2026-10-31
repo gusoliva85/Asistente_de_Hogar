@@ -130,6 +130,11 @@ export function Pronostico({ franjas }: { franjas: FranjaClima[] }) {
 /**
  * Versión chica del ícono, sin animación ni halo: a 18 px no se ven y
  * son tres repeticiones más que pintar en una Pi 3.
+ *
+ * Con color propio, no `currentColor`: en blanco los tres se veían
+ * iguales de un vistazo, que es justo cuando se miran. El amarillo del
+ * sol contra el violeta de la nube distingue sol de nublado sin tener
+ * que reconocer la forma.
  */
 function IconoClimaMini({ condicion, esDeNoche }: { condicion: string; esDeNoche: boolean }) {
   const nublado = /nublad|cubiert|lluvi|tormenta/i.test(condicion)
@@ -140,13 +145,12 @@ function IconoClimaMini({ condicion, esDeNoche }: { condicion: string; esDeNoche
         (esDeNoche ? (
           <path
             d="M18 14.5A7.5 7.5 0 0 1 9.5 6a6.2 6.2 0 1 0 8.5 8.5Z"
-            fill="currentColor"
-            opacity=".9"
+            fill="var(--clima-luna)"
           />
         ) : (
           <>
-            <circle cx="12" cy="12" r="4.6" fill="currentColor" opacity=".9" />
-            <g stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" opacity=".7">
+            <circle cx="12" cy="12" r="4.6" fill="var(--clima-sol)" />
+            <g stroke="var(--clima-sol)" strokeWidth="1.7" strokeLinecap="round" opacity=".85">
               <path d="M12 2.6v2.2" />
               <path d="M12 19.2v2.2" />
               <path d="M2.6 12h2.2" />
@@ -160,11 +164,15 @@ function IconoClimaMini({ condicion, esDeNoche }: { condicion: string; esDeNoche
         ))}
       {nublado && (
         <>
-          {!esDeNoche && <circle cx="9" cy="9" r="3.4" fill="currentColor" opacity=".55" />}
+          {/* El sol asoma detrás de la nube: distingue "parcialmente
+              nublado" de "cubierto" sin leer el texto. */}
+          {!esDeNoche && <circle cx="9.5" cy="8.5" r="3.6" fill="var(--clima-sol)" />}
+          {esDeNoche && (
+            <path d="M13 9.6A5 5 0 0 1 7.4 4a4.2 4.2 0 1 0 5.6 5.6Z" fill="var(--clima-luna)" />
+          )}
           <path
             d="M8.5 19h8.2a3.6 3.6 0 0 0 .4-7.2 5.4 5.4 0 0 0-10.2-1.3A4 4 0 0 0 8.5 19Z"
-            fill="currentColor"
-            opacity=".9"
+            fill="var(--clima-nube)"
           />
         </>
       )}
